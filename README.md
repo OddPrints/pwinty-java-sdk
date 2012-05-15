@@ -80,12 +80,13 @@ Alternatively:
 - [pwinty-sdk-src-1.0.jar](https://github.com/downloads/mattburns/pwinty-java-sdk/pwinty-sdk-src-1.0.jar)
 
 
-Building
---------
+Contribute/Extend
+-----------------
 
-ant
+The project files are present so you can just import the project into [ecilpse](http://www.eclipse.org/).
+If you want to play, you can build the jars from source using [ant](http://ant.apache.org/). 
 
 More
 ----
 
-Browse the test code for more usage examples.
+See the [test code](https://github.com/mattburns/pwinty-java-sdk/blob/master/pwinty-java-sdk/src/test/uk/co/mattburns/pwinty/PwintyTest.java) for more usage examples.
