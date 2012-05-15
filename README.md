@@ -21,7 +21,7 @@ import uk.co.mattburns.pwinty.model.Photo.Type;
 // Choose Environment.LIVE for real orders
 Pwinty pwinty = new Pwinty(Environment.SANDBOX, "merchant-id", "api-key");
 
-/ Contruct a new Order
+// Contruct a new Order
 Order newOrder = new Order();
 newOrder.setRecipientName("Matt Burns");
 newOrder.setAddress1("123 Some Street");
@@ -63,7 +63,7 @@ try {
 Download
 --------
 
-- pwinty-sdk-with-dependencies-1.0.zip (includes required dependencies)
+- [pwinty-sdk-with-dependencies-1.0.zip](https://github.com/downloads/mattburns/pwinty-java-sdk/pwinty-sdk-with-dependencies-1.0.zip) (includes required dependencies)
 
 
 Dependencies
@@ -76,9 +76,14 @@ I have bundled up the Jars you need into pwinty-sdk-with-dependencies-1.0.zip. I
 
 Alternatively:
 
-- pwinty-sdk-1.0.jar
-- pwinty-sdk-src-1.0.jar
+- [pwinty-sdk-1.0.jar](https://github.com/downloads/mattburns/pwinty-java-sdk/pwinty-sdk-1.0.jar)
+- [pwinty-sdk-src-1.0.jar](https://github.com/downloads/mattburns/pwinty-java-sdk/pwinty-sdk-src-1.0.jar)
 
+
+Building
+--------
+
+ant
 
 More
 ----
