@@ -1,4 +1,4 @@
-<project name="scf-api" default="all" basedir=".">
+<project name="pwinty-java-sdk" default="all" basedir=".">
     <description>
         Java library for simple interaction with Pwinty API
     </description>

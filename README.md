@@ -83,7 +83,7 @@ Here is the SDK without the dependencies:
 Contribute/Extend
 -----------------
 
-The project files are present so you can just import the project into [ecilpse](http://www.eclipse.org/).
+The project files are present so you can just import the project into [eclipse](http://www.eclipse.org/).
 If you want to play, you can build the jars from source using [ant](http://ant.apache.org/). 
 
 More
