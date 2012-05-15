@@ -74,7 +74,7 @@ I have bundled up the Jars you need into pwinty-sdk-with-dependencies-1.0.zip. I
 - [Gson](https://code.google.com/p/google-gson/) - gson-2.2.jar
 - [Jersey](http://jersey.java.net/) - jersey-core-1.12.jar, jersey-client-1.12.jar, jersey-multipart-1.12.jar, jsr311-api-1.1.1.jar
 
-Alternatively:
+Here is the SDK without the dependencies:
 
 - [pwinty-sdk-1.0.jar](https://github.com/downloads/mattburns/pwinty-java-sdk/pwinty-sdk-1.0.jar)
 - [pwinty-sdk-src-1.0.jar](https://github.com/downloads/mattburns/pwinty-java-sdk/pwinty-sdk-src-1.0.jar)
