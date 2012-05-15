@@ -17,8 +17,8 @@
         <fileset dir="lib" includes="**/*.jar" />
     </path>
 
-	<path id="test-classpath">
-		<path refid="classpath" />
+    <path id="test-classpath">
+        <path refid="classpath" />
         <fileset dir="test-lib" includes="**/*.jar" />
     </path>
 
@@ -43,8 +43,8 @@
         <junit printsummary="yes" haltonfailure="true">
             <classpath>
                 <path refid="test-classpath" />
-            	<path location="${test-bin}" />
-            	<path location="${src-test}" />
+                <path location="${test-bin}" />
+                <path location="${src-test}" />
             </classpath>
 
             <formatter type="xml" />
@@ -68,15 +68,15 @@
         <jar destfile="${dist-name}-${dist-version}.jar">
             <fileset dir="${ant-bin}" />
         </jar>
-    	
+        
         <jar destfile="${dist-name}-src-${dist-version}.jar">
             <fileset dir="${src-main}" />
         </jar>
-    	
-    	<zip destfile="${dist-name}-with-dependencies-${dist-version}.zip">
-    		<fileset dir="lib" />
-    		<fileset dir="dist"/>
-    	</zip>
+        
+        <zip destfile="${dist-name}-with-dependencies-${dist-version}.zip">
+            <fileset dir="lib" />
+            <fileset dir="dist"/>
+        </zip>
     </target>
 
 </project>
