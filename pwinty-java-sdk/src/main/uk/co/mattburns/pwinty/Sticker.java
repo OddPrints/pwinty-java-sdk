@@ -1,11 +1,9 @@
-package uk.co.mattburns.pwinty.model;
+package uk.co.mattburns.pwinty;
 
-
-public class Document {
+public class Sticker {
 
     private Integer id;
     private String fileName;
-    private int pages;
     private int orderId;
 
     public Integer getId() {
@@ -14,10 +12,6 @@ public class Document {
 
     public String getFileName() {
         return fileName;
-    }
-
-    public int getPages() {
-        return pages;
     }
 
     public int getOrderId() {

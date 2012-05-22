@@ -7,7 +7,7 @@ A java library for communicating with the [Pwinty API](http://www.pwinty.com/api
 Usage
 -----
 
-Everything is done with a Pwinty object:
+Everything is done with an Order object:
 
 ``` java
 import uk.co.mattburns.pwinty.Pwinty;
@@ -22,27 +22,23 @@ import uk.co.mattburns.pwinty.model.Photo.Type;
 Pwinty pwinty = new Pwinty(Environment.SANDBOX, "merchant-id", "api-key");
 
 // Contruct a new Order
-Order newOrder = new Order();
-newOrder.setRecipientName("Matt Burns");
-newOrder.setAddress1("123 Some Street");
-newOrder.setAddress2("Some Village");
-newOrder.setAddressTownOrCity("Bristol");
-newOrder.setStateOrCounty("Bristol");
-newOrder.setPostalOrZipCode("BS1 123");
-newOrder.setCountry("UK");
-
-// Create the new Order object on Pwinty
-Order createdOrder = pwinty.createOrder(newOrder);
-int id = createdOrder.getId();
+Order order = new Order(pwinty);
+order.setRecipientName("Matt Burns");
+order.setAddress1("123 Some Street");
+order.setAddress2("Some Village");
+order.setAddressTownOrCity("Bristol");
+order.setStateOrCounty("Bristol");
+order.setPostalOrZipCode("BS1 123");
+order.setCountry("UK");
 
 // Upload a photo
 File file = new File("kittens.jpg");
-pwinty.addPhotoToOrder(id, file, Type._4x6, 1, Sizing.Crop);
+order.addPhoto(file, Type._4x6, 1, Sizing.Crop);
 
 // Check the Order is valid for submission
-if (pwinty.getSubmissionStatus(id).isValid()) {
+if (order.getSubmissionStatus().isValid()) {
 	// Submit it for printing and posting
-	pwinty.submitOrder(id);
+	order.submit();
 }
 ```
 
@@ -50,11 +46,11 @@ if (pwinty.getSubmissionStatus(id).isValid()) {
 Error Handling
 --------------
 
-Any call to the Pwinty object could throw a PwintyError which is an unchecked exception. It's up to you if you want to catch and handle it. See the [Pwinty API documentation](http://www.pwinty.com/api.html) for potential errors.
+Any call to the API could throw a PwintyError which is an unchecked exception. It's up to you if you want to catch and handle it. See the [Pwinty API documentation](http://www.pwinty.com/api.html) for potential errors.
 
 ``` java
 try {
-	pwinty.submitOrder(id);
+	order.submit();
 } catch (PwintyError e) {
 	System.out.println(e.getCode() + ": " + e.getError());
 }

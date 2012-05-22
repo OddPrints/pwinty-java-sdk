@@ -9,13 +9,8 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.core.MediaType;
 
-import uk.co.mattburns.pwinty.model.Document;
-import uk.co.mattburns.pwinty.model.Order;
-import uk.co.mattburns.pwinty.model.Order.Status;
-import uk.co.mattburns.pwinty.model.Photo;
-import uk.co.mattburns.pwinty.model.Photo.Sizing;
-import uk.co.mattburns.pwinty.model.Sticker;
-import uk.co.mattburns.pwinty.model.SubmissionStatus;
+import uk.co.mattburns.pwinty.Order.Status;
+import uk.co.mattburns.pwinty.Photo.Sizing;
 
 import com.google.gson.Gson;
 import com.sun.jersey.api.client.Client;
@@ -110,6 +105,9 @@ public class Pwinty {
                 .header("X-Pwinty-REST-API-Key", apiKey).get(String.class);
         Order[] orders = new Gson().fromJson(ordersJSON, Order[].class);
 
+        for (Order order : orders) {
+            order.setPwinty(this);
+        }
         return Arrays.asList(orders);
     }
 
@@ -121,10 +119,12 @@ public class Pwinty {
                 .header("X-Pwinty-REST-API-Key", apiKey)
                 .get(ClientResponse.class);
 
-        return createReponse(response, Order.class);
+        Order order = createReponse(response, Order.class);
+        order.setPwinty(this);
+        return order;
     }
 
-    public Order createOrder(Order newOrder) {
+    Order createOrder(Order newOrder) {
         Form form = createOrderForm(newOrder);
         ClientResponse response = webResource.path("Orders")
                 .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
@@ -136,7 +136,7 @@ public class Pwinty {
         return createReponse(response, Order.class);
     }
 
-    public Order updateOrder(int orderId, Order newOrder) {
+    Order updateOrder(int orderId, Order newOrder) {
         Form form = createOrderForm(newOrder);
         form.add("id", orderId);
         ClientResponse response = webResource.path("Orders")
@@ -149,7 +149,7 @@ public class Pwinty {
         return createReponse(response, Order.class);
     }
 
-    public SubmissionStatus getSubmissionStatus(int orderId) {
+    SubmissionStatus getSubmissionStatus(int orderId) {
         ClientResponse response = webResource.path("Orders/SubmissionStatus")
                 .queryParam("id", "" + orderId)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
@@ -164,15 +164,15 @@ public class Pwinty {
      * Add a photo File object to the order. This method will block until the
      * File is uploaded.
      */
-    public Photo addPhotoToOrder(int orderId, File photo, Photo.Type type,
-            int copies, Sizing sizing) {
+    Photo addPhotoToOrder(int orderId, File photo, Photo.Type type, int copies,
+            Sizing sizing) {
         return addPhotoToOrder(orderId, photo, null, type, copies, sizing);
     }
 
     /**
      * Add a photo to the order using a public URL.
      */
-    public Photo addPhotoToOrder(int orderId, URL photoUrl, Photo.Type type,
+    Photo addPhotoToOrder(int orderId, URL photoUrl, Photo.Type type,
             int copies, Sizing sizing) {
         return addPhotoToOrder(orderId, null, photoUrl, type, copies, sizing);
     }
@@ -217,7 +217,7 @@ public class Pwinty {
         return createReponse(response, Photo.class);
     }
 
-    public void deletePhoto(int photoId) {
+    void deletePhoto(int photoId) {
         Form form = new Form();
         form.add("id", photoId);
 
@@ -236,18 +236,18 @@ public class Pwinty {
      * 
      * If an error occurs, a {@link PwintyError} will be thrown
      */
-    public void submitOrder(int orderId) {
+    void submitOrder(int orderId) {
         updateOrder(orderId, Status.Submitted);
     }
 
     /**
      * If an error occurs, a {@link PwintyError} will be thrown
      */
-    public void cancelOrder(int orderId) {
+    void cancelOrder(int orderId) {
         updateOrder(orderId, Status.Cancelled);
     }
 
-    private void updateOrder(int orderId, Status status) {
+    void updateOrder(int orderId, Status status) {
         Form form = new Form();
         form.add("id", orderId);
         form.add("status", status);
@@ -262,8 +262,7 @@ public class Pwinty {
         throwIfBad(response);
     }
 
-    public Document addDocumentToOrder(int orderId, String filename,
-            File document) {
+    Document addDocumentToOrder(int orderId, String filename, File document) {
 
         FormDataMultiPart form = new FormDataMultiPart().field("fileName",
                 filename).field("orderId", "" + orderId);
@@ -294,7 +293,7 @@ public class Pwinty {
         return createReponse(response, Document.class);
     }
 
-    public void deleteDocument(int documentId) {
+    void deleteDocument(int documentId) {
         Form form = new Form();
         form.add("id", documentId);
 
@@ -308,7 +307,7 @@ public class Pwinty {
         throwIfBad(response);
     }
 
-    public Sticker addStickerToOrder(int orderId, String filename, File sticker) {
+    Sticker addStickerToOrder(int orderId, String filename, File sticker) {
         FormDataMultiPart form = new FormDataMultiPart().field("fileName",
                 filename).field("orderId", "" + orderId);
 
@@ -338,7 +337,7 @@ public class Pwinty {
         return createReponse(response, Sticker.class);
     }
 
-    public void deleteSticker(int stickerId) {
+    void deleteSticker(int stickerId) {
         Form form = new Form();
         form.add("id", stickerId);
 
