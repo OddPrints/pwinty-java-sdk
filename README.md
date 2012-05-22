@@ -59,7 +59,7 @@ try {
 Download
 --------
 
-- [pwinty-sdk-with-dependencies-1.1.zip](https://github.com/downloads/mattburns/pwinty-java-sdk/pwinty-sdk-with-dependencies-1.1.zip) (includes required dependencies)
+- [pwinty-java-sdk-with-dependencies-1.1.zip](https://github.com/downloads/mattburns/pwinty-java-sdk/pwinty-java-sdk-with-dependencies-1.1.zip) (includes required dependencies)
 
 
 Dependencies
@@ -72,8 +72,8 @@ I have bundled up the Jars you need into pwinty-sdk-with-dependencies-1.0.zip. I
 
 Here is the SDK without the dependencies:
 
-- [pwinty-sdk-1.1.jar](https://github.com/downloads/mattburns/pwinty-java-sdk/pwinty-sdk-1.1.jar)
-- [pwinty-sdk-src-1.1.jar](https://github.com/downloads/mattburns/pwinty-java-sdk/pwinty-sdk-src-1.1.jar)
+- [pwinty-java-sdk-1.1.jar](https://github.com/downloads/mattburns/pwinty-java-sdk/pwinty-java-sdk-1.1.jar)
+- [pwinty-java-sdk-src-1.1.jar](https://github.com/downloads/mattburns/pwinty-java-sdk/pwinty-java-sdk-src-1.1.jar)
 
 
 Contribute/Extend
