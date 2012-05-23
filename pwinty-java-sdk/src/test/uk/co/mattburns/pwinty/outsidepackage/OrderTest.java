@@ -61,10 +61,10 @@ public class OrderTest {
 
     @Test
     public void can_create_order() {
-        Order newOrder = new Order(pwinty);
-        newOrder.setRecipientName("bloggs");
-        assertEquals("bloggs", newOrder.getRecipientName());
-        assertTrue(newOrder.getId() > 0);
+        Order order = new Order(pwinty);
+        order.setRecipientName("bloggs");
+        assertEquals("bloggs", order.getRecipientName());
+        assertTrue(order.getId() > 0);
     }
 
     @Test
@@ -103,14 +103,14 @@ public class OrderTest {
 
     @Test
     public void can_create_and_update_order() {
-        Order createdOrder = new Order(pwinty);
-        createdOrder.setRecipientName("bloggs");
+        Order order = new Order(pwinty);
+        order.setRecipientName("bloggs");
 
-        assertEquals("bloggs", createdOrder.getRecipientName());
+        assertEquals("bloggs", order.getRecipientName());
 
-        int id = createdOrder.getId();
-        createdOrder.setRecipientName("jones");
-        assertEquals("jones", createdOrder.getRecipientName());
+        int id = order.getId();
+        order.setRecipientName("jones");
+        assertEquals("jones", order.getRecipientName());
 
         Order updatedOrder = pwinty.getOrder(id);
         assertEquals("jones", updatedOrder.getRecipientName());
@@ -119,11 +119,11 @@ public class OrderTest {
 
     @Test
     public void can_create_order_and_get_status() {
-        Order createdOrder = new Order(pwinty);
+        Order order = new Order(pwinty);
 
-        assertEquals(Status.NotYetSubmitted, createdOrder.getStatus());
+        assertEquals(Status.NotYetSubmitted, order.getStatus());
 
-        SubmissionStatus submissionStatus = createdOrder.getSubmissionStatus();
+        SubmissionStatus submissionStatus = order.getSubmissionStatus();
         assertEquals(false, submissionStatus.isValid());
         assertTrue(submissionStatus.getGeneralErrors().contains(
                 GeneralError.NoItemsInOrder));
@@ -134,29 +134,29 @@ public class OrderTest {
     @Test
     public void can_create_and_add_photo_and_submit_order()
             throws URISyntaxException {
-        Order createdOrder = new Order(pwinty);
-        createdOrder.setAddress1("ad1");
-        createdOrder.setAddress2("ad2");
-        createdOrder.setAddressTownOrCity("toc");
-        createdOrder.setCountry("uk");
-        createdOrder.setPostalOrZipCode("zip");
-        createdOrder.setRecipientName("bloggs");
-        createdOrder.setStateOrCounty("bristol");
+        Order order = new Order(pwinty);
+        order.setAddress1("ad1");
+        order.setAddress2("ad2");
+        order.setAddressTownOrCity("toc");
+        order.setCountry("uk");
+        order.setPostalOrZipCode("zip");
+        order.setRecipientName("bloggs");
+        order.setStateOrCounty("bristol");
 
-        int id = createdOrder.getId();
-        assertEquals(Status.NotYetSubmitted, createdOrder.getStatus());
+        int id = order.getId();
+        assertEquals(Status.NotYetSubmitted, order.getStatus());
 
         URL resource = OrderTest.class.getResource(TEST_PHOTO_LOCAL);
         File file = new File(resource.toURI());
 
-        createdOrder.addPhoto(file, Type._4x6, 1, Sizing.Crop);
+        order.addPhoto(file, Type._4x6, 1, Sizing.Crop);
 
-        SubmissionStatus submissionStatus = createdOrder.getSubmissionStatus();
+        SubmissionStatus submissionStatus = order.getSubmissionStatus();
         assertEquals(
                 "SubmissionStatus is not valid: " + submissionStatus.toString(),
                 true, submissionStatus.isValid());
 
-        createdOrder.submit();
+        order.submit();
 
         Order fetchedOrder = pwinty.getOrder(id);
         assertEquals(Status.Submitted, fetchedOrder.getStatus());
@@ -165,24 +165,24 @@ public class OrderTest {
     @Test
     public void error_is_thrown_if_order_not_in_correct_state()
             throws URISyntaxException {
-        Order createdOrder = new Order(pwinty);
-        createdOrder.setAddress1("ad1");
-        createdOrder.setAddress2("ad2");
-        createdOrder.setAddressTownOrCity("toc");
-        createdOrder.setCountry("uk");
-        createdOrder.setPostalOrZipCode("zip");
-        createdOrder.setRecipientName("bloggs");
-        createdOrder.setStateOrCounty("bristol");
+        Order order = new Order(pwinty);
+        order.setAddress1("ad1");
+        order.setAddress2("ad2");
+        order.setAddressTownOrCity("toc");
+        order.setCountry("uk");
+        order.setPostalOrZipCode("zip");
+        order.setRecipientName("bloggs");
+        order.setStateOrCounty("bristol");
 
         URL resource = OrderTest.class.getResource(TEST_PHOTO_LOCAL);
         File file = new File(resource.toURI());
 
-        createdOrder.addPhoto(file, Type._4x6, 1, Sizing.Crop);
+        order.addPhoto(file, Type._4x6, 1, Sizing.Crop);
 
-        createdOrder.submit(); // this call should work
+        order.submit(); // this call should work
 
         try {
-            createdOrder.submit();
+            order.submit();
             fail("Should have thrown");
         } catch (PwintyError e) {
             assertEquals(403, e.getCode());
@@ -191,22 +191,22 @@ public class OrderTest {
 
     @Test
     public void can_create_and_add_photo_by_url() throws MalformedURLException {
-        Order createdOrder = new Order(pwinty);
-        createdOrder.setAddress1("ad1");
-        createdOrder.setAddress2("ad2");
-        createdOrder.setAddressTownOrCity("toc");
-        createdOrder.setCountry("uk");
-        createdOrder.setPostalOrZipCode("zip");
-        createdOrder.setRecipientName("bloggs");
-        createdOrder.setStateOrCounty("bristol");
+        Order order = new Order(pwinty);
+        order.setAddress1("ad1");
+        order.setAddress2("ad2");
+        order.setAddressTownOrCity("toc");
+        order.setCountry("uk");
+        order.setPostalOrZipCode("zip");
+        order.setRecipientName("bloggs");
+        order.setStateOrCounty("bristol");
 
-        assertEquals(Status.NotYetSubmitted, createdOrder.getStatus());
+        assertEquals(Status.NotYetSubmitted, order.getStatus());
 
         URL url = new URL(TEST_PHOTO_URL);
 
-        createdOrder.addPhoto(url, Type._4x6, 1, Sizing.Crop);
+        order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
 
-        SubmissionStatus submissionStatus = createdOrder.getSubmissionStatus();
+        SubmissionStatus submissionStatus = order.getSubmissionStatus();
 
         assertEquals(
                 "SubmissionStatus is not valid: " + submissionStatus.toString(),
@@ -215,11 +215,11 @@ public class OrderTest {
 
     @Test
     public void can_get_photo_details() throws MalformedURLException {
-        Order createdOrder = new Order(pwinty);
+        Order order = new Order(pwinty);
 
         URL url = new URL(TEST_PHOTO_URL);
-        createdOrder.addPhoto(url, Type._4x6, 2, Sizing.ShrinkToExactFit);
-        SubmissionStatus submissionStatus = createdOrder.getSubmissionStatus();
+        order.addPhoto(url, Type._4x6, 2, Sizing.ShrinkToExactFit);
+        SubmissionStatus submissionStatus = order.getSubmissionStatus();
         int photoId = submissionStatus.getPhotos().get(0).getId();
 
         Photo photo = pwinty.getPhoto(photoId);
@@ -230,50 +230,50 @@ public class OrderTest {
 
     @Test
     public void can_delete_photo_from_order() throws MalformedURLException {
-        Order createdOrder = new Order(pwinty);
+        Order order = new Order(pwinty);
 
         URL url = new URL(TEST_PHOTO_URL);
-        createdOrder.addPhoto(url, Type._4x6, 1, Sizing.Crop);
+        order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
 
-        SubmissionStatus submissionStatus = createdOrder.getSubmissionStatus();
+        SubmissionStatus submissionStatus = order.getSubmissionStatus();
         assertEquals(1, submissionStatus.getPhotos().size());
 
-        createdOrder.deletePhoto(createdOrder.getPhotos().get(0));
+        order.deletePhoto(order.getPhotos().get(0));
 
-        submissionStatus = createdOrder.getSubmissionStatus();
+        submissionStatus = order.getSubmissionStatus();
         assertEquals(0, submissionStatus.getPhotos().size());
     }
 
     @Test
     public void can_cancel_order() throws URISyntaxException {
-        Order createdOrder = new Order(pwinty);
+        Order order = new Order(pwinty);
 
-        int id = createdOrder.getId();
+        int id = order.getId();
 
-        createdOrder.cancel();
+        order.cancel();
         Order fetchedOrder = pwinty.getOrder(id);
         assertEquals(Status.Cancelled, fetchedOrder.getStatus());
     }
 
     @Test
     public void cannot_cancel_submitted_order() throws URISyntaxException {
-        Order createdOrder = new Order(pwinty);
-        createdOrder.setAddress1("ad1");
-        createdOrder.setAddress2("ad2");
-        createdOrder.setAddressTownOrCity("toc");
-        createdOrder.setCountry("uk");
-        createdOrder.setPostalOrZipCode("zip");
-        createdOrder.setRecipientName("bloggs");
-        createdOrder.setStateOrCounty("bristol");
+        Order order = new Order(pwinty);
+        order.setAddress1("ad1");
+        order.setAddress2("ad2");
+        order.setAddressTownOrCity("toc");
+        order.setCountry("uk");
+        order.setPostalOrZipCode("zip");
+        order.setRecipientName("bloggs");
+        order.setStateOrCounty("bristol");
 
         URL resource = OrderTest.class.getResource(TEST_PHOTO_LOCAL);
         File file = new File(resource.toURI());
 
-        createdOrder.addPhoto(file, Type._4x6, 1, Sizing.Crop);
-        createdOrder.submit();
+        order.addPhoto(file, Type._4x6, 1, Sizing.Crop);
+        order.submit();
 
         try {
-            createdOrder.cancel();
+            order.cancel();
             fail("Should have thrown");
         } catch (PwintyError e) {
             assertEquals(403, e.getCode());
@@ -282,28 +282,28 @@ public class OrderTest {
 
     @Test
     public void can_add_and_get_and_delete_document() throws URISyntaxException {
-        Order createdOrder = new Order(pwinty);
+        Order order = new Order(pwinty);
 
         URL resource = OrderTest.class.getResource(TEST_DOCUMENT_LOCAL);
         File file = new File(resource.toURI());
 
-        Document document = createdOrder.addDocument("test.pdf", file);
+        Document document = order.addDocument("test.pdf", file);
         document = pwinty.getDocument(document.getId());
         assertEquals(1, document.getPages());
 
-        createdOrder.deleteDocument(document);
+        order.deleteDocument(document);
     }
 
     @Test
     public void can_add_and_get_and_delete_sticker() throws URISyntaxException {
-        Order createdOrder = new Order(pwinty);
+        Order order = new Order(pwinty);
 
         URL resource = OrderTest.class.getResource(TEST_STICKER_LOCAL);
         File file = new File(resource.toURI());
 
-        Sticker sticker = createdOrder.addSticker("test.jpg", file);
+        Sticker sticker = order.addSticker("test.jpg", file);
         sticker = pwinty.getSticker(sticker.getId());
-        createdOrder.deleteSticker(sticker);
+        order.deleteSticker(sticker);
     }
 
     @Test

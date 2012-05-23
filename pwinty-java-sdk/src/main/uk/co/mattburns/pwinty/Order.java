@@ -32,8 +32,8 @@ public class Order {
 
     public Order(Pwinty pwinty) {
         this.pwinty = pwinty;
-        Order createdOrder = pwinty.createOrder(this);
-        overwriteThisOrderWithGivenOrder(createdOrder);
+        Order order = pwinty.createOrder(this);
+        overwriteThisOrderWithGivenOrder(order);
     }
 
     public int getId() {
@@ -127,9 +127,7 @@ public class Order {
 
     private void overwriteThisOrderWithGivenOrder(Order updated) {
         id = updated.id;
-        if (updated.status != null) { // pwinty may return null on update
-            status = updated.status;
-        }
+        status = updated.status;
         photos = updated.photos;
         recipientName = updated.recipientName;
         address1 = updated.address1;
