@@ -2,3 +2,4 @@ pwinty-java-sdk/ant-bin
 pwinty-java-sdk/bin
 pwinty-java-sdk/dist
 pwinty-java-sdk/test-bin
+pwinty-java-sdk/src/test/uk/co/mattburns/pwinty/outsidepackage/test-settings.properties

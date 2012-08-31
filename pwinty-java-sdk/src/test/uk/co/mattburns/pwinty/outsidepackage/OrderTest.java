@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
+import java.util.Properties;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -30,27 +31,33 @@ import uk.co.mattburns.pwinty.SubmissionStatus.GeneralError;
 public class OrderTest {
 
     // Enter keys here to runs the tests
-    private static final String API_KEY = "";
-    private static final String MERCHANT_ID = "";
-
     private static final String TEST_PHOTO_LOCAL = "/resources/test.jpg";
     private static final String TEST_PHOTO_URL = "http://farm4.staticflickr.com/3454/3837830342_dae0b932a9_b_d.jpg";
     private static final String TEST_DOCUMENT_LOCAL = "/resources/test.pdf";
     private static final String TEST_STICKER_LOCAL = TEST_PHOTO_LOCAL;
 
-    private Pwinty pwinty = new Pwinty(Environment.SANDBOX, MERCHANT_ID,
-            API_KEY, System.out);
+    private static Pwinty pwinty;
 
     @BeforeClass
     public static void before() {
-        if (MERCHANT_ID.isEmpty() || API_KEY.isEmpty()) {
-            fail("MERCHANT_ID and API_KEY must be set to run the tests");
+
+        Properties props = new Properties();
+
+        try {
+            // load a properties file
+            props.load(OrderTest.class
+                    .getResourceAsStream("test-settings.properties"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+
+        pwinty = new Pwinty(Environment.SANDBOX,
+                props.getProperty("PWINTY_MERCHANT_ID"),
+                props.getProperty("PWINTY_MERCHANT_KEY"));
     }
 
     @AfterClass
     public static void after() {
-        Pwinty pwinty = new Pwinty(Environment.SANDBOX, MERCHANT_ID, API_KEY);
         List<Order> fetchedOrders = pwinty.getOrders();
         for (Order o : fetchedOrders) {
             if (o.getStatus() == Status.NotYetSubmitted) {
