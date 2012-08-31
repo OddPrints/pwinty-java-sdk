@@ -94,6 +94,8 @@ public class Pwinty {
         if (loggingFilter != null) {
             client.addFilter(loggingFilter);
         }
+        client.setConnectTimeout(0);
+        client.setReadTimeout(0);
 
         webResource = client.resource(environment.url);
     }
@@ -183,6 +185,7 @@ public class Pwinty {
     private Photo addPhotoToOrder(int orderId, File photo, URL photoUrl,
             Photo.Type type, int copies, Sizing sizing) {
 
+        @SuppressWarnings("resource")
         FormDataMultiPart form = new FormDataMultiPart()
                 .field("type", type.toString())
                 .field("sizing", sizing.toString())
@@ -264,6 +267,7 @@ public class Pwinty {
 
     Document addDocumentToOrder(int orderId, String filename, File document) {
 
+        @SuppressWarnings("resource")
         FormDataMultiPart form = new FormDataMultiPart().field("fileName",
                 filename).field("orderId", "" + orderId);
 
@@ -308,6 +312,7 @@ public class Pwinty {
     }
 
     Sticker addStickerToOrder(int orderId, String filename, File sticker) {
+        @SuppressWarnings("resource")
         FormDataMultiPart form = new FormDataMultiPart().field("fileName",
                 filename).field("orderId", "" + orderId);
 

@@ -5,7 +5,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/jsr311-api-1.1.1.jar"/>
-	<classpathentry kind="lib" path="lib/jersey-multipart-1.12.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-multipart-1.12.jar" sourcepath="/home/matt/.m2/repository/com/sun/jersey/contribs/jersey-multipart/1.12/jersey-multipart-1.12-sources.jar"/>
 	<classpathentry kind="lib" path="lib/gson-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/jersey-client-1.12.jar"/>
 	<classpathentry kind="lib" path="lib/jersey-core-1.12.jar"/>
