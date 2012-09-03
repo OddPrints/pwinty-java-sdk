@@ -64,7 +64,7 @@
         </junitreport>
     </target>
 
-    <target name="jar" depends="clean" description="Build the distributable jars">
+    <target name="jar" depends="clean, test" description="Build the distributable jars">
         <jar destfile="${dist-name}-${dist-version}.jar">
             <fileset dir="${ant-bin}" />
         </jar>
