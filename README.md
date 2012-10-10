@@ -4,6 +4,7 @@ Pwinty-Java-SDK
 A java library for communicating with the [Pwinty API](http://www.pwinty.com/api.html).
 
 
+
 Usage
 -----
 
@@ -43,6 +44,7 @@ if (order.getSubmissionStatus().isValid()) {
 ```
 
 
+
 Error Handling
 --------------
 
@@ -56,24 +58,18 @@ try {
 }
 ```
 
-Download
---------
-
-- [pwinty-java-sdk-with-dependencies-1.1.zip](https://github.com/downloads/mattburns/pwinty-java-sdk/pwinty-java-sdk-with-dependencies-1.1.zip) (includes required dependencies)
 
 
 Dependencies
 ------------
 
-I have bundled up the Jars you need into pwinty-sdk-with-dependencies-1.0.zip. If you prefer to manage them yourself, they are:
+I have bundled up the Jars you need into pwinty-sdk-with-dependencies-*.zip. If you prefer to manage them yourself, they are:
 
 - [Gson](https://code.google.com/p/google-gson/) - gson-2.2.jar
 - [Jersey](http://jersey.java.net/) - jersey-core-1.12.jar, jersey-client-1.12.jar, jersey-multipart-1.12.jar, jsr311-api-1.1.1.jar
 
-Here is the SDK without the dependencies:
 
-- [pwinty-java-sdk-1.1.jar](https://github.com/downloads/mattburns/pwinty-java-sdk/pwinty-java-sdk-1.1.jar)
-- [pwinty-java-sdk-src-1.1.jar](https://github.com/downloads/mattburns/pwinty-java-sdk/pwinty-java-sdk-src-1.1.jar)
+
 
 
 Contribute/Extend
@@ -81,6 +77,8 @@ Contribute/Extend
 
 The project files are present so you can just import the project into [eclipse](http://www.eclipse.org/).
 If you want to play, you can build the jars from source using [ant](http://ant.apache.org/). 
+
+
 
 More
 ----
