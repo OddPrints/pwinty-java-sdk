@@ -11,7 +11,6 @@ import uk.co.mattburns.pwinty.Photo.Sizing;
 import uk.co.mattburns.pwinty.Photo.Type;
 import uk.co.mattburns.pwinty.Pwinty;
 import uk.co.mattburns.pwinty.Pwinty.Environment;
-import uk.co.mattburns.pwinty.outsidepackage.OrderTest;
 
 public class OrderUpdater {
 
@@ -20,9 +19,11 @@ public class OrderUpdater {
         // Create an updater:
         // OrderUpdater updater = new OrderUpdater();
 
-        // Two use cases:
+        // Three use cases:
         // updater.updateAddress(orderIdToUpdate);
-        // updater.updateImageUrl(orderIdToUpdate, photoIdToUpdate, newUrl)
+        // updater.updateImageUrl(orderIdToUpdate, photoIdToUpdate, newUrl);
+        // updater.addPhotoToOrder(orderIdToUpdate,newUrl,type,copies,sizing);
+
     }
 
     public void updateAddress(int orderIdToUpdate) {
@@ -65,12 +66,21 @@ public class OrderUpdater {
         order.addPhoto(newUrl, type, copies, sizing);
     }
 
+    public void addPhotoToOrder(int orderIdToUpdate, URL newUrl, Type type,
+            int copies, Sizing sizing) {
+        Pwinty pwinty = getPwinty(Environment.LIVE);
+        System.out.println(pwinty.getOrder(orderIdToUpdate));
+
+        Order order = pwinty.getOrder(orderIdToUpdate);
+        order.addPhoto(newUrl, type, copies, sizing);
+    }
+
     public Pwinty getPwinty(Environment env) {
         Properties props = new Properties();
 
         try {
-            props.load(OrderTest.class
-                    .getResourceAsStream("test-settings.properties"));
+            props.load(getClass().getResourceAsStream(
+                    "test-settings.properties"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.outsidepackage;
+package uk.co.mattburns.pwinty.manual;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
