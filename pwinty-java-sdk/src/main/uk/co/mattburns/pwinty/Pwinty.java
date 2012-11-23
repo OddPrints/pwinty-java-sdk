@@ -1,6 +1,7 @@
 package uk.co.mattburns.pwinty;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.Arrays;
@@ -20,6 +21,7 @@ import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.representation.Form;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
+import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
 public class Pwinty {
 
@@ -317,6 +319,25 @@ public class Pwinty {
                 filename).field("orderId", "" + orderId);
 
         form.bodyPart(new FileDataBodyPart("file", sticker,
+                MediaType.MULTIPART_FORM_DATA_TYPE));
+
+        ClientResponse response = webResource.path("Stickers")
+                .type(MediaType.MULTIPART_FORM_DATA_TYPE)
+                .header("X-Pwinty-MerchantId", merchantId)
+                .header("X-Pwinty-REST-API-Key", apiKey)
+                .post(ClientResponse.class, form);
+
+        throwIfBad(response);
+
+        return createReponse(response, Sticker.class);
+    }
+
+    Sticker addStickerToOrder(int orderId, String filename, InputStream sticker) {
+        @SuppressWarnings("resource")
+        FormDataMultiPart form = new FormDataMultiPart().field("fileName",
+                filename).field("orderId", "" + orderId);
+
+        form.bodyPart(new StreamDataBodyPart("file", sticker, "sticker.jpg",
                 MediaType.MULTIPART_FORM_DATA_TYPE));
 
         ClientResponse response = webResource.path("Stickers")

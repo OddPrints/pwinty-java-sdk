@@ -19,15 +19,21 @@ public class OrderUpdater {
         // Create an updater:
         // OrderUpdater updater = new OrderUpdater();
 
-        // Three use cases:
+        // Four use cases:
+        // updater.display(orderId);
         // updater.updateAddress(orderIdToUpdate);
         // updater.updateImageUrl(orderIdToUpdate, photoIdToUpdate, newUrl);
         // updater.addPhotoToOrder(orderIdToUpdate,newUrl,type,copies,sizing);
 
     }
 
-    public void updateAddress(int orderIdToUpdate) {
+    public void display(int orderId) {
+        Pwinty pwinty = getPwinty(Environment.LIVE);
+        Order order = pwinty.getOrder(orderId);
+        System.out.println(order);
+    }
 
+    public void updateAddress(int orderIdToUpdate) {
         Pwinty pwinty = getPwinty(Environment.LIVE);
 
         System.out.println(pwinty.getOrder(orderIdToUpdate));

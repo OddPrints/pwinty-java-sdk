@@ -63,12 +63,8 @@ try {
 Dependencies
 ------------
 
-I have bundled up the Jars you need into pwinty-sdk-with-dependencies-*.zip. If you prefer to manage them yourself, they are:
-
-- [Gson](https://code.google.com/p/google-gson/) - gson-2.2.jar
-- [Jersey](http://jersey.java.net/) - jersey-core-1.12.jar, jersey-client-1.12.jar, jersey-multipart-1.12.jar, jsr311-api-1.1.1.jar
-
-
+I have bundled up the Jars you need into pwinty-sdk-with-dependencies-*.zip. If you prefer to manage them yourself, you can see which jars you need in the [lib directory]
+(https://github.com/mattburns/pwinty-java-sdk/tree/master/pwinty-java-sdk/lib)
 
 
 
@@ -83,4 +79,4 @@ If you want to play, you can build the jars from source using [ant](http://ant.a
 More
 ----
 
-See the [test code](https://github.com/mattburns/pwinty-java-sdk/blob/master/pwinty-java-sdk/src/test/uk/co/mattburns/pwinty/PwintyTest.java) for more usage examples.
+See the [test code](https://github.com/mattburns/pwinty-java-sdk/tree/master/pwinty-java-sdk/src/test/uk/co/mattburns/pwinty/manual/OrderTest.java) for more usage examples.

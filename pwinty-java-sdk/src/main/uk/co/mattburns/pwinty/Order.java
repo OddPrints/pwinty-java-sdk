@@ -1,6 +1,7 @@
 package uk.co.mattburns.pwinty;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -188,6 +189,12 @@ public class Order {
 
     public Sticker addSticker(String filename, File document) {
         Sticker addedSticker = pwinty.addStickerToOrder(id, filename, document);
+        refreshOrder();
+        return addedSticker;
+    }
+
+    public Sticker addSticker(String filename, InputStream stream) {
+        Sticker addedSticker = pwinty.addStickerToOrder(id, filename, stream);
         refreshOrder();
         return addedSticker;
     }

@@ -40,7 +40,6 @@ public class OrderTest {
 
     @BeforeClass
     public static void before() {
-
         Properties props = new Properties();
 
         try {
