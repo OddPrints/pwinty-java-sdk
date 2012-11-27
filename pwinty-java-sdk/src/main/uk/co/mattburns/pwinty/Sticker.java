@@ -18,4 +18,10 @@ public class Sticker {
         return orderId;
     }
 
+    @Override
+    public String toString() {
+        return "Sticker [id=" + id + ", fileName=" + fileName + ", orderId="
+                + orderId + "]";
+    }
+
 }

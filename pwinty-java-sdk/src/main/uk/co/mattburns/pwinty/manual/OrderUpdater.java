@@ -28,8 +28,9 @@ public class OrderUpdater {
     }
 
     public void display(int orderId) {
-        Pwinty pwinty = getPwinty(Environment.LIVE);
+        Pwinty pwinty = getPwinty(Environment.SANDBOX);
         Order order = pwinty.getOrder(orderId);
+
         System.out.println(order);
     }
 

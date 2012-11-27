@@ -13,6 +13,8 @@ public class Order {
     private int id;
     private Status status;
     private List<Photo> photos = new ArrayList<Photo>();
+    private List<Document> documents = new ArrayList<Document>();
+    private List<Sticker> stickers = new ArrayList<Sticker>();
     private String recipientName;
     private String address1;
     private String address2;
@@ -47,6 +49,14 @@ public class Order {
 
     public List<Photo> getPhotos() {
         return photos;
+    }
+
+    public List<Document> getDocuments() {
+        return documents;
+    }
+
+    public List<Sticker> getStickers() {
+        return stickers;
     }
 
     public String getRecipientName() {
@@ -115,6 +125,7 @@ public class Order {
     @Override
     public String toString() {
         return "Order [id=" + id + ", status=" + status + ", photos=" + photos
+                + ", documents=" + documents + ", stickers=" + stickers
                 + ", recipientName=" + recipientName + ", address1=" + address1
                 + ", address2=" + address2 + ", addressTownOrCity="
                 + addressTownOrCity + ", stateOrCounty=" + stateOrCounty
@@ -130,6 +141,8 @@ public class Order {
         id = updated.id;
         status = updated.status;
         photos = updated.photos;
+        documents = updated.documents;
+        stickers = updated.stickers;
         recipientName = updated.recipientName;
         address1 = updated.address1;
         address2 = updated.address2;

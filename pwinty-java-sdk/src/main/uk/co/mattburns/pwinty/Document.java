@@ -1,6 +1,5 @@
 package uk.co.mattburns.pwinty;
 
-
 public class Document {
 
     private Integer id;
@@ -22,6 +21,12 @@ public class Document {
 
     public int getOrderId() {
         return orderId;
+    }
+
+    @Override
+    public String toString() {
+        return "Document [id=" + id + ", fileName=" + fileName + ", pages="
+                + pages + ", orderId=" + orderId + "]";
     }
 
 }
