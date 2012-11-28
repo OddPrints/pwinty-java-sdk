@@ -17,25 +17,31 @@ public class OrderUpdater {
     public static void main(String... args) throws MalformedURLException {
 
         // Create an updater:
-        // OrderUpdater updater = new OrderUpdater();
+        // OrderUpdater updater = new OrderUpdater(Environment.LIVE);
 
         // Four use cases:
-        // updater.display(orderId);
+        // updater.display(id);
         // updater.updateAddress(orderIdToUpdate);
         // updater.updateImageUrl(orderIdToUpdate, photoIdToUpdate, newUrl);
         // updater.addPhotoToOrder(orderIdToUpdate,newUrl,type,copies,sizing);
 
     }
 
+    private Environment environment;
+
+    public OrderUpdater(Environment environment) {
+        this.environment = environment;
+    }
+
     public void display(int orderId) {
-        Pwinty pwinty = getPwinty(Environment.SANDBOX);
+        Pwinty pwinty = getPwinty(environment);
         Order order = pwinty.getOrder(orderId);
 
         System.out.println(order);
     }
 
     public void updateAddress(int orderIdToUpdate) {
-        Pwinty pwinty = getPwinty(Environment.LIVE);
+        Pwinty pwinty = getPwinty(environment);
 
         System.out.println(pwinty.getOrder(orderIdToUpdate));
 
@@ -52,7 +58,7 @@ public class OrderUpdater {
 
     public void updateImageUrl(int orderIdToUpdate, int photoIdToUpdate,
             URL newUrl) {
-        Pwinty pwinty = getPwinty(Environment.LIVE);
+        Pwinty pwinty = getPwinty(environment);
         System.out.println(pwinty.getOrder(orderIdToUpdate));
 
         Order order = pwinty.getOrder(orderIdToUpdate);
@@ -75,7 +81,7 @@ public class OrderUpdater {
 
     public void addPhotoToOrder(int orderIdToUpdate, URL newUrl, Type type,
             int copies, Sizing sizing) {
-        Pwinty pwinty = getPwinty(Environment.LIVE);
+        Pwinty pwinty = getPwinty(environment);
         System.out.println(pwinty.getOrder(orderIdToUpdate));
 
         Order order = pwinty.getOrder(orderIdToUpdate);
