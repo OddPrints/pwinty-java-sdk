@@ -27,6 +27,10 @@ import uk.co.mattburns.pwinty.PwintyError;
 import uk.co.mattburns.pwinty.Sticker;
 import uk.co.mattburns.pwinty.SubmissionStatus;
 import uk.co.mattburns.pwinty.SubmissionStatus.GeneralError;
+import uk.co.mattburns.pwinty.gson.TypeDeserializer;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class OrderTest {
 
@@ -321,5 +325,15 @@ public class OrderTest {
         } catch (PwintyError e) {
             assertEquals(401, e.getCode());
         }
+    }
+
+    @Test
+    public void can_serialize_json_order_photo_type() {
+        String json = "{\"id\":1,\"address1\":\"1 street,\",\"address2\":\"blah,\",\"postalOrZipCode\":\"peecode\",\"country\":\"GB\",\"addressTownOrCity\":\"bristol.\",\"recipientName\":\"matt burns\",\"textOnReverse\":null,\"stateOrCounty\":\"Bristol.\",\"status\":\"NotYetSubmitted\",\"payment\":null,\"paymentUrl\":null,\"photos\":[{\"id\":123,\"type\":\"4x18\",\"url\":\"http://www.g.com\",\"status\":\"Ok\",\"copies\":1,\"sizing\":\"Crop\",\"orderId\":1,\"price\":null}],\"documents\":[],\"stickers\":[{\"id\":456,\"orderId\":1,\"fileName\":\"sticker.jpg\"}]}";
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(Type.class, new TypeDeserializer());
+        Gson gson = gsonBuilder.create();
+        Order order = gson.fromJson(json, Order.class);
+        assertEquals(Type._4x18, order.getPhotos().get(0).getType());
     }
 }

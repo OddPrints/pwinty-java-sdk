@@ -12,8 +12,11 @@ import javax.ws.rs.core.MediaType;
 
 import uk.co.mattburns.pwinty.Order.Status;
 import uk.co.mattburns.pwinty.Photo.Sizing;
+import uk.co.mattburns.pwinty.Photo.Type;
+import uk.co.mattburns.pwinty.gson.TypeDeserializer;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -107,7 +110,7 @@ public class Pwinty {
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .header("X-Pwinty-MerchantId", merchantId)
                 .header("X-Pwinty-REST-API-Key", apiKey).get(String.class);
-        Order[] orders = new Gson().fromJson(ordersJSON, Order[].class);
+        Order[] orders = createGson().fromJson(ordersJSON, Order[].class);
 
         for (Order order : orders) {
             order.setPwinty(this);
@@ -151,6 +154,12 @@ public class Pwinty {
                 .put(ClientResponse.class, form);
 
         return createReponse(response, Order.class);
+    }
+
+    Gson createGson() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(Type.class, new TypeDeserializer());
+        return gsonBuilder.create();
     }
 
     SubmissionStatus getSubmissionStatus(int orderId) {
@@ -391,7 +400,8 @@ public class Pwinty {
 
     private <T> T createReponse(ClientResponse response, Class<T> type) {
         throwIfBad(response);
-        return new Gson().fromJson(response.getEntity(String.class), type);
+        Gson gson = createGson();
+        return gson.fromJson(response.getEntity(String.class), type);
     }
 
     private void throwIfBad(ClientResponse response) {
@@ -401,7 +411,7 @@ public class Pwinty {
     }
 
     private PwintyError toError(ClientResponse response) {
-        PwintyError error = new Gson().fromJson(
+        PwintyError error = createGson().fromJson(
                 response.getEntity(String.class), PwintyError.class);
         if (error == null) {
             error = new PwintyError();

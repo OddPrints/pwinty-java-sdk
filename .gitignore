@@ -1,4 +1,6 @@
 *~
+*.DS_Store
+pwinty-java-sdk/.ant-targets-build.xml
 pwinty-java-sdk/bin
 pwinty-java-sdk/ant-bin
 pwinty-java-sdk/dist

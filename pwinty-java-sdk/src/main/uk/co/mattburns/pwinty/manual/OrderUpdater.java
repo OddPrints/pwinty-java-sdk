@@ -99,7 +99,7 @@ public class OrderUpdater {
         }
 
         return new Pwinty(env, props.getProperty("PWINTY_MERCHANT_ID"),
-                props.getProperty("PWINTY_MERCHANT_KEY"));
+                props.getProperty("PWINTY_MERCHANT_KEY"), System.out);
     }
 
 }
