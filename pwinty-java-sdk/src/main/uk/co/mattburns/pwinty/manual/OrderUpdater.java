@@ -1,7 +1,9 @@
 package uk.co.mattburns.pwinty.manual;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Properties;
 
@@ -24,7 +26,6 @@ public class OrderUpdater {
         // updater.updateAddress(orderIdToUpdate);
         // updater.updateImageUrl(orderIdToUpdate, photoIdToUpdate, newUrl);
         // updater.addPhotoToOrder(orderIdToUpdate,newUrl,type,copies,sizing);
-
     }
 
     private Environment environment;
@@ -53,7 +54,33 @@ public class OrderUpdater {
         order.setStateOrCounty("");
         order.setPostalOrZipCode("");
         order.setCountry("");
+    }
 
+    public void decodeAddress(int orderIdToUpdate) {
+        Pwinty pwinty = getPwinty(environment);
+
+        System.out.println(pwinty.getOrder(orderIdToUpdate));
+
+        Order order = pwinty.getOrder(orderIdToUpdate);
+        order.setRecipientName(decode(order.getRecipientName()));
+        order.setAddress1(decode(order.getAddress1()));
+        order.setAddress2(decode(order.getAddress2()));
+        order.setAddressTownOrCity(decode(order.getAddressTownOrCity()));
+        order.setStateOrCounty(decode(order.getStateOrCounty()));
+        order.setPostalOrZipCode(decode(order.getPostalOrZipCode()));
+        order.setCountry(decode(order.getCountry()));
+    }
+
+    private String decode(String str) {
+        if (str != null) {
+            try {
+                return URLDecoder.decode(str, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            return str;
+        }
     }
 
     public void updateImageUrl(int orderIdToUpdate, int photoIdToUpdate,
