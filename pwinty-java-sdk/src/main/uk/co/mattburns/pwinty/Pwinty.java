@@ -276,6 +276,7 @@ public class Pwinty {
         throwIfBad(response);
     }
 
+    @Deprecated
     Document addDocumentToOrder(int orderId, String filename, File document) {
 
         @SuppressWarnings("resource")
@@ -296,6 +297,7 @@ public class Pwinty {
         return createReponse(response, Document.class);
     }
 
+    @Deprecated
     public Document getDocument(int documentId) {
         ClientResponse response = webResource.path("Documents")
                 .queryParam("id", "" + documentId)
@@ -322,6 +324,7 @@ public class Pwinty {
         throwIfBad(response);
     }
 
+    @Deprecated
     Sticker addStickerToOrder(int orderId, String filename, File sticker) {
         @SuppressWarnings("resource")
         FormDataMultiPart form = new FormDataMultiPart().field("fileName",
@@ -341,6 +344,7 @@ public class Pwinty {
         return createReponse(response, Sticker.class);
     }
 
+    @Deprecated
     Sticker addStickerToOrder(int orderId, String filename, InputStream sticker) {
         @SuppressWarnings("resource")
         FormDataMultiPart form = new FormDataMultiPart().field("fileName",
@@ -360,6 +364,7 @@ public class Pwinty {
         return createReponse(response, Sticker.class);
     }
 
+    @Deprecated
     public Sticker getSticker(int stickerId) {
         ClientResponse response = webResource.path("Stickers")
                 .queryParam("id", "" + stickerId)

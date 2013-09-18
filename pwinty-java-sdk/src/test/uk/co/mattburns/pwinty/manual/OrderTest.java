@@ -32,6 +32,7 @@ import uk.co.mattburns.pwinty.gson.TypeDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+@SuppressWarnings("deprecation")
 public class OrderTest {
 
     // Enter keys here to runs the tests
@@ -291,6 +292,7 @@ public class OrderTest {
     }
 
     @Test
+    @Deprecated
     public void can_add_and_get_and_delete_document() throws URISyntaxException {
         Order order = new Order(pwinty);
 
@@ -305,6 +307,7 @@ public class OrderTest {
     }
 
     @Test
+    @Deprecated
     public void can_add_and_get_and_delete_sticker() throws URISyntaxException {
         Order order = new Order(pwinty);
 

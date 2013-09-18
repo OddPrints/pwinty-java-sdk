@@ -44,6 +44,12 @@ if (order.getSubmissionStatus().isValid()) {
 ```
 
 
+Download
+--------
+
+Just add the jar to your project. You can find the jar in the [dist directory]
+(https://github.com/mattburns/pwinty-java-sdk/tree/master/pwinty-java-sdk/dist)
+
 
 Error Handling
 --------------
@@ -63,7 +69,9 @@ try {
 Dependencies
 ------------
 
-I have bundled up the Jars you need into pwinty-sdk-with-dependencies-*.zip. If you prefer to manage them yourself, you can see which jars you need in the [lib directory]
+I have bundled up the Jars you need into pwinty-sdk-with-dependencies-*.zip which you can find in the [dist directory]
+(https://github.com/mattburns/pwinty-java-sdk/tree/master/pwinty-java-sdk/dist)
+. If you prefer to manage them yourself, you can see which jars you need in the [lib directory]
 (https://github.com/mattburns/pwinty-java-sdk/tree/master/pwinty-java-sdk/lib)
 
 

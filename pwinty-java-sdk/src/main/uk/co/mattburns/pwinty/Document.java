@@ -1,5 +1,6 @@
 package uk.co.mattburns.pwinty;
 
+@Deprecated
 public class Document {
 
     private Integer id;

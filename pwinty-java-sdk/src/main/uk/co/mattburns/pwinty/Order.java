@@ -13,7 +13,9 @@ public class Order {
     private int id;
     private Status status;
     private List<Photo> photos = new ArrayList<Photo>();
+    @Deprecated
     private List<Document> documents = new ArrayList<Document>();
+    @Deprecated
     private List<Sticker> stickers = new ArrayList<Sticker>();
     private String recipientName;
     private String address1;
@@ -51,10 +53,12 @@ public class Order {
         return photos;
     }
 
+    @Deprecated
     public List<Document> getDocuments() {
         return documents;
     }
 
+    @Deprecated
     public List<Sticker> getStickers() {
         return stickers;
     }
@@ -188,6 +192,7 @@ public class Order {
         overwriteThisOrderWithGivenOrder(pwinty.getOrder(id));
     }
 
+    @Deprecated
     public Document addDocument(String filename, File document) {
         Document addedDocument = pwinty.addDocumentToOrder(id, filename,
                 document);
@@ -195,23 +200,27 @@ public class Order {
         return addedDocument;
     }
 
+    @Deprecated
     public void deleteDocument(Document document) {
         pwinty.deleteDocument(document.getId());
         refreshOrder();
     }
 
+    @Deprecated
     public Sticker addSticker(String filename, File document) {
         Sticker addedSticker = pwinty.addStickerToOrder(id, filename, document);
         refreshOrder();
         return addedSticker;
     }
 
+    @Deprecated
     public Sticker addSticker(String filename, InputStream stream) {
         Sticker addedSticker = pwinty.addStickerToOrder(id, filename, stream);
         refreshOrder();
         return addedSticker;
     }
 
+    @Deprecated
     public void deleteSticker(Sticker sticker) {
         pwinty.deleteSticker(sticker.getId());
         refreshOrder();

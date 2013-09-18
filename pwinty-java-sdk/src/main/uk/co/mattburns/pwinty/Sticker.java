@@ -1,5 +1,6 @@
 package uk.co.mattburns.pwinty;
 
+@Deprecated
 public class Sticker {
 
     private Integer id;
