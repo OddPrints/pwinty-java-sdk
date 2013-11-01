@@ -1,31 +1,31 @@
-package uk.co.mattburns.pwinty;
+package uk.co.mattburns.pwinty.v2;
 
 @SuppressWarnings("serial")
 public class PwintyError extends RuntimeException {
-    private String error;
+    private String errorMessage;
     private int code;
-
+    
     public PwintyError() {
     }
-
-    public PwintyError(String error, int code) {
-        this.error = error;
+    
+    public PwintyError(String errorMessage, int code) {
+        this.errorMessage = errorMessage;
         this.code = code;
     }
-
-    public String getError() {
-        return error;
+    
+    public String getErrorMessage() {
+        return errorMessage;
     }
-
+    
     public int getCode() {
         return code;
     }
-
+    
     public void setCode(int code) {
         this.code = code;
     }
-
+    
     public String getMessage() {
-        return code + (error == null ? "" : ": " + error);
+        return code + (errorMessage == null ? "" : ": " + errorMessage);
     }
 }

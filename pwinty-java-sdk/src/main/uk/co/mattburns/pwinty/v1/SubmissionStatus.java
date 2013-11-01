@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty;
+package uk.co.mattburns.pwinty.v1;
 
 import java.util.List;
 

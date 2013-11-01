@@ -1,11 +1,10 @@
-package uk.co.mattburns.pwinty;
+package uk.co.mattburns.pwinty.v1;
 
 @Deprecated
-public class Document {
+public class Sticker {
 
     private Integer id;
     private String fileName;
-    private int pages;
     private int orderId;
 
     public Integer getId() {
@@ -16,18 +15,14 @@ public class Document {
         return fileName;
     }
 
-    public int getPages() {
-        return pages;
-    }
-
     public int getOrderId() {
         return orderId;
     }
 
     @Override
     public String toString() {
-        return "Document [id=" + id + ", fileName=" + fileName + ", pages="
-                + pages + ", orderId=" + orderId + "]";
+        return "Sticker [id=" + id + ", fileName=" + fileName + ", orderId="
+                + orderId + "]";
     }
 
 }

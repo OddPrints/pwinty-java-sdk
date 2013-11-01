@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty;
+package uk.co.mattburns.pwinty.v2;
 
 import java.net.URL;
 

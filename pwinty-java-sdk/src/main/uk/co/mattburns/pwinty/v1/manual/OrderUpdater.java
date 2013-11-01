@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.manual;
+package uk.co.mattburns.pwinty.v1.manual;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -7,12 +7,12 @@ import java.net.URLDecoder;
 import java.util.List;
 import java.util.Properties;
 
-import uk.co.mattburns.pwinty.Order;
-import uk.co.mattburns.pwinty.Photo;
-import uk.co.mattburns.pwinty.Photo.Sizing;
-import uk.co.mattburns.pwinty.Photo.Type;
-import uk.co.mattburns.pwinty.Pwinty;
-import uk.co.mattburns.pwinty.Pwinty.Environment;
+import uk.co.mattburns.pwinty.v1.Order;
+import uk.co.mattburns.pwinty.v1.Photo;
+import uk.co.mattburns.pwinty.v1.Pwinty;
+import uk.co.mattburns.pwinty.v1.Photo.Sizing;
+import uk.co.mattburns.pwinty.v1.Photo.Type;
+import uk.co.mattburns.pwinty.v1.Pwinty.Environment;
 
 public class OrderUpdater {
 

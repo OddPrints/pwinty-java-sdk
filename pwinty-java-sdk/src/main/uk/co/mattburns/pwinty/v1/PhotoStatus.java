@@ -1,9 +1,9 @@
-package uk.co.mattburns.pwinty;
+package uk.co.mattburns.pwinty.v1;
 
 import java.util.List;
 
-import uk.co.mattburns.pwinty.SubmissionStatus.PhotoError;
-import uk.co.mattburns.pwinty.SubmissionStatus.PhotoWarning;
+import uk.co.mattburns.pwinty.v1.SubmissionStatus.PhotoError;
+import uk.co.mattburns.pwinty.v1.SubmissionStatus.PhotoWarning;
 
 public class PhotoStatus {
     private int id;
