@@ -1,42 +1,57 @@
-package uk.co.mattburns.pwinty;
+package uk.co.mattburns.pwinty.v2;
 
 import java.io.File;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.co.mattburns.pwinty.Photo.Sizing;
+import uk.co.mattburns.pwinty.v2.Photo.Sizing;
 
 public class Order {
 
     private int id;
-    private Status status;
-    private List<Photo> photos = new ArrayList<Photo>();
-    @Deprecated
-    private List<Document> documents = new ArrayList<Document>();
-    @Deprecated
-    private List<Sticker> stickers = new ArrayList<Sticker>();
     private String recipientName;
     private String address1;
     private String address2;
     private String addressTownOrCity;
     private String stateOrCounty;
     private String postalOrZipCode;
-    private String country;
+    private CountryCode countryCode;
+    private CountryCode destinationCountryCode;
+    private int price;
+    private Status status;
+    private boolean useTrackedShipping;
+    private ShippingInfo shippingInfo;
+    private Payment payment;
+    private URL paymentUrl;
+    private QualityLevel qualityLevel;
+    private List<Photo> photos = new ArrayList<Photo>();
+    private String errorMessage;
 
     private Pwinty pwinty;
 
     public enum Status {
-        NotYetSubmitted, Submitted, Complete, Cancelled;
+        NotYetSubmitted, Submitted, AwaitingPayment, Complete, Cancelled;
+    }
+
+    public enum Payment {
+        InvoiceMe, InvoiceRecipient;
+    }
+
+    public enum QualityLevel {
+        Pro, Standard;
     }
 
     // needed for GSON
     Order() {
     }
 
-    public Order(Pwinty pwinty) {
+    public Order(Pwinty pwinty, CountryCode labCountry,
+            CountryCode destinationCountry, QualityLevel quality) {
         this.pwinty = pwinty;
+        this.countryCode = labCountry;
+        this.destinationCountryCode = destinationCountry;
+        this.qualityLevel = quality;
         Order order = pwinty.createOrder(this);
         overwriteThisOrderWithGivenOrder(order);
     }
@@ -51,16 +66,6 @@ public class Order {
 
     public List<Photo> getPhotos() {
         return photos;
-    }
-
-    @Deprecated
-    public List<Document> getDocuments() {
-        return documents;
-    }
-
-    @Deprecated
-    public List<Sticker> getStickers() {
-        return stickers;
     }
 
     public String getRecipientName() {
@@ -117,24 +122,55 @@ public class Order {
         overwriteThisOrderWithGivenOrder(pwinty.updateOrder(id, this));
     }
 
-    public String getCountry() {
-        return country;
+    public CountryCode getCountryCode() {
+        return countryCode;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public CountryCode getDestinationCountryCode() {
+        return destinationCountryCode;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public boolean isUseTrackedShipping() {
+        return useTrackedShipping;
+    }
+
+    public void setUseTrackedShipping(boolean useTrackedShipping) {
+        this.useTrackedShipping = useTrackedShipping;
         overwriteThisOrderWithGivenOrder(pwinty.updateOrder(id, this));
     }
 
-    @Override
-    public String toString() {
-        return "Order [id=" + id + ", status=" + status + ", photos=" + photos
-                + ", documents=" + documents + ", stickers=" + stickers
-                + ", recipientName=" + recipientName + ", address1=" + address1
-                + ", address2=" + address2 + ", addressTownOrCity="
-                + addressTownOrCity + ", stateOrCounty=" + stateOrCounty
-                + ", postalOrZipCode=" + postalOrZipCode + ", country="
-                + country + "]";
+    public ShippingInfo getShippingInfo() {
+        return shippingInfo;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+        overwriteThisOrderWithGivenOrder(pwinty.updateOrder(id, this));
+    }
+
+    public URL getPaymentUrl() {
+        return paymentUrl;
+    }
+
+    public QualityLevel getQualityLevel() {
+        return qualityLevel;
+    }
+
+    public void setQualityLevel(QualityLevel qualityLevel) {
+        this.qualityLevel = qualityLevel;
+        overwriteThisOrderWithGivenOrder(pwinty.updateOrder(id, this));
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
     private void refreshOrder() {
@@ -145,15 +181,20 @@ public class Order {
         id = updated.id;
         status = updated.status;
         photos = updated.photos;
-        documents = updated.documents;
-        stickers = updated.stickers;
         recipientName = updated.recipientName;
         address1 = updated.address1;
         address2 = updated.address2;
         addressTownOrCity = updated.addressTownOrCity;
         stateOrCounty = updated.stateOrCounty;
         postalOrZipCode = updated.postalOrZipCode;
-        country = updated.country;
+        useTrackedShipping = updated.useTrackedShipping;
+        payment = updated.payment;
+        qualityLevel = updated.qualityLevel;
+        // Country codes are immutable, but just in case...
+        if (countryCode != updated.countryCode
+                || destinationCountryCode != updated.destinationCountryCode) {
+            throw new RuntimeException("Cannot modify country code");
+        }
     }
 
     public void cancel() {
@@ -188,42 +229,8 @@ public class Order {
     }
 
     public void deletePhoto(Photo photo) {
-        pwinty.deletePhoto(photo.getId());
+        pwinty.deletePhoto(getId(), photo.getId());
         overwriteThisOrderWithGivenOrder(pwinty.getOrder(id));
-    }
-
-    @Deprecated
-    public Document addDocument(String filename, File document) {
-        Document addedDocument = pwinty.addDocumentToOrder(id, filename,
-                document);
-        refreshOrder();
-        return addedDocument;
-    }
-
-    @Deprecated
-    public void deleteDocument(Document document) {
-        pwinty.deleteDocument(document.getId());
-        refreshOrder();
-    }
-
-    @Deprecated
-    public Sticker addSticker(String filename, File document) {
-        Sticker addedSticker = pwinty.addStickerToOrder(id, filename, document);
-        refreshOrder();
-        return addedSticker;
-    }
-
-    @Deprecated
-    public Sticker addSticker(String filename, InputStream stream) {
-        Sticker addedSticker = pwinty.addStickerToOrder(id, filename, stream);
-        refreshOrder();
-        return addedSticker;
-    }
-
-    @Deprecated
-    public void deleteSticker(Sticker sticker) {
-        pwinty.deleteSticker(sticker.getId());
-        refreshOrder();
     }
 
     /**

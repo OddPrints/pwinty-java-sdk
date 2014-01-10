@@ -3,6 +3,8 @@ Pwinty-Java-SDK
 
 A java library for communicating with the [Pwinty API](http://www.pwinty.com/api.html).
 
+v2 of the API is supported. v1 is also available, but marked as deprecated and should no longer be used.
+
 
 
 Usage
@@ -11,26 +13,17 @@ Usage
 Everything is done with an Order object:
 
 ``` java
-import uk.co.mattburns.pwinty.Pwinty;
-import uk.co.mattburns.pwinty.Pwinty.Environment;
-import uk.co.mattburns.pwinty.model.Order;
-import uk.co.mattburns.pwinty.model.Photo.Sizing;
-import uk.co.mattburns.pwinty.model.Photo.Type;
-
-...
-
 // Choose Environment.LIVE for real orders
 Pwinty pwinty = new Pwinty(Environment.SANDBOX, "merchant-id", "api-key");
 
 // Contruct a new Order
-Order order = new Order(pwinty);
+Order order = new Order(pwinty, CountryCode.GB, CountryCode.GB, QualityLevel.Standard);
 order.setRecipientName("Matt Burns");
 order.setAddress1("123 Some Street");
 order.setAddress2("Some Village");
 order.setAddressTownOrCity("Bristol");
 order.setStateOrCounty("Bristol");
 order.setPostalOrZipCode("BS1 123");
-order.setCountry("UK");
 
 // Upload a photo
 File file = new File("kittens.jpg");
@@ -38,9 +31,10 @@ order.addPhoto(file, Type._4x6, 1, Sizing.Crop);
 
 // Check the Order is valid for submission
 if (order.getSubmissionStatus().isValid()) {
-	// Submit it for printing and posting
-	order.submit();
+    // Submit it for printing and posting
+    order.submit();
 }
+
 ```
 
 
@@ -87,4 +81,4 @@ If you want to play, you can build the jars from source using [ant](http://ant.a
 More
 ----
 
-See the [test code](https://github.com/mattburns/pwinty-java-sdk/tree/master/pwinty-java-sdk/src/test/uk/co/mattburns/pwinty/manual/OrderTest.java) for more usage examples.
+See the [test code](https://github.com/mattburns/pwinty-java-sdk/tree/master/pwinty-java-sdk/src/test/uk/co/mattburns/pwinty/v2/) for more usage examples.

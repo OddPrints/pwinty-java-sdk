@@ -1,7 +1,8 @@
-package uk.co.mattburns.pwinty;
+package uk.co.mattburns.pwinty.v1;
 
 import java.net.URL;
 
+@Deprecated
 public class Photo {
 
     private Integer id;
@@ -12,6 +13,7 @@ public class Photo {
     private Sizing sizing;
     private int orderId;
 
+    @Deprecated
     public enum Type {
         _4x4, _4x6, _5x7, _6x6, _8x8, _8x10, _8x12, _4x18, _P16x24, _P18x18, _P18x24, _P20x30, _P24x24, _P24x36;
 
@@ -21,10 +23,12 @@ public class Photo {
         }
     }
 
+    @Deprecated
     public enum Status {
         AwaitingUrlOrData, NotYetDownloaded, Ok, FileNotFoundAtUrl, Invalid;
     }
 
+    @Deprecated
     public enum Sizing {
         Crop, ShrinkToFit, ShrinkToExactFit;
     }

@@ -1,8 +1,9 @@
-package uk.co.mattburns.pwinty.manual;
+package uk.co.mattburns.pwinty.v2;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static uk.co.mattburns.pwinty.v2.CountryCode.GB;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -15,31 +16,22 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import uk.co.mattburns.pwinty.Document;
-import uk.co.mattburns.pwinty.Order;
-import uk.co.mattburns.pwinty.Order.Status;
-import uk.co.mattburns.pwinty.Photo;
-import uk.co.mattburns.pwinty.Photo.Sizing;
-import uk.co.mattburns.pwinty.Photo.Type;
-import uk.co.mattburns.pwinty.Pwinty;
-import uk.co.mattburns.pwinty.Pwinty.Environment;
-import uk.co.mattburns.pwinty.PwintyError;
-import uk.co.mattburns.pwinty.Sticker;
-import uk.co.mattburns.pwinty.SubmissionStatus;
-import uk.co.mattburns.pwinty.SubmissionStatus.GeneralError;
-import uk.co.mattburns.pwinty.gson.TypeDeserializer;
+import uk.co.mattburns.pwinty.v2.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2.Order.Status;
+import uk.co.mattburns.pwinty.v2.Photo.Sizing;
+import uk.co.mattburns.pwinty.v2.Photo.Type;
+import uk.co.mattburns.pwinty.v2.Pwinty.Environment;
+import uk.co.mattburns.pwinty.v2.SubmissionStatus.GeneralError;
+import uk.co.mattburns.pwinty.v2.gson.TypeDeserializer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-@SuppressWarnings("deprecation")
 public class OrderTest {
 
     // Enter keys here to runs the tests
     private static final String TEST_PHOTO_LOCAL = "/resources/test.jpg";
     private static final String TEST_PHOTO_URL = "http://farm4.staticflickr.com/3454/3837830342_dae0b932a9_b_d.jpg";
-    private static final String TEST_DOCUMENT_LOCAL = "/resources/test.pdf";
-    private static final String TEST_STICKER_LOCAL = TEST_PHOTO_LOCAL;
 
     private static Pwinty pwinty;
 
@@ -57,12 +49,12 @@ public class OrderTest {
 
         pwinty = new Pwinty(Environment.SANDBOX,
                 props.getProperty("PWINTY_MERCHANT_ID"),
-                props.getProperty("PWINTY_MERCHANT_KEY"));
+                props.getProperty("PWINTY_MERCHANT_KEY"), System.out);
     }
 
     @AfterClass
     public static void after() {
-        List<Order> fetchedOrders = pwinty.getOrders();
+        List<Order> fetchedOrders = pwinty.getOrders(100, 0);
         for (Order o : fetchedOrders) {
             if (o.getStatus() == Status.NotYetSubmitted) {
                 o.cancel();
@@ -72,7 +64,7 @@ public class OrderTest {
 
     @Test
     public void can_create_order() {
-        Order order = new Order(pwinty);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
         order.setRecipientName("bloggs");
         assertEquals("bloggs", order.getRecipientName());
         assertTrue(order.getId() > 0);
@@ -80,7 +72,7 @@ public class OrderTest {
 
     @Test
     public void can_create_and_fetch_order_id() {
-        Order order = new Order(pwinty);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
         order.setRecipientName("bloggs");
 
         int fetchedOrderId = order.getId();
@@ -102,19 +94,36 @@ public class OrderTest {
     }
 
     @Test
-    public void can_fetch_all_orders() {
-        List<Order> fetchedOrders = pwinty.getOrders();
-        int initialSize = fetchedOrders.size();
+    public void can_find_order_by_fetching_all_orders_recursively() {
+        int orderId = 8040; // just an old order I have... FIXME
+        boolean found = false;
+        int count = 100;
+        for (int offset = 0; !found; offset += count) {
+            List<Order> fetchedOrders = pwinty.getOrders(count, offset);
+            for (Order o1 : fetchedOrders) {
+                if (o1.getId() == orderId) {
+                    found = true;
+                    break;
+                }
+            }
+        }
 
-        new Order(pwinty);
+        assertTrue(found);
+    }
 
-        fetchedOrders = pwinty.getOrders();
-        assertEquals(initialSize + 1, fetchedOrders.size());
+    @Test
+    public void can_find_most_recent_order_by_fetching_1_order() {
+
+        Order o = new Order(pwinty, GB, GB, QualityLevel.Standard);
+        int orderId = o.getId();
+        Order fetched = pwinty.getOrders(1, 0).get(0);
+
+        assertEquals(orderId, fetched.getId());
     }
 
     @Test
     public void can_create_and_update_order() {
-        Order order = new Order(pwinty);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
         order.setRecipientName("bloggs");
 
         assertEquals("bloggs", order.getRecipientName());
@@ -130,7 +139,7 @@ public class OrderTest {
 
     @Test
     public void can_create_order_and_get_status() {
-        Order order = new Order(pwinty);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
 
         assertEquals(Status.NotYetSubmitted, order.getStatus());
 
@@ -145,11 +154,10 @@ public class OrderTest {
     @Test
     public void can_create_and_add_photo_and_submit_order()
             throws URISyntaxException {
-        Order order = new Order(pwinty);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
         order.setAddress1("ad1");
         order.setAddress2("ad2");
         order.setAddressTownOrCity("toc");
-        order.setCountry("uk");
         order.setPostalOrZipCode("zip");
         order.setRecipientName("bloggs");
         order.setStateOrCounty("bristol");
@@ -174,13 +182,45 @@ public class OrderTest {
     }
 
     @Test
+    public void cannot_ship_standard_internationally()
+            throws URISyntaxException {
+        try {
+            new Order(pwinty, GB, CountryCode.AD, QualityLevel.Standard);
+            fail("International shipping for standard prints from GB should not be allowed...");
+        } catch (PwintyError pe) {
+            assertTrue(pe.getErrorMessage().toLowerCase()
+                    .contains("no shipping rates available"));
+        }
+    }
+
+    @Test
+    public void cannot_order_standard_pano() throws URISyntaxException {
+        try {
+            Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
+
+            URL resource = OrderTest.class.getResource(TEST_PHOTO_LOCAL);
+            File file = new File(resource.toURI());
+
+            order.addPhoto(file, Type._4x18, 1, Sizing.Crop);
+            fail();
+        } catch (PwintyError pe) {
+            assertTrue(pe.getErrorMessage().toLowerCase()
+                    .contains("no item of type 4x18"));
+        }
+    }
+
+    @Test
+    public void can_ship_pro_internationally() throws URISyntaxException {
+        new Order(pwinty, GB, CountryCode.AD, QualityLevel.Pro);
+    }
+
+    @Test
     public void error_is_thrown_if_order_not_in_correct_state()
             throws URISyntaxException {
-        Order order = new Order(pwinty);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
         order.setAddress1("ad1");
         order.setAddress2("ad2");
         order.setAddressTownOrCity("toc");
-        order.setCountry("uk");
         order.setPostalOrZipCode("zip");
         order.setRecipientName("bloggs");
         order.setStateOrCounty("bristol");
@@ -202,11 +242,10 @@ public class OrderTest {
 
     @Test
     public void can_create_and_add_photo_by_url() throws MalformedURLException {
-        Order order = new Order(pwinty);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
         order.setAddress1("ad1");
         order.setAddress2("ad2");
         order.setAddressTownOrCity("toc");
-        order.setCountry("uk");
         order.setPostalOrZipCode("zip");
         order.setRecipientName("bloggs");
         order.setStateOrCounty("bristol");
@@ -226,14 +265,14 @@ public class OrderTest {
 
     @Test
     public void can_get_photo_details() throws MalformedURLException {
-        Order order = new Order(pwinty);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
 
         URL url = new URL(TEST_PHOTO_URL);
         order.addPhoto(url, Type._4x6, 2, Sizing.ShrinkToExactFit);
         SubmissionStatus submissionStatus = order.getSubmissionStatus();
         int photoId = submissionStatus.getPhotos().get(0).getId();
 
-        Photo photo = pwinty.getPhoto(photoId);
+        Photo photo = pwinty.getPhoto(order.getId(), photoId);
         assertEquals(2, photo.getCopies());
         assertEquals(Photo.Sizing.ShrinkToExactFit, photo.getSizing());
 
@@ -241,7 +280,7 @@ public class OrderTest {
 
     @Test
     public void can_delete_photo_from_order() throws MalformedURLException {
-        Order order = new Order(pwinty);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
 
         URL url = new URL(TEST_PHOTO_URL);
         order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
@@ -257,7 +296,7 @@ public class OrderTest {
 
     @Test
     public void can_cancel_order() throws URISyntaxException {
-        Order order = new Order(pwinty);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
 
         int id = order.getId();
 
@@ -268,11 +307,10 @@ public class OrderTest {
 
     @Test
     public void cannot_cancel_submitted_order() throws URISyntaxException {
-        Order order = new Order(pwinty);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
         order.setAddress1("ad1");
         order.setAddress2("ad2");
         order.setAddressTownOrCity("toc");
-        order.setCountry("uk");
         order.setPostalOrZipCode("zip");
         order.setRecipientName("bloggs");
         order.setStateOrCounty("bristol");
@@ -292,38 +330,10 @@ public class OrderTest {
     }
 
     @Test
-    @Deprecated
-    public void can_add_and_get_and_delete_document() throws URISyntaxException {
-        Order order = new Order(pwinty);
-
-        URL resource = OrderTest.class.getResource(TEST_DOCUMENT_LOCAL);
-        File file = new File(resource.toURI());
-
-        Document document = order.addDocument("test.pdf", file);
-        document = pwinty.getDocument(document.getId());
-        assertEquals(1, document.getPages());
-
-        order.deleteDocument(document);
-    }
-
-    @Test
-    @Deprecated
-    public void can_add_and_get_and_delete_sticker() throws URISyntaxException {
-        Order order = new Order(pwinty);
-
-        URL resource = OrderTest.class.getResource(TEST_STICKER_LOCAL);
-        File file = new File(resource.toURI());
-
-        Sticker sticker = order.addSticker("test.jpg", file);
-        sticker = pwinty.getSticker(sticker.getId());
-        order.deleteSticker(sticker);
-    }
-
-    @Test
     public void error_with_bad_api_keys() {
         Pwinty unauthorizedPwinty = new Pwinty(Environment.SANDBOX, "", "");
         try {
-            new Order(unauthorizedPwinty);
+            new Order(unauthorizedPwinty, GB, GB, QualityLevel.Standard);
             fail("Should have thrown");
         } catch (PwintyError e) {
             assertEquals(401, e.getCode());

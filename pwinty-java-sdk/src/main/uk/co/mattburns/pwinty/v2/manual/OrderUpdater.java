@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.manual;
+package uk.co.mattburns.pwinty.v2.manual;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -7,17 +7,16 @@ import java.net.URLDecoder;
 import java.util.List;
 import java.util.Properties;
 
-import uk.co.mattburns.pwinty.Order;
-import uk.co.mattburns.pwinty.Photo;
-import uk.co.mattburns.pwinty.Photo.Sizing;
-import uk.co.mattburns.pwinty.Photo.Type;
-import uk.co.mattburns.pwinty.Pwinty;
-import uk.co.mattburns.pwinty.Pwinty.Environment;
+import uk.co.mattburns.pwinty.v2.Order;
+import uk.co.mattburns.pwinty.v2.Photo;
+import uk.co.mattburns.pwinty.v2.Photo.Sizing;
+import uk.co.mattburns.pwinty.v2.Photo.Type;
+import uk.co.mattburns.pwinty.v2.Pwinty;
+import uk.co.mattburns.pwinty.v2.Pwinty.Environment;
 
 public class OrderUpdater {
 
     public static void main(String... args) throws MalformedURLException {
-
         // Create an updater:
         // OrderUpdater updater = new OrderUpdater(Environment.LIVE);
 
@@ -53,7 +52,6 @@ public class OrderUpdater {
         order.setAddressTownOrCity("");
         order.setStateOrCounty("");
         order.setPostalOrZipCode("");
-        order.setCountry("");
     }
 
     public void decodeAddress(int orderIdToUpdate) {
@@ -68,7 +66,6 @@ public class OrderUpdater {
         order.setAddressTownOrCity(decode(order.getAddressTownOrCity()));
         order.setStateOrCounty(decode(order.getStateOrCounty()));
         order.setPostalOrZipCode(decode(order.getPostalOrZipCode()));
-        order.setCountry(decode(order.getCountry()));
     }
 
     private String decode(String str) {

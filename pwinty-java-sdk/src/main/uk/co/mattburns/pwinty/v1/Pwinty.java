@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty;
+package uk.co.mattburns.pwinty.v1;
 
 import java.io.File;
 import java.io.InputStream;
@@ -10,10 +10,10 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.core.MediaType;
 
-import uk.co.mattburns.pwinty.Order.Status;
-import uk.co.mattburns.pwinty.Photo.Sizing;
-import uk.co.mattburns.pwinty.Photo.Type;
-import uk.co.mattburns.pwinty.gson.TypeDeserializer;
+import uk.co.mattburns.pwinty.v1.Order.Status;
+import uk.co.mattburns.pwinty.v1.Photo.Sizing;
+import uk.co.mattburns.pwinty.v1.Photo.Type;
+import uk.co.mattburns.pwinty.v1.gson.TypeDeserializer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,6 +26,7 @@ import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
 import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
+@Deprecated
 public class Pwinty {
 
     private String merchantId;
@@ -425,6 +426,7 @@ public class Pwinty {
         return error;
     }
 
+    @Deprecated
     public enum Environment {
         LIVE("https://api.pwinty.com"), SANDBOX("https://sandbox.pwinty.com");
 
