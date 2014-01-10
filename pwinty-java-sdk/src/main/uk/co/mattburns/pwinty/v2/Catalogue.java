@@ -1,0 +1,72 @@
+package uk.co.mattburns.pwinty.v2;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import uk.co.mattburns.pwinty.v2.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2.Photo.Type;
+
+public class Catalogue {
+
+    private String country;
+    private CountryCode countryCode;
+
+    private QualityLevel qualityLevel;
+    private List<CatalogueItem> items;
+    private List<CatalogueShippingRate> shippingRates;
+
+    public Catalogue() {
+        super();
+    }
+
+    public CountryCode getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(CountryCode countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public QualityLevel getQualityLevel() {
+        return qualityLevel;
+    }
+
+    public void setQualityLevel(QualityLevel qualityLevel) {
+        this.qualityLevel = qualityLevel;
+    }
+
+    public List<CatalogueItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<CatalogueItem> items) {
+        this.items = items;
+    }
+
+    public List<CatalogueShippingRate> getShippingRates() {
+        return shippingRates;
+    }
+
+    public void setShippingRates(List<CatalogueShippingRate> shippingRates) {
+        this.shippingRates = shippingRates;
+    }
+
+    public boolean containsType(Type type) {
+        Set<Type> availablePrintSizes = new HashSet<Type>();
+        for (CatalogueItem item : getItems()) {
+            availablePrintSizes.add(item.getType());
+        }
+
+        return availablePrintSizes.contains(type);
+    }
+
+}

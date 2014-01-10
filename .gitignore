@@ -1,8 +1,9 @@
 *~
 *.DS_Store
+*.swp
 pwinty-java-sdk/.ant-targets-build.xml
 pwinty-java-sdk/bin
 pwinty-java-sdk/ant-bin
 pwinty-java-sdk/test-bin
 pwinty-java-sdk/test-results
-pwinty-java-sdk/src/test/uk/co/mattburns/pwinty/manual/test-settings.properties
+*test-settings.properties

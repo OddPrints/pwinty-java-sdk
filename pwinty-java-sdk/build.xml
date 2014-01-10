@@ -10,7 +10,7 @@
     <property name="test-bin" location="test-bin" />
     <property name="test-bin" location="test-bin" />
     <property name="dist-name" value="dist/pwinty-java-sdk" />
-    <property name="dist-version" value="1.6" />
+    <property name="dist-version" value="2.0" />
     <property name="results" location="test-results" />
 
     <path id="classpath">

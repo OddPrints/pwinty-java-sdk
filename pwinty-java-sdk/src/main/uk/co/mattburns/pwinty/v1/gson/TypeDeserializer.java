@@ -7,6 +7,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
+@Deprecated
 public class TypeDeserializer implements JsonDeserializer<Type> {
     @Override
     public Type deserialize(JsonElement json, java.lang.reflect.Type arg1,

@@ -9,11 +9,12 @@ import java.util.Properties;
 
 import uk.co.mattburns.pwinty.v1.Order;
 import uk.co.mattburns.pwinty.v1.Photo;
-import uk.co.mattburns.pwinty.v1.Pwinty;
 import uk.co.mattburns.pwinty.v1.Photo.Sizing;
 import uk.co.mattburns.pwinty.v1.Photo.Type;
+import uk.co.mattburns.pwinty.v1.Pwinty;
 import uk.co.mattburns.pwinty.v1.Pwinty.Environment;
 
+@Deprecated
 public class OrderUpdater {
 
     public static void main(String... args) throws MalformedURLException {
@@ -25,7 +26,9 @@ public class OrderUpdater {
         // updater.display(id);
         // updater.updateAddress(orderIdToUpdate);
         // updater.updateImageUrl(orderIdToUpdate, photoIdToUpdate, newUrl);
-        // updater.addPhotoToOrder(orderIdToUpdate,newUrl,type,copies,sizing);
+        // updater.addPhotoToOrder(orderIdToUpdate, newUrl, type, copies,
+        // sizing);
+        // updater.removePhotoFromOrder(orderIdToUpdate, photoIdToDelete);
     }
 
     private Environment environment;
@@ -104,6 +107,20 @@ public class OrderUpdater {
         }
 
         order.addPhoto(newUrl, type, copies, sizing);
+    }
+
+    public void removePhotoFromOrder(int orderIdToUpdate, int photoIdToDelete) {
+        Pwinty pwinty = getPwinty(environment);
+        System.out.println(pwinty.getOrder(orderIdToUpdate));
+
+        Order order = pwinty.getOrder(orderIdToUpdate);
+        List<Photo> photos = order.getPhotos();
+
+        for (Photo photo : photos) {
+            if (photo.getId() == photoIdToDelete) {
+                order.deletePhoto(photo);
+            }
+        }
     }
 
     public void addPhotoToOrder(int orderIdToUpdate, URL newUrl, Type type,

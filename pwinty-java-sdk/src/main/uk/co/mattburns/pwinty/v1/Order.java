@@ -8,6 +8,7 @@ import java.util.List;
 
 import uk.co.mattburns.pwinty.v1.Photo.Sizing;
 
+@Deprecated
 public class Order {
 
     private int id;
@@ -27,6 +28,7 @@ public class Order {
 
     private Pwinty pwinty;
 
+    @Deprecated
     public enum Status {
         NotYetSubmitted, Submitted, Complete, Cancelled;
     }

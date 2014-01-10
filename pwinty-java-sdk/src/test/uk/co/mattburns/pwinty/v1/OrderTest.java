@@ -15,13 +15,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import uk.co.mattburns.pwinty.v1.Document;
-import uk.co.mattburns.pwinty.v1.Order;
-import uk.co.mattburns.pwinty.v1.Photo;
-import uk.co.mattburns.pwinty.v1.Pwinty;
-import uk.co.mattburns.pwinty.v1.PwintyError;
-import uk.co.mattburns.pwinty.v1.Sticker;
-import uk.co.mattburns.pwinty.v1.SubmissionStatus;
 import uk.co.mattburns.pwinty.v1.Order.Status;
 import uk.co.mattburns.pwinty.v1.Photo.Sizing;
 import uk.co.mattburns.pwinty.v1.Photo.Type;
@@ -32,7 +25,7 @@ import uk.co.mattburns.pwinty.v1.gson.TypeDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-@SuppressWarnings("deprecation")
+@Deprecated
 public class OrderTest {
 
     // Enter keys here to runs the tests
@@ -57,7 +50,7 @@ public class OrderTest {
 
         pwinty = new Pwinty(Environment.SANDBOX,
                 props.getProperty("PWINTY_MERCHANT_ID"),
-                props.getProperty("PWINTY_MERCHANT_KEY"));
+                props.getProperty("PWINTY_MERCHANT_KEY"), System.out);
     }
 
     @AfterClass

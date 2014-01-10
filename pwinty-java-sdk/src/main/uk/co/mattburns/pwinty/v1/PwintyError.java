@@ -1,6 +1,7 @@
 package uk.co.mattburns.pwinty.v1;
 
 @SuppressWarnings("serial")
+@Deprecated
 public class PwintyError extends RuntimeException {
     private String error;
     private int code;

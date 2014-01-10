@@ -26,6 +26,7 @@ import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
 import com.sun.jersey.multipart.file.StreamDataBodyPart;
 
+@Deprecated
 public class Pwinty {
 
     private String merchantId;
@@ -425,6 +426,7 @@ public class Pwinty {
         return error;
     }
 
+    @Deprecated
     public enum Environment {
         LIVE("https://api.pwinty.com"), SANDBOX("https://sandbox.pwinty.com");
 
