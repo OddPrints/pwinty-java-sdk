@@ -333,8 +333,12 @@ public class Pwinty {
     }
 
     private PwintyError toError(ClientResponse response) {
-        PwintyError error = createGson().fromJson(
-                response.getEntity(String.class), PwintyError.class);
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
+        Gson gson = gsonBuilder.create();
+
+        PwintyError error = gson.fromJson(response.getEntity(String.class),
+                PwintyError.class);
         if (error == null) {
             error = new PwintyError();
         }

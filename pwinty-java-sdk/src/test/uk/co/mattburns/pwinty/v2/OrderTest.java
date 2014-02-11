@@ -95,7 +95,7 @@ public class OrderTest {
 
     @Test
     public void can_find_order_by_fetching_all_orders_recursively() {
-        int orderId = 8040; // just an old order I have... FIXME
+        int orderId = 8466; // just an old order I have...
         boolean found = false;
         int count = 100;
         for (int offset = 0; !found; offset += count) {
@@ -105,6 +105,13 @@ public class OrderTest {
                     found = true;
                     break;
                 }
+            }
+            if (fetchedOrders.isEmpty()) {
+                fail("Couln't find Order "
+                        + orderId
+                        + ", no more orders to search. "
+                        + "I suggest you visit https://sandboxdashboard.pwinty.com/Account/Balance "
+                        + "to grab an old order number and set it at the top of this test.");
             }
         }
 
