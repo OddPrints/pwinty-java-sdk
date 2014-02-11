@@ -36,8 +36,8 @@ public class PwintyTest {
         }
 
         pwinty = new Pwinty(Environment.SANDBOX,
-                props.getProperty("PWINTY_MERCHANT_ID"),
-                props.getProperty("PWINTY_MERCHANT_KEY"), System.out);
+                props.getProperty("PWINTY_MERCHANT_ID_SANDBOX"),
+                props.getProperty("PWINTY_MERCHANT_KEY_SANDBOX"), System.out);
     }
 
     @Test

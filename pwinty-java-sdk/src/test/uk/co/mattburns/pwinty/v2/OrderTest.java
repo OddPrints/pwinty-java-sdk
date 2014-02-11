@@ -48,8 +48,8 @@ public class OrderTest {
         }
 
         pwinty = new Pwinty(Environment.SANDBOX,
-                props.getProperty("PWINTY_MERCHANT_ID"),
-                props.getProperty("PWINTY_MERCHANT_KEY"), System.out);
+                props.getProperty("PWINTY_MERCHANT_ID_SANDBOX"),
+                props.getProperty("PWINTY_MERCHANT_KEY_SANDBOX"), System.out);
     }
 
     @AfterClass
@@ -95,7 +95,7 @@ public class OrderTest {
 
     @Test
     public void can_find_order_by_fetching_all_orders_recursively() {
-        int orderId = 8466; // just an old order I have...
+        int orderId = 864; // just an old order I have...
         boolean found = false;
         int count = 100;
         for (int offset = 0; !found; offset += count) {

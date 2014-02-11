@@ -11,8 +11,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.Properties;
 
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import uk.co.mattburns.pwinty.v1.Order.Status;
@@ -49,18 +49,8 @@ public class OrderTest {
         }
 
         pwinty = new Pwinty(Environment.SANDBOX,
-                props.getProperty("PWINTY_MERCHANT_ID"),
-                props.getProperty("PWINTY_MERCHANT_KEY"), System.out);
-    }
-
-    @AfterClass
-    public static void after() {
-        List<Order> fetchedOrders = pwinty.getOrders();
-        for (Order o : fetchedOrders) {
-            if (o.getStatus() == Status.NotYetSubmitted) {
-                o.cancel();
-            }
-        }
+                props.getProperty("PWINTY_MERCHANT_ID_SANDBOX"),
+                props.getProperty("PWINTY_MERCHANT_KEY_SANDBOX"), System.out);
     }
 
     @Test
@@ -95,6 +85,7 @@ public class OrderTest {
     }
 
     @Test
+    @Ignore("Too slow and deprecated anyway")
     public void can_fetch_all_orders() {
         List<Order> fetchedOrders = pwinty.getOrders();
         int initialSize = fetchedOrders.size();
