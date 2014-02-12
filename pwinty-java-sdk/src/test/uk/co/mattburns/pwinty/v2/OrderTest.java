@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -355,5 +356,17 @@ public class OrderTest {
         Gson gson = gsonBuilder.create();
         Order order = gson.fromJson(json, Order.class);
         assertEquals(Type._4x18, order.getPhotos().get(0).getType());
+    }
+
+    @Test
+    public void can_add_50_photos_in_25_seconds() throws MalformedURLException {
+        long startTime = System.currentTimeMillis();
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
+
+        for (int i = 0; i < 50; i++) {
+            order.addPhoto(new URL(TEST_PHOTO_URL), Type._4x6, 1, Sizing.Crop);
+        }
+        long timeTaken = System.currentTimeMillis() - startTime;
+        Assert.assertTrue("Took " + timeTaken + "ms", timeTaken < 25000);
     }
 }

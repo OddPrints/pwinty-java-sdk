@@ -213,7 +213,7 @@ public class Order {
     public Photo addPhoto(File photo, Photo.Type type, int copies, Sizing sizing) {
         Photo addedPhoto = pwinty.addPhotoToOrder(id, photo, type, copies,
                 sizing);
-        refreshOrder();
+        getPhotos().add(addedPhoto);
         return addedPhoto;
     }
 
@@ -224,7 +224,7 @@ public class Order {
             Sizing sizing) {
         Photo addedPhoto = pwinty.addPhotoToOrder(id, photoUrl, type, copies,
                 sizing);
-        refreshOrder();
+        getPhotos().add(addedPhoto);
         return addedPhoto;
     }
 
