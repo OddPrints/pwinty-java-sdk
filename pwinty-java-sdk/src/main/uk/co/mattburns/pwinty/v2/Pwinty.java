@@ -3,6 +3,7 @@ package uk.co.mattburns.pwinty.v2;
 import java.io.File;
 import java.io.PrintStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -222,7 +223,7 @@ public class Pwinty {
         FormDataMultiPart form = new FormDataMultiPart()
                 .field("type", type.toString())
                 .field("sizing", sizing.toString())
-                .field("copies", "" + copies).field("orderId", "" + orderId);
+                .field("copies", "" + copies);
 
         if (photo != null) {
             form.bodyPart(new FileDataBodyPart("file", photo,
@@ -366,6 +367,57 @@ public class Pwinty {
         Catalogue catalogue = createGson().fromJson(catalogueJSON,
                 Catalogue.class);
 
+        removeUnrecognisedItems(catalogue);
+
         return catalogue;
+    }
+
+    /**
+     * Test if Pwinty have started offering new print sizes currently not
+     * hard-coded in the enum Photo.Type
+     * 
+     * @param countryCodes
+     *            countries to check (just an optimisation).
+     * @return true if there are new print sizes available.
+     */
+    protected boolean thereAreNewPhotoTypes(CountryCode... countryCodes) {
+        for (QualityLevel quality : QualityLevel.values()) {
+            for (CountryCode countryCode : countryCodes) {
+                String catalogueJSON = webResource
+                        .path("Catalogue/" + countryCode + "/"
+                                + quality.toString())
+                        .accept(MediaType.APPLICATION_JSON_TYPE)
+                        .header("X-Pwinty-MerchantId", merchantId)
+                        .header("X-Pwinty-REST-API-Key", apiKey)
+                        .get(String.class);
+                Catalogue catalogue = createGson().fromJson(catalogueJSON,
+                        Catalogue.class);
+                int rawCatalogueSize = catalogue.getItems().size();
+                removeUnrecognisedItems(catalogue);
+                if (rawCatalogueSize != catalogue.getItems().size()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Remove any items that aren't in our enum
+     * 
+     * @param catalogue
+     */
+    private void removeUnrecognisedItems(Catalogue catalogue) {
+        List<CatalogueItem> unrecognisedItems = new ArrayList<CatalogueItem>();
+        for (CatalogueItem item : catalogue.getItems()) {
+            try {
+                item.getType();
+            } catch (IllegalArgumentException iae) {
+                System.err
+                        .println("Unrecognised print size: " + item.getName());
+                unrecognisedItems.add(item);
+            }
+        }
+        catalogue.getItems().removeAll(unrecognisedItems);
     }
 }

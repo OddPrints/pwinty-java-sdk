@@ -111,6 +111,13 @@ public class PwintyTest {
     }
 
     @Test
+    public void can_silently_ignore_unrecognised_print_sizes() {
+        Catalogue catalogue = pwinty.getCatalogue(GB.getCountryCode(),
+                QualityLevel.Pro);
+        catalogue.containsType(Type._4x4); // This should always work
+    }
+
+    @Test
     public void can_fetch_all_catalogues() {
         Set<Photo.Type> availablePrintSizes = new HashSet<Photo.Type>();
         for (CatalogueItem item : pwinty.getCatalogue(GB.getCountryCode(),
@@ -143,5 +150,14 @@ public class PwintyTest {
         }
         assertTrue(availablePrintSizes.contains(Type._4x6));
         assertFalse(availablePrintSizes.contains(Type._4x18));
+    }
+
+    /**
+     * This test just forces us to keep the enum up to date.
+     */
+    @Test
+    public void all_available_print_types_are_in_enum() {
+        assertFalse(pwinty
+                .thereAreNewPhotoTypes(CountryCode.GB, CountryCode.US));
     }
 }

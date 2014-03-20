@@ -63,7 +63,17 @@ public class Catalogue {
     public boolean containsType(Type type) {
         Set<Type> availablePrintSizes = new HashSet<Type>();
         for (CatalogueItem item : getItems()) {
-            availablePrintSizes.add(item.getType());
+            Type parsedType = null;
+            try {
+                parsedType = item.getType();
+            } catch (IllegalArgumentException iae) {
+                // There Pwinty offer a type that is not yet in the enum...
+                System.err
+                        .println("Unrecognised print size: " + item.getName());
+            }
+            if (parsedType != null) {
+                availablePrintSizes.add(parsedType);
+            }
         }
 
         return availablePrintSizes.contains(type);

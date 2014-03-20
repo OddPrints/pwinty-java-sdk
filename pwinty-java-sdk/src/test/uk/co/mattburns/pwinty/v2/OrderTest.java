@@ -283,7 +283,6 @@ public class OrderTest {
         Photo photo = pwinty.getPhoto(order.getId(), photoId);
         assertEquals(2, photo.getCopies());
         assertEquals(Photo.Sizing.ShrinkToExactFit, photo.getSizing());
-
     }
 
     @Test
