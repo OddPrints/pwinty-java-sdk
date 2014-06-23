@@ -18,6 +18,7 @@ import uk.co.mattburns.pwinty.v2.Pwinty.Environment;
 
 public class PwintyTest {
 
+    private static final Country AU = new Country(CountryCode.AU);
     private static final Country GB = new Country(CountryCode.GB);
     private static final Country US = new Country(CountryCode.US);
 
@@ -111,6 +112,20 @@ public class PwintyTest {
     }
 
     @Test
+    public void can_fetch_oz_catalogue() {
+        Catalogue catalogue = pwinty.getCatalogue(AU.getCountryCode(),
+                QualityLevel.Standard);
+        assertEquals("AUSTRALIA", catalogue.getCountry());
+        assertEquals(AU.getCountryCode(), catalogue.getCountryCode());
+
+        Set<Photo.Type> availablePrintSizes = new HashSet<Photo.Type>();
+        for (CatalogueItem item : catalogue.getItems()) {
+            availablePrintSizes.add(item.getType());
+        }
+        assertTrue(availablePrintSizes.contains(Type._4x6));
+    }
+
+    @Test
     public void can_silently_ignore_unrecognised_print_sizes() {
         Catalogue catalogue = pwinty.getCatalogue(GB.getCountryCode(),
                 QualityLevel.Pro);
@@ -157,7 +172,6 @@ public class PwintyTest {
      */
     @Test
     public void all_available_print_types_are_in_enum() {
-        assertFalse(pwinty
-                .thereAreNewPhotoTypes(CountryCode.GB, CountryCode.US));
+        assertFalse(pwinty.thereAreNewPhotoTypes(CountryCode.values()));
     }
 }

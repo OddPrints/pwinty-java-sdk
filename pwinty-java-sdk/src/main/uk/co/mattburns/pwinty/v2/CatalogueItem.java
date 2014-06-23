@@ -6,8 +6,8 @@ public class CatalogueItem {
 
     private String name;
     private String description;
-    private int horizontalSize;
-    private int verticalSize;
+    private double horizontalSize;
+    private double verticalSize;
     private SizeUnits sizeUnits;
     private int priceGBP;
     private int priceUSD;
@@ -41,19 +41,19 @@ public class CatalogueItem {
         this.description = description;
     }
 
-    public int getHorizontalSize() {
+    public double getHorizontalSize() {
         return horizontalSize;
     }
 
-    public void setHorizontalSize(int horizontalSize) {
+    public void setHorizontalSize(double horizontalSize) {
         this.horizontalSize = horizontalSize;
     }
 
-    public int getVerticalSize() {
+    public double getVerticalSize() {
         return verticalSize;
     }
 
-    public void setVerticalSize(int verticalSize) {
+    public void setVerticalSize(double verticalSize) {
         this.verticalSize = verticalSize;
     }
 
