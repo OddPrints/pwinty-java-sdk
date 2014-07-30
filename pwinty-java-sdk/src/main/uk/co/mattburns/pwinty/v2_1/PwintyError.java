@@ -1,8 +1,7 @@
-package uk.co.mattburns.pwinty.v2;
+package uk.co.mattburns.pwinty.v2_1;
 
 import com.google.gson.annotations.Expose;
 
-@Deprecated
 @SuppressWarnings("serial")
 public class PwintyError extends RuntimeException {
     @Expose

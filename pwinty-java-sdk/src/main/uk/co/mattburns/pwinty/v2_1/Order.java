@@ -1,13 +1,12 @@
-package uk.co.mattburns.pwinty.v2;
+package uk.co.mattburns.pwinty.v2_1;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.co.mattburns.pwinty.v2.Photo.Sizing;
+import uk.co.mattburns.pwinty.v2_1.Photo.Sizing;
 
-@Deprecated
 public class Order {
 
     private int id;

@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2;
+package uk.co.mattburns.pwinty.v2_1;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -10,11 +10,11 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.core.MediaType;
 
-import uk.co.mattburns.pwinty.v2.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2.Order.Status;
-import uk.co.mattburns.pwinty.v2.Photo.Sizing;
-import uk.co.mattburns.pwinty.v2.Photo.Type;
-import uk.co.mattburns.pwinty.v2.gson.TypeDeserializer;
+import uk.co.mattburns.pwinty.v2_1.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2_1.Order.Status;
+import uk.co.mattburns.pwinty.v2_1.Photo.Sizing;
+import uk.co.mattburns.pwinty.v2_1.Photo.Type;
+import uk.co.mattburns.pwinty.v2_1.gson.TypeDeserializer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,7 +26,6 @@ import com.sun.jersey.api.representation.Form;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
 
-@Deprecated
 public class Pwinty {
 
     private String merchantId;
@@ -349,8 +348,8 @@ public class Pwinty {
     }
 
     public enum Environment {
-        LIVE("https://api.pwinty.com/v2"), SANDBOX(
-                "https://sandbox.pwinty.com/v2");
+        LIVE("https://api.pwinty.com/v2.1"), SANDBOX(
+                "https://sandbox.pwinty.com/v2.1");
 
         private String url;
 

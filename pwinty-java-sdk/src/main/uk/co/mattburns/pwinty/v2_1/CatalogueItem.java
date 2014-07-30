@@ -1,14 +1,15 @@
-package uk.co.mattburns.pwinty.v2;
+package uk.co.mattburns.pwinty.v2_1;
 
-import uk.co.mattburns.pwinty.v2.Photo.Type;
+import uk.co.mattburns.pwinty.v2_1.Photo.Type;
 
-@Deprecated
 public class CatalogueItem {
 
     private String name;
     private String description;
-    private double horizontalSize;
-    private double verticalSize;
+    private double imageHorizontalSize;
+    private double imageVerticalSize;
+    private double fullProductHorizontalSize;
+    private double fullProductVerticalSize;
     private SizeUnits sizeUnits;
     private int priceGBP;
     private int priceUSD;
@@ -42,20 +43,36 @@ public class CatalogueItem {
         this.description = description;
     }
 
-    public double getHorizontalSize() {
-        return horizontalSize;
+    public double getImageHorizontalSize() {
+        return imageHorizontalSize;
     }
 
-    public void setHorizontalSize(double horizontalSize) {
-        this.horizontalSize = horizontalSize;
+    public void setImageHorizontalSize(double imageHorizontalSize) {
+        this.imageHorizontalSize = imageHorizontalSize;
     }
 
-    public double getVerticalSize() {
-        return verticalSize;
+    public double getImageVerticalSize() {
+        return imageVerticalSize;
     }
 
-    public void setVerticalSize(double verticalSize) {
-        this.verticalSize = verticalSize;
+    public void setImageVerticalSize(double imageVerticalSize) {
+        this.imageVerticalSize = imageVerticalSize;
+    }
+
+    public double getFullProductHorizontalSize() {
+        return fullProductHorizontalSize;
+    }
+
+    public void setFullProductHorizontalSize(double fullProductHorizontalSize) {
+        this.fullProductHorizontalSize = fullProductHorizontalSize;
+    }
+
+    public double getFullProductVerticalSize() {
+        return fullProductVerticalSize;
+    }
+
+    public void setFullProductVerticalSize(double fullProductVerticalSize) {
+        this.fullProductVerticalSize = fullProductVerticalSize;
     }
 
     public SizeUnits getSizeUnits() {

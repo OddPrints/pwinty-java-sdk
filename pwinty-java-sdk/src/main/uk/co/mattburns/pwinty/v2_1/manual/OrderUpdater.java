@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2.manual;
+package uk.co.mattburns.pwinty.v2_1.manual;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -7,14 +7,13 @@ import java.net.URLDecoder;
 import java.util.List;
 import java.util.Properties;
 
-import uk.co.mattburns.pwinty.v2.Order;
-import uk.co.mattburns.pwinty.v2.Photo;
-import uk.co.mattburns.pwinty.v2.Photo.Sizing;
-import uk.co.mattburns.pwinty.v2.Photo.Type;
-import uk.co.mattburns.pwinty.v2.Pwinty;
-import uk.co.mattburns.pwinty.v2.Pwinty.Environment;
+import uk.co.mattburns.pwinty.v2_1.Order;
+import uk.co.mattburns.pwinty.v2_1.Photo;
+import uk.co.mattburns.pwinty.v2_1.Photo.Sizing;
+import uk.co.mattburns.pwinty.v2_1.Photo.Type;
+import uk.co.mattburns.pwinty.v2_1.Pwinty;
+import uk.co.mattburns.pwinty.v2_1.Pwinty.Environment;
 
-@Deprecated
 public class OrderUpdater {
 
     public static void main(String... args) throws MalformedURLException {

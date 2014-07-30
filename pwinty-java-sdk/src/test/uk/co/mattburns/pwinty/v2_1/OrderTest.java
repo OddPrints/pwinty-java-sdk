@@ -1,9 +1,9 @@
-package uk.co.mattburns.pwinty.v2;
+package uk.co.mattburns.pwinty.v2_1;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static uk.co.mattburns.pwinty.v2.CountryCode.GB;
+import static uk.co.mattburns.pwinty.v2_1.CountryCode.GB;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -17,18 +17,17 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import uk.co.mattburns.pwinty.v2.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2.Order.Status;
-import uk.co.mattburns.pwinty.v2.Photo.Sizing;
-import uk.co.mattburns.pwinty.v2.Photo.Type;
-import uk.co.mattburns.pwinty.v2.Pwinty.Environment;
-import uk.co.mattburns.pwinty.v2.SubmissionStatus.GeneralError;
-import uk.co.mattburns.pwinty.v2.gson.TypeDeserializer;
+import uk.co.mattburns.pwinty.v2_1.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2_1.Order.Status;
+import uk.co.mattburns.pwinty.v2_1.Photo.Sizing;
+import uk.co.mattburns.pwinty.v2_1.Photo.Type;
+import uk.co.mattburns.pwinty.v2_1.Pwinty.Environment;
+import uk.co.mattburns.pwinty.v2_1.SubmissionStatus.GeneralError;
+import uk.co.mattburns.pwinty.v2_1.gson.TypeDeserializer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-@Deprecated
 public class OrderTest {
 
     // Enter keys here to runs the tests

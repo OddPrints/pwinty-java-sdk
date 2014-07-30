@@ -1,13 +1,12 @@
-package uk.co.mattburns.pwinty.v2.gson;
+package uk.co.mattburns.pwinty.v2_1.gson;
 
-import uk.co.mattburns.pwinty.v2.Photo.Type;
+import uk.co.mattburns.pwinty.v2_1.Photo.Type;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
-@Deprecated
 public class TypeDeserializer implements JsonDeserializer<Type> {
     @Override
     public Type deserialize(JsonElement json, java.lang.reflect.Type arg1,

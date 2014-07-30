@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2;
+package uk.co.mattburns.pwinty.v2_1;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -12,11 +12,10 @@ import java.util.Set;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import uk.co.mattburns.pwinty.v2.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2.Photo.Type;
-import uk.co.mattburns.pwinty.v2.Pwinty.Environment;
+import uk.co.mattburns.pwinty.v2_1.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2_1.Photo.Type;
+import uk.co.mattburns.pwinty.v2_1.Pwinty.Environment;
 
-@Deprecated
 public class PwintyTest {
 
     private static final Country AU = new Country(CountryCode.AU);

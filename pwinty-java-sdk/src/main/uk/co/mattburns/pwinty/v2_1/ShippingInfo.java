@@ -1,9 +1,8 @@
-package uk.co.mattburns.pwinty.v2;
+package uk.co.mattburns.pwinty.v2_1;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-@Deprecated
 public class ShippingInfo {
     private boolean isTracked;
     private String trackingNumber;

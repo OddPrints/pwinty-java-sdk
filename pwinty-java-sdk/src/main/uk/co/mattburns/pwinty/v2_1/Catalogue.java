@@ -1,13 +1,12 @@
-package uk.co.mattburns.pwinty.v2;
+package uk.co.mattburns.pwinty.v2_1;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import uk.co.mattburns.pwinty.v2.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2.Photo.Type;
+import uk.co.mattburns.pwinty.v2_1.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2_1.Photo.Type;
 
-@Deprecated
 public class Catalogue {
 
     private String country;

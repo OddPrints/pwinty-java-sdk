@@ -1,6 +1,5 @@
-package uk.co.mattburns.pwinty.v2;
+package uk.co.mattburns.pwinty.v2_1;
 
-@Deprecated
 public class Country {
     private CountryCode countryCode;
     private Boolean hasProducts;

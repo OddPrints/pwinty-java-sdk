@@ -3,7 +3,7 @@ Pwinty-Java-SDK
 
 A java library for communicating with the [Pwinty API](http://www.pwinty.com/api.html).
 
-v2 of the API is supported. v1 is also available, but marked as deprecated and should no longer be used.
+v2.1 of the API is supported. v1 and v2 are also available, but marked as deprecated and should no longer be used.
 
 
 
@@ -90,6 +90,7 @@ echo PWINTY_MERCHANT_ID_SANDBOX=12345 > test-settings.properties
 echo PWINTY_MERCHANT_KEY_SANDBOX=12345 >> test-settings.properties
 cp test-settings.properties src/test/uk/co/mattburns/pwinty/v1/
 cp test-settings.properties src/test/uk/co/mattburns/pwinty/v2/
+cp test-settings.properties src/test/uk/co/mattburns/pwinty/v2_1/
 ant test
 ```
 
@@ -98,4 +99,4 @@ ant test
 More
 ----
 
-See the [test code](https://github.com/mattburns/pwinty-java-sdk/tree/master/pwinty-java-sdk/src/test/uk/co/mattburns/pwinty/v2/) for more usage examples.
+See the [test code](https://github.com/mattburns/pwinty-java-sdk/tree/master/pwinty-java-sdk/src/test/uk/co/mattburns/pwinty/v2_1/) for more usage examples.
