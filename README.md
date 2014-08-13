@@ -3,7 +3,7 @@ Pwinty-Java-SDK
 
 A java library for communicating with the [Pwinty API](http://www.pwinty.com/api.html).
 
-v2.1 of the API is supported. v1 and v2 are also available, but marked as deprecated and should no longer be used.
+Only v2.1 of the API is supported. If you want an older version, use an older build ;)
 
 
 
@@ -48,7 +48,7 @@ Just add the jar to your project. You can find the jar in the [dist directory]
 Error Handling
 --------------
 
-Any call to the API could throw a PwintyError which is an unchecked exception. It's up to you if you want to catch and handle it. See the [Pwinty API documentation](http://www.pwinty.com/api.html) for potential errors.
+Any call to the API could throw a PwintyError which is an unchecked exception. It's up to you if you want to catch and handle it. See the [Pwinty API documentation](http://www.pwinty.com/api) for potential errors.
 
 ``` java
 try {

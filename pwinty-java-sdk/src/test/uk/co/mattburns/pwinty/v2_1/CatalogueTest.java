@@ -115,4 +115,9 @@ public class CatalogueTest {
         }
         assertTrue("Couldn't find the item I wanted to test!", testedItem);
     }
+
+    @Test
+    public void photo_types_with_multiple_underscores_are_ok() {
+        assertEquals("10x15_cm", Photo.Type._10x15_cm.toString());
+    }
 }

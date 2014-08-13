@@ -52,6 +52,10 @@ public class Order {
         this.countryCode = labCountry;
         this.destinationCountryCode = destinationCountry;
         this.qualityLevel = quality;
+        if (destinationCountry == CountryCode.IE) {
+            this.postalOrZipCode = "-"; // default postcode to dash for IE.
+                                        // Pwinty's bug really...
+        }
         Order order = pwinty.createOrder(this);
         overwriteThisOrderWithGivenOrder(order);
     }

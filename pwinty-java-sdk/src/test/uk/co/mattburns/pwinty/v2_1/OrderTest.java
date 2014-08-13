@@ -15,6 +15,7 @@ import java.util.Properties;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import uk.co.mattburns.pwinty.v2_1.Order.QualityLevel;
@@ -190,6 +191,31 @@ public class OrderTest {
     }
 
     @Test
+    public void no_postcode_is_ok_for_IE() throws URISyntaxException,
+            MalformedURLException {
+        Order order = new Order(pwinty, CountryCode.IE, CountryCode.IE,
+                QualityLevel.Standard);
+        order.setAddress1("ad1");
+        order.setAddress2("ad2");
+        order.setAddressTownOrCity("toc");
+        order.setRecipientName("bloggs");
+        order.setStateOrCounty("somewhereInIreland");
+
+        assertEquals(Status.NotYetSubmitted, order.getStatus());
+        assertEquals("-", order.getPostalOrZipCode());
+
+        URL resource = OrderTest.class.getResource(TEST_PHOTO_LOCAL);
+        File file = new File(resource.toURI());
+
+        order.addPhoto(file, Type._10x15_cm, 1, Sizing.Crop);
+
+        SubmissionStatus submissionStatus = order.getSubmissionStatus();
+        assertEquals(
+                "SubmissionStatus is not valid: " + submissionStatus.toString(),
+                true, submissionStatus.isValid());
+    }
+
+    @Test
     public void cannot_ship_standard_internationally()
             throws URISyntaxException {
         try {
@@ -263,6 +289,30 @@ public class OrderTest {
         URL url = new URL(TEST_PHOTO_URL);
 
         order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
+
+        SubmissionStatus submissionStatus = order.getSubmissionStatus();
+
+        assertEquals(
+                "SubmissionStatus is not valid: " + submissionStatus.toString(),
+                true, submissionStatus.isValid());
+    }
+
+    @Test
+    public void can_add_metric_photo_size() throws MalformedURLException {
+        Order order = new Order(pwinty, CountryCode.IE, CountryCode.IE,
+                QualityLevel.Standard);
+        order.setAddress1("ad1");
+        order.setAddress2("ad2");
+        order.setAddressTownOrCity("toc");
+        order.setPostalOrZipCode("zip");
+        order.setRecipientName("bloggs");
+        order.setStateOrCounty("bristol");
+
+        assertEquals(Status.NotYetSubmitted, order.getStatus());
+
+        URL url = new URL(TEST_PHOTO_URL);
+
+        order.addPhoto(url, Type._10x15_cm, 1, Sizing.Crop);
 
         SubmissionStatus submissionStatus = order.getSubmissionStatus();
 
@@ -358,6 +408,7 @@ public class OrderTest {
     }
 
     @Test
+    @Ignore("This test no longer relevant now that batch adding is possible")
     public void can_add_50_photos_in_25_seconds() throws MalformedURLException {
         long startTime = System.currentTimeMillis();
         Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);

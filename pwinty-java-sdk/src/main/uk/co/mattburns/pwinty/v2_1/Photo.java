@@ -15,9 +15,9 @@ public class Photo {
     public enum Type {
         _4x4, _4x6, _5x7, _6x6, _6x8, _8x8, _8x10, _8x12, _4x18, _10x12, _10x15, _12x16,
 
-        _P11x14, _P12x18, _P16x20, _P16x24, _P18x18, _P18x24, _P20x30, _P20x24, _P24x24, _P24x36,
+        _P11x14, _P12x18, _P16x20, _P16x24, _P18x18, _P18x24, _P20x30, _P20x24, _P24x24, _P24x36, _P30x40,
 
-        _C8x10, _C10x12, _C11x14, _C12x12, _C12x16, _C12x18, _C12x24, _C12x12_1_25, _C12x18_1_25, _C12x24_1_25, _C16x16, _C16x20, _C16x24, _C16x16_1_25, _C16x20_1_25, _C20x20, _C20x24, _C20x30, _C20x30_1_25, _C24x24, _C24x24_1_25, _C30x30_1_25,
+        _C8x10, _C8x12, _C10x12, _C11x14, _C12x12, _C12x16, _C12x18, _C12x24, _C12x12_1_25, _C12x18_1_25, _C12x24_1_25, _C16x16, _C16x20, _C16x24, _C16x16_1_25, _C16x20_1_25, _C20x20, _C20x24, _C20x30, _C20x30_1_25, _C24x24, _C24x24_1_25, _C30x30_1_25,
 
         _F10x24_4x18, _F12x16_8x10, _F12x16_8x12, _F12x16_10x12, _F16x20_12x16, _F20x28_16x20, _F20x28_16x24, _F20x28_18x24, _F28x40_24x36,
 
@@ -26,7 +26,7 @@ public class Photo {
 
         @Override
         public String toString() {
-            return super.toString().replace("_", "");
+            return super.toString().replaceFirst("_", "");
         }
 
         public static Type fromName(String name) {
