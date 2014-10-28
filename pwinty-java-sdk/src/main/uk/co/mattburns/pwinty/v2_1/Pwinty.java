@@ -163,7 +163,15 @@ public class Pwinty {
                 .header("X-Pwinty-REST-API-Key", apiKey)
                 .post(ClientResponse.class, form);
 
-        return createReponse(response, Order.class);
+        Order createdOrder = createReponse(response, Order.class);
+        createdOrder.setPwinty(this);
+
+        for (Photo photo : newOrder.getPhotos()) {
+            createdOrder.addPhoto(photo.getUrl(), photo.getType(),
+                    photo.getCopies(), photo.getSizing());
+        }
+
+        return createdOrder;
     }
 
     Order updateOrder(int orderId, Order newOrder) {

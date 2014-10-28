@@ -17,14 +17,19 @@ import uk.co.mattburns.pwinty.v2_1.Pwinty.Environment;
 public class OrderUpdater {
 
     public static void main(String... args) throws MalformedURLException {
+
+        // int orderIdToUpdate = xxxxxx;
+
         // Create an updater:
         // OrderUpdater updater = new OrderUpdater(Environment.LIVE);
 
-        // Four use cases:
-        // updater.display(id);
+        // Five use cases:
+        // updater.display(orderIdToUpdate);
         // updater.updateAddress(orderIdToUpdate);
         // updater.updateImageUrl(orderIdToUpdate, photoIdToUpdate, newUrl);
         // updater.addPhotoToOrder(orderIdToUpdate,newUrl,type,copies,sizing);
+        // orderIdToUpdate = updater.updateUseTrackedShipping(orderIdToUpdate,
+        // true);
     }
 
     private Environment environment;
@@ -112,6 +117,24 @@ public class OrderUpdater {
         order.addPhoto(newUrl, type, copies, sizing);
     }
 
+    public int updateUseTrackedShipping(int orderIdToUpdate,
+            boolean useTrackedShipping) {
+        Pwinty pwinty = getPwinty(environment);
+        System.out.println(pwinty.getOrder(orderIdToUpdate));
+
+        Order order = pwinty.getOrder(orderIdToUpdate);
+        order = order.createCloneWithTrackedShipping(true);
+        if (!order.getShippingInfo().isTracked()) {
+            throw new RuntimeException(
+                    "Couldn't set to tracked. Is it available with current quality / country settings?");
+        }
+        System.out.println(pwinty.getOrder(order.getId()));
+
+        System.out.println("**** NOTE: ORDER NUMBER HAS NOW CHANGED !! ****");
+        System.out.println("New order number is : " + order.getId());
+        return order.getId();
+    }
+
     public Pwinty getPwinty(Environment env) {
         Properties props = new Properties();
 
@@ -122,8 +145,8 @@ public class OrderUpdater {
             throw new RuntimeException(e);
         }
 
-        return new Pwinty(env, props.getProperty("PWINTY_MERCHANT_ID"),
-                props.getProperty("PWINTY_MERCHANT_KEY"), System.out);
+        return new Pwinty(env, props.getProperty("PWINTY_MERCHANT_ID_" + env),
+                props.getProperty("PWINTY_MERCHANT_KEY_" + env), System.out);
     }
 
 }

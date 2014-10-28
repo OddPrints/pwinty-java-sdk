@@ -1,6 +1,7 @@
 package uk.co.mattburns.pwinty.v2_1;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static uk.co.mattburns.pwinty.v2_1.CountryCode.GB;
@@ -97,7 +98,7 @@ public class OrderTest {
 
     @Test
     public void can_find_order_by_fetching_all_orders_recursively() {
-        int orderId = 864; // just an old order I have...
+        int orderId = 271149; // just an old order I have...
         boolean found = false;
         int count = 100;
         for (int offset = 0; !found; offset += count) {
@@ -418,5 +419,38 @@ public class OrderTest {
         }
         long timeTaken = System.currentTimeMillis() - startTime;
         Assert.assertTrue("Took " + timeTaken + "ms", timeTaken < 25000);
+    }
+
+    @Test
+    public void can_change_quality_using_clone() throws URISyntaxException {
+        Order order = new Order(pwinty, GB, CountryCode.GB,
+                QualityLevel.Standard);
+
+        assertEquals(QualityLevel.Standard, order.getQualityLevel());
+        int originalId = order.getId();
+        order = order.createCloneWithQualityLevel(QualityLevel.Pro);
+        int newId = order.getId();
+
+        assertEquals(QualityLevel.Pro, order.getQualityLevel());
+        assertFalse(originalId == newId);
+    }
+
+    @Test
+    public void can_add_tracked_shipping_using_clone()
+            throws URISyntaxException, MalformedURLException {
+        Order order = new Order(pwinty, GB, CountryCode.HK, QualityLevel.Pro);
+
+        URL url = new URL(TEST_PHOTO_URL);
+        order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
+
+        order = pwinty.getOrder(order.getId());
+        assertEquals(false, order.isUseTrackedShipping());
+        assertEquals(false, order.getShippingInfo().isTracked());
+
+        assertEquals(1, order.getPhotos().size());
+        order = order.createCloneWithTrackedShipping(true);
+
+        assertEquals(true, order.getShippingInfo().isTracked());
+        assertEquals(1, order.getPhotos().size());
     }
 }

@@ -142,22 +142,12 @@ public class Order {
         return useTrackedShipping;
     }
 
-    public void setUseTrackedShipping(boolean useTrackedShipping) {
-        this.useTrackedShipping = useTrackedShipping;
-        overwriteThisOrderWithGivenOrder(pwinty.updateOrder(id, this));
-    }
-
     public ShippingInfo getShippingInfo() {
         return shippingInfo;
     }
 
     public Payment getPayment() {
         return payment;
-    }
-
-    public void setPayment(Payment payment) {
-        this.payment = payment;
-        overwriteThisOrderWithGivenOrder(pwinty.updateOrder(id, this));
     }
 
     public URL getPaymentUrl() {
@@ -168,9 +158,19 @@ public class Order {
         return qualityLevel;
     }
 
-    public void setQualityLevel(QualityLevel qualityLevel) {
+    public Order createCloneWithQualityLevel(QualityLevel qualityLevel) {
         this.qualityLevel = qualityLevel;
-        overwriteThisOrderWithGivenOrder(pwinty.updateOrder(id, this));
+        return pwinty.createOrder(this);
+    }
+
+    public Order createCloneWithTrackedShipping(boolean useTrackedShipping) {
+        this.useTrackedShipping = useTrackedShipping;
+        return pwinty.createOrder(this);
+    }
+
+    public Order createCloneWithPayment(Payment payment) {
+        this.payment = payment;
+        return pwinty.createOrder(this);
     }
 
     public String getErrorMessage() {
@@ -191,13 +191,23 @@ public class Order {
         addressTownOrCity = updated.addressTownOrCity;
         stateOrCounty = updated.stateOrCounty;
         postalOrZipCode = updated.postalOrZipCode;
-        useTrackedShipping = updated.useTrackedShipping;
-        payment = updated.payment;
-        qualityLevel = updated.qualityLevel;
+
         // Country codes are immutable, but just in case...
         if (countryCode != updated.countryCode
                 || destinationCountryCode != updated.destinationCountryCode) {
             throw new RuntimeException("Cannot modify country code");
+        }
+        // qualityLevel is immutable, but just in case...
+        if (qualityLevel != updated.qualityLevel) {
+            throw new RuntimeException("Cannot modify qualityLevel");
+        }
+        // useTrackedShipping is immutable, but just in case...
+        if (useTrackedShipping != updated.useTrackedShipping) {
+            throw new RuntimeException("Cannot modify useTrackedShipping");
+        }
+        // payment is immutable, but just in case...
+        if (payment != null && payment != updated.payment) {
+            throw new RuntimeException("Cannot modify payment");
         }
     }
 

@@ -88,8 +88,6 @@ git clone https://github.com/mattburns/pwinty-java-sdk.git
 cd pwinty-java-sdk/pwinty-java-sdk/
 echo PWINTY_MERCHANT_ID_SANDBOX=12345 > test-settings.properties
 echo PWINTY_MERCHANT_KEY_SANDBOX=12345 >> test-settings.properties
-cp test-settings.properties src/test/uk/co/mattburns/pwinty/v1/
-cp test-settings.properties src/test/uk/co/mattburns/pwinty/v2/
 cp test-settings.properties src/test/uk/co/mattburns/pwinty/v2_1/
 ant test
 ```
