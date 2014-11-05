@@ -123,7 +123,9 @@ public class OrderUpdater {
         System.out.println(pwinty.getOrder(orderIdToUpdate));
 
         Order order = pwinty.getOrder(orderIdToUpdate);
+
         order = order.createCloneWithTrackedShipping(true);
+        System.out.println(order);
         if (!order.getShippingInfo().isTracked()) {
             throw new RuntimeException(
                     "Couldn't set to tracked. Is it available with current quality / country settings?");
