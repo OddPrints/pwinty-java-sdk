@@ -29,7 +29,7 @@ public class OrderUpdater {
         // updater.updateImageUrl(orderIdToUpdate, photoIdToUpdate, newUrl);
         // updater.addPhotoToOrder(orderIdToUpdate,newUrl,type,copies,sizing);
         // orderIdToUpdate = updater.updateUseTrackedShipping(orderIdToUpdate,
-        // true);
+        // false);
     }
 
     private Environment environment;
@@ -124,11 +124,13 @@ public class OrderUpdater {
 
         Order order = pwinty.getOrder(orderIdToUpdate);
 
-        order = order.createCloneWithTrackedShipping(true);
+        order = order.createCloneWithTrackedShipping(useTrackedShipping);
         System.out.println(order);
-        if (!order.getShippingInfo().isTracked()) {
+        if (order.getShippingInfo().isTracked() != useTrackedShipping) {
             throw new RuntimeException(
-                    "Couldn't set to tracked. Is it available with current quality / country settings?");
+                    "Couldn't set useTrackedShipping to "
+                            + useTrackedShipping
+                            + ". Is it available with current quality / country settings?");
         }
         System.out.println(pwinty.getOrder(order.getId()));
 

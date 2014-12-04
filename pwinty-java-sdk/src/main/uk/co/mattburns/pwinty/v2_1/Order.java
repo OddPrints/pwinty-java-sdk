@@ -165,7 +165,11 @@ public class Order {
 
     public Order createCloneWithTrackedShipping(boolean useTrackedShipping) {
         this.useTrackedShipping = useTrackedShipping;
-        this.qualityLevel = QualityLevel.Pro;
+        if (useTrackedShipping) {
+            this.qualityLevel = QualityLevel.Pro;
+        } else {
+            this.qualityLevel = QualityLevel.Standard;
+        }
         return pwinty.createOrder(this);
     }
 
