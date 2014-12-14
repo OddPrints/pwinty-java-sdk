@@ -17,7 +17,7 @@ Everything is done with an Order object:
 Pwinty pwinty = new Pwinty(Environment.SANDBOX, "merchant-id", "api-key");
 
 // Contruct a new Order
-Order order = new Order(pwinty, CountryCode.GB, CountryCode.GB, QualityLevel.Standard);
+Order order = new Order(pwinty, CountryCode.GB, CountryCode.GB, QualityLevel.Standard, false);
 order.setRecipientName("Matt Burns");
 order.setAddress1("123 Some Street");
 order.setAddress2("Some Village");
