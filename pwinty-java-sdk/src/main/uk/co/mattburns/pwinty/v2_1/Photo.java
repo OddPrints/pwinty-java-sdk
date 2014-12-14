@@ -13,7 +13,7 @@ public class Photo {
     private int orderId;
 
     public enum Type {
-        _4x4, _4x6, _5x7, _6x6, _6x8, _8x8, _8x10, _8x12, _4x18, _10x12, _10x15, _12x16,
+        _3x3, _3x4, _4x4, _4x5, _4x6, _5x7, _6x6, _6x8, _8x8, _8x10, _8x12, _4x18, _10x12, _10x15, _12x16,
 
         _P10x15, _P11x14, _P12x18, _P16x20, _P16x24, _P18x18, _P18x24, _P20x30, _P20x24, _P24x24, _P24x36, _P30x40,
 

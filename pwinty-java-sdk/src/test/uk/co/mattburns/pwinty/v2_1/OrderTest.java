@@ -67,7 +67,7 @@ public class OrderTest {
 
     @Test
     public void can_create_order() {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
         order.setRecipientName("bloggs");
         assertEquals("bloggs", order.getRecipientName());
         assertTrue(order.getId() > 0);
@@ -75,7 +75,7 @@ public class OrderTest {
 
     @Test
     public void can_create_and_fetch_order_id() {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
         order.setRecipientName("bloggs");
 
         int fetchedOrderId = order.getId();
@@ -124,7 +124,7 @@ public class OrderTest {
     @Test
     public void can_find_most_recent_order_by_fetching_1_order() {
 
-        Order o = new Order(pwinty, GB, GB, QualityLevel.Standard);
+        Order o = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
         int orderId = o.getId();
         Order fetched = pwinty.getOrders(1, 0).get(0);
 
@@ -133,7 +133,7 @@ public class OrderTest {
 
     @Test
     public void can_create_and_update_order() {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
         order.setRecipientName("bloggs");
 
         assertEquals("bloggs", order.getRecipientName());
@@ -149,7 +149,7 @@ public class OrderTest {
 
     @Test
     public void can_create_order_and_get_status() {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
 
         assertEquals(Status.NotYetSubmitted, order.getStatus());
 
@@ -164,7 +164,7 @@ public class OrderTest {
     @Test
     public void can_create_and_add_photo_and_submit_order()
             throws URISyntaxException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
         order.setAddress1("ad1");
         order.setAddress2("ad2");
         order.setAddressTownOrCity("toc");
@@ -195,7 +195,7 @@ public class OrderTest {
     public void no_postcode_is_ok_for_IE() throws URISyntaxException,
             MalformedURLException {
         Order order = new Order(pwinty, CountryCode.IE, CountryCode.IE,
-                QualityLevel.Standard);
+                QualityLevel.Standard, false);
         order.setAddress1("ad1");
         order.setAddress2("ad2");
         order.setAddressTownOrCity("toc");
@@ -220,7 +220,7 @@ public class OrderTest {
     public void cannot_ship_standard_internationally()
             throws URISyntaxException {
         try {
-            new Order(pwinty, GB, CountryCode.AD, QualityLevel.Standard);
+            new Order(pwinty, GB, CountryCode.AD, QualityLevel.Standard, false);
             fail("International shipping for standard prints from GB should not be allowed...");
         } catch (PwintyError pe) {
             assertTrue(pe.getErrorMessage().toLowerCase()
@@ -231,7 +231,8 @@ public class OrderTest {
     @Test
     public void cannot_order_standard_pano() throws URISyntaxException {
         try {
-            Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
+            Order order = new Order(pwinty, GB, GB, QualityLevel.Standard,
+                    false);
 
             URL resource = OrderTest.class.getResource(TEST_PHOTO_LOCAL);
             File file = new File(resource.toURI());
@@ -246,13 +247,13 @@ public class OrderTest {
 
     @Test
     public void can_ship_pro_internationally() throws URISyntaxException {
-        new Order(pwinty, GB, CountryCode.AD, QualityLevel.Pro);
+        new Order(pwinty, GB, CountryCode.AD, QualityLevel.Pro, false);
     }
 
     @Test
     public void error_is_thrown_if_order_not_in_correct_state()
             throws URISyntaxException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
         order.setAddress1("ad1");
         order.setAddress2("ad2");
         order.setAddressTownOrCity("toc");
@@ -277,7 +278,7 @@ public class OrderTest {
 
     @Test
     public void can_create_and_add_photo_by_url() throws MalformedURLException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
         order.setAddress1("ad1");
         order.setAddress2("ad2");
         order.setAddressTownOrCity("toc");
@@ -301,7 +302,7 @@ public class OrderTest {
     @Test
     public void can_add_metric_photo_size() throws MalformedURLException {
         Order order = new Order(pwinty, CountryCode.IE, CountryCode.IE,
-                QualityLevel.Standard);
+                QualityLevel.Standard, false);
         order.setAddress1("ad1");
         order.setAddress2("ad2");
         order.setAddressTownOrCity("toc");
@@ -324,7 +325,7 @@ public class OrderTest {
 
     @Test
     public void can_get_photo_details() throws MalformedURLException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
 
         URL url = new URL(TEST_PHOTO_URL);
         order.addPhoto(url, Type._4x6, 2, Sizing.ShrinkToExactFit);
@@ -338,7 +339,7 @@ public class OrderTest {
 
     @Test
     public void can_delete_photo_from_order() throws MalformedURLException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
 
         URL url = new URL(TEST_PHOTO_URL);
         order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
@@ -354,7 +355,7 @@ public class OrderTest {
 
     @Test
     public void can_cancel_order() throws URISyntaxException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
 
         int id = order.getId();
 
@@ -365,7 +366,7 @@ public class OrderTest {
 
     @Test
     public void cannot_cancel_submitted_order() throws URISyntaxException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
         order.setAddress1("ad1");
         order.setAddress2("ad2");
         order.setAddressTownOrCity("toc");
@@ -391,7 +392,7 @@ public class OrderTest {
     public void error_with_bad_api_keys() {
         Pwinty unauthorizedPwinty = new Pwinty(Environment.SANDBOX, "", "");
         try {
-            new Order(unauthorizedPwinty, GB, GB, QualityLevel.Standard);
+            new Order(unauthorizedPwinty, GB, GB, QualityLevel.Standard, false);
             fail("Should have thrown");
         } catch (PwintyError e) {
             assertEquals(401, e.getCode());
@@ -412,7 +413,7 @@ public class OrderTest {
     @Ignore("This test no longer relevant now that batch adding is possible")
     public void can_add_50_photos_in_25_seconds() throws MalformedURLException {
         long startTime = System.currentTimeMillis();
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
 
         for (int i = 0; i < 50; i++) {
             order.addPhoto(new URL(TEST_PHOTO_URL), Type._4x6, 1, Sizing.Crop);
@@ -424,33 +425,14 @@ public class OrderTest {
     @Test
     public void can_change_quality_using_clone() throws URISyntaxException {
         Order order = new Order(pwinty, GB, CountryCode.GB,
-                QualityLevel.Standard);
+                QualityLevel.Standard, false);
 
         assertEquals(QualityLevel.Standard, order.getQualityLevel());
         int originalId = order.getId();
-        order = order.createCloneWithQualityLevel(QualityLevel.Pro);
+        order = order.createCloneWithQualityLevel(QualityLevel.Pro, false);
         int newId = order.getId();
 
         assertEquals(QualityLevel.Pro, order.getQualityLevel());
         assertFalse(originalId == newId);
-    }
-
-    @Test
-    public void can_add_tracked_shipping_using_clone()
-            throws URISyntaxException, MalformedURLException {
-        Order order = new Order(pwinty, GB, CountryCode.HK, QualityLevel.Pro);
-
-        URL url = new URL(TEST_PHOTO_URL);
-        order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
-
-        order = pwinty.getOrder(order.getId());
-        assertEquals(false, order.isUseTrackedShipping());
-        assertEquals(false, order.getShippingInfo().isTracked());
-
-        assertEquals(1, order.getPhotos().size());
-        order = order.createCloneWithTrackedShipping(true);
-
-        assertEquals(true, order.getShippingInfo().isTracked());
-        assertEquals(1, order.getPhotos().size());
     }
 }
