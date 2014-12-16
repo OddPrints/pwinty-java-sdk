@@ -154,8 +154,8 @@ public class Pwinty {
         return order;
     }
 
-    Order createOrder(Order newOrder) {
-        Form form = createOrderForm(newOrder);
+    Order createOrder(Order newOrder, boolean useTrackedShipping) {
+        Form form = createOrderForm(newOrder, useTrackedShipping);
         ClientResponse response = webResource.path("Orders")
                 .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
                 .accept(MediaType.APPLICATION_JSON_TYPE)
@@ -170,7 +170,6 @@ public class Pwinty {
             createdOrder.addPhoto(photo.getUrl(), photo.getType(),
                     photo.getCopies(), photo.getSizing());
         }
-
         return createdOrder;
     }
 
@@ -184,7 +183,8 @@ public class Pwinty {
                 .header("X-Pwinty-REST-API-Key", apiKey)
                 .put(ClientResponse.class, form);
 
-        return createReponse(response, Order.class);
+        Order updatedOrder = createReponse(response, Order.class);
+        return updatedOrder;
     }
 
     static Gson createGson() {
@@ -309,6 +309,10 @@ public class Pwinty {
     }
 
     private Form createOrderForm(Order newOrder) {
+        return createOrderForm(newOrder, null);
+    }
+
+    private Form createOrderForm(Order newOrder, Boolean useTrackedShipping) {
         Form form = new Form();
         form.add("recipientName", newOrder.getRecipientName());
         form.add("address1", newOrder.getAddress1());
@@ -318,7 +322,9 @@ public class Pwinty {
         form.add("postalOrZipCode", newOrder.getPostalOrZipCode());
         form.add("countryCode", newOrder.getCountryCode());
         form.add("destinationCountryCode", newOrder.getDestinationCountryCode());
-        form.add("useTrackedShipping", newOrder.isUseTrackedShipping());
+        if (useTrackedShipping != null) {
+            form.add("useTrackedShipping", useTrackedShipping);
+        }
         form.add("payment", newOrder.getPayment());
         form.add("qualityLevel", newOrder.getQualityLevel());
         return form;

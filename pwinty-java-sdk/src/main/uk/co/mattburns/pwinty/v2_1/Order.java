@@ -47,7 +47,8 @@ public class Order {
     }
 
     public Order(Pwinty pwinty, CountryCode labCountry,
-            CountryCode destinationCountry, QualityLevel quality) {
+            CountryCode destinationCountry, QualityLevel quality,
+            boolean useTrackedShipping) {
         this.pwinty = pwinty;
         this.countryCode = labCountry;
         this.destinationCountryCode = destinationCountry;
@@ -56,7 +57,8 @@ public class Order {
             this.postalOrZipCode = "-"; // default postcode to dash for IE.
                                         // Pwinty's bug really...
         }
-        Order order = pwinty.createOrder(this);
+        this.useTrackedShipping = useTrackedShipping;
+        Order order = pwinty.createOrder(this, useTrackedShipping);
         overwriteThisOrderWithGivenOrder(order);
     }
 
@@ -138,10 +140,6 @@ public class Order {
         return price;
     }
 
-    public boolean isUseTrackedShipping() {
-        return useTrackedShipping;
-    }
-
     public ShippingInfo getShippingInfo() {
         return shippingInfo;
     }
@@ -158,9 +156,11 @@ public class Order {
         return qualityLevel;
     }
 
-    public Order createCloneWithQualityLevel(QualityLevel qualityLevel) {
+    public Order createCloneWithQualityLevel(QualityLevel qualityLevel,
+            boolean useTrackedShipping) {
         this.qualityLevel = qualityLevel;
-        return pwinty.createOrder(this);
+        this.useTrackedShipping = useTrackedShipping;
+        return pwinty.createOrder(this, useTrackedShipping);
     }
 
     public Order createCloneWithTrackedShipping(boolean useTrackedShipping) {
@@ -170,12 +170,14 @@ public class Order {
         } else {
             this.qualityLevel = QualityLevel.Standard;
         }
-        return pwinty.createOrder(this);
+        return pwinty.createOrder(this, useTrackedShipping);
     }
 
-    public Order createCloneWithPayment(Payment payment) {
+    public Order createCloneWithPayment(Payment payment,
+            boolean useTrackedShipping) {
         this.payment = payment;
-        return pwinty.createOrder(this);
+        this.useTrackedShipping = useTrackedShipping;
+        return pwinty.createOrder(this, useTrackedShipping);
     }
 
     public Order createCloneWithDestinationCountryCode(
@@ -203,6 +205,7 @@ public class Order {
         addressTownOrCity = updated.addressTownOrCity;
         stateOrCounty = updated.stateOrCounty;
         postalOrZipCode = updated.postalOrZipCode;
+        useTrackedShipping = updated.useTrackedShipping;
 
         // Country codes are immutable, but just in case...
         if (countryCode != updated.countryCode
@@ -230,6 +233,17 @@ public class Order {
 
     public SubmissionStatus getSubmissionStatus() {
         return pwinty.getSubmissionStatus(id);
+    }
+
+    /**
+     * This is filthy. Only way to ensure this property is kept after creation
+     * on Pwinty because the API doesn't return this property... Not for public
+     * consumption!
+     * 
+     * @param useTrackedShipping
+     */
+    protected void setImmutableUseTrackedShipping(boolean useTrackedShipping) {
+        this.useTrackedShipping = useTrackedShipping;
     }
 
     /**
