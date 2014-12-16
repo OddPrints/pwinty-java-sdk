@@ -144,14 +144,15 @@ public class OrderUpdater {
     }
 
     public int updateDestinationCountryCode(int orderIdToUpdate,
-            CountryCode destinationCountryCode, QualityLevel qualityLevel) {
+            CountryCode destinationCountryCode, QualityLevel qualityLevel,
+            boolean useTrackedShipping) {
         Pwinty pwinty = getPwinty(environment);
         System.out.println(pwinty.getOrder(orderIdToUpdate));
 
         Order order = pwinty.getOrder(orderIdToUpdate);
 
         order = order.createCloneWithDestinationCountryCode(
-                destinationCountryCode, qualityLevel);
+                destinationCountryCode, qualityLevel, useTrackedShipping);
         System.out.println(order);
         System.out.println(pwinty.getOrder(order.getId()));
 

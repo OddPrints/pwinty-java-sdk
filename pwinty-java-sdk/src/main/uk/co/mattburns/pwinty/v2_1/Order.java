@@ -181,10 +181,11 @@ public class Order {
     }
 
     public Order createCloneWithDestinationCountryCode(
-            CountryCode destinationCountryCode, QualityLevel qualityLevel) {
+            CountryCode destinationCountryCode, QualityLevel qualityLevel,
+            boolean useTrackedShipping) {
         this.destinationCountryCode = destinationCountryCode;
         this.qualityLevel = qualityLevel;
-        return pwinty.createOrder(this);
+        return pwinty.createOrder(this, useTrackedShipping);
     }
 
     public String getErrorMessage() {
