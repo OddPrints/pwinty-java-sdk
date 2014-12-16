@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static uk.co.mattburns.pwinty.v2_1.CountryCode.GB;
+import static uk.co.mattburns.pwinty.v2_1.CountryCode.US;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -189,6 +190,58 @@ public class OrderTest {
 
         Order fetchedOrder = pwinty.getOrder(id);
         assertEquals(Status.Submitted, fetchedOrder.getStatus());
+    }
+
+    @Test
+    public void can_use_tracked_shipping() throws MalformedURLException {
+        testTrackedShipping(US, QualityLevel.Standard, false);
+        testTrackedShipping(US, QualityLevel.Standard, true);
+        testTrackedShipping(US, QualityLevel.Pro, false);
+        testTrackedShipping(US, QualityLevel.Pro, true);
+
+        testTrackedShipping(GB, QualityLevel.Standard, false);
+        // fails, see next test
+        // testTrackedShipping(GB, QualityLevel.Standard, true);
+        testTrackedShipping(GB, QualityLevel.Pro, false);
+        testTrackedShipping(GB, QualityLevel.Pro, true);
+    }
+
+    @Test
+    public void cant_use_tracked_shipping_for_uk_standard()
+            throws MalformedURLException {
+        testTrackedShipping(GB, QualityLevel.Standard, true, false); // fails
+    }
+
+    private void testTrackedShipping(CountryCode countryCode,
+            QualityLevel qualityLevel, boolean useTrackedShipping)
+            throws MalformedURLException {
+        testTrackedShipping(countryCode, qualityLevel, useTrackedShipping,
+                useTrackedShipping);
+    }
+
+    private void testTrackedShipping(CountryCode countryCode,
+            QualityLevel qualityLevel, boolean useTrackedShipping,
+            boolean expected) throws MalformedURLException {
+        Order order = new Order(pwinty, countryCode, countryCode, qualityLevel,
+                useTrackedShipping);
+        order.setAddress1("-");
+        order.setAddress2("-");
+        order.setAddressTownOrCity("-");
+        order.setPostalOrZipCode("-");
+        order.setRecipientName("-");
+        order.setStateOrCounty("-");
+
+        int id = order.getId();
+        assertEquals(Status.NotYetSubmitted, order.getStatus());
+
+        URL url = new URL(TEST_PHOTO_URL);
+
+        order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
+        Order fetchedOrder = pwinty.getOrder(id);
+
+        assertEquals(countryCode + "-" + qualityLevel + "-"
+                + useTrackedShipping, expected, fetchedOrder.getShippingInfo()
+                .isTracked());
     }
 
     @Test
