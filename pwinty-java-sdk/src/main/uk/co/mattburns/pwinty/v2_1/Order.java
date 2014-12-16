@@ -178,6 +178,13 @@ public class Order {
         return pwinty.createOrder(this);
     }
 
+    public Order createCloneWithDestinationCountryCode(
+            CountryCode destinationCountryCode, QualityLevel qualityLevel) {
+        this.destinationCountryCode = destinationCountryCode;
+        this.qualityLevel = qualityLevel;
+        return pwinty.createOrder(this);
+    }
+
     public String getErrorMessage() {
         return errorMessage;
     }

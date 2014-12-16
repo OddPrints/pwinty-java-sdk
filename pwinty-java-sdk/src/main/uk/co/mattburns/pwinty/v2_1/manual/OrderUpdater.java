@@ -7,7 +7,9 @@ import java.net.URLDecoder;
 import java.util.List;
 import java.util.Properties;
 
+import uk.co.mattburns.pwinty.v2_1.CountryCode;
 import uk.co.mattburns.pwinty.v2_1.Order;
+import uk.co.mattburns.pwinty.v2_1.Order.QualityLevel;
 import uk.co.mattburns.pwinty.v2_1.Photo;
 import uk.co.mattburns.pwinty.v2_1.Photo.Sizing;
 import uk.co.mattburns.pwinty.v2_1.Photo.Type;
@@ -23,9 +25,11 @@ public class OrderUpdater {
         // Create an updater:
         // OrderUpdater updater = new OrderUpdater(Environment.LIVE);
 
-        // Five use cases:
+        // Six use cases:
         // updater.display(orderIdToUpdate);
         // updater.updateAddress(orderIdToUpdate);
+        // updater.updateDestinationCountryCode(orderIdToUpdate, CountryCode.FR,
+        // QualityLevel.Pro);
         // updater.updateImageUrl(orderIdToUpdate, photoIdToUpdate, newUrl);
         // updater.addPhotoToOrder(orderIdToUpdate,newUrl,type,copies,sizing);
         // orderIdToUpdate = updater.updateUseTrackedShipping(orderIdToUpdate,
@@ -132,6 +136,23 @@ public class OrderUpdater {
                             + useTrackedShipping
                             + ". Is it available with current quality / country settings?");
         }
+        System.out.println(pwinty.getOrder(order.getId()));
+
+        System.out.println("**** NOTE: ORDER NUMBER HAS NOW CHANGED !! ****");
+        System.out.println("New order number is : " + order.getId());
+        return order.getId();
+    }
+
+    public int updateDestinationCountryCode(int orderIdToUpdate,
+            CountryCode destinationCountryCode, QualityLevel qualityLevel) {
+        Pwinty pwinty = getPwinty(environment);
+        System.out.println(pwinty.getOrder(orderIdToUpdate));
+
+        Order order = pwinty.getOrder(orderIdToUpdate);
+
+        order = order.createCloneWithDestinationCountryCode(
+                destinationCountryCode, qualityLevel);
+        System.out.println(order);
         System.out.println(pwinty.getOrder(order.getId()));
 
         System.out.println("**** NOTE: ORDER NUMBER HAS NOW CHANGED !! ****");
