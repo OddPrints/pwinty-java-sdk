@@ -235,7 +235,7 @@ public class Pwinty {
 
         if (photo != null) {
             form.bodyPart(new FileDataBodyPart("file", photo,
-                    MediaType.MULTIPART_FORM_DATA_TYPE));
+                    MediaType.APPLICATION_OCTET_STREAM_TYPE));
         } else {
             form = form.field("url", photoUrl.toExternalForm());
         }
