@@ -34,7 +34,7 @@ import com.google.gson.GsonBuilder;
 public class OrderTest {
 
     // Enter keys here to runs the tests
-    private static final String TEST_PHOTO_LOCAL = "/resources/test.jpg";
+    private static final String TEST_PHOTO_LOCAL = "test.jpg";
     private static final String TEST_PHOTO_URL = "http://farm4.staticflickr.com/3454/3837830342_dae0b932a9_b_d.jpg";
 
     private static Pwinty pwinty;

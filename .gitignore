@@ -1,9 +1,33 @@
 *~
 *.DS_Store
 *.swp
-pwinty-java-sdk/.ant-targets-build.xml
-pwinty-java-sdk/bin
-pwinty-java-sdk/ant-bin
-pwinty-java-sdk/test-bin
-pwinty-java-sdk/test-results
+build
+!build/libs/pwinty.*
 *test-settings.properties
+
+.gradle
+
+## IntelliJ IDEA
+
+# User-specific stuff:
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+
+# Sensitive or high-churn files:
+.idea/dataSources.ids
+.idea/dataSources.xml
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
+
+# Gradle:
+.idea/gradle.xml
+.idea/libraries
+
+# Mongo Explorer plugin:
+.idea/mongoSettings.xml
+
+## File-based project format:
+.ipr
+.iws
