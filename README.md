@@ -82,7 +82,8 @@ cd pwinty-java-sdk
 echo PWINTY_MERCHANT_ID_SANDBOX=12345 > test-settings.properties
 echo PWINTY_MERCHANT_KEY_SANDBOX=12345 >> test-settings.properties
 cp test-settings.properties src/test/resources/uk/co/mattburns/pwinty/v2_1/
-ant test
+
+gradle test
 ```
 
 
