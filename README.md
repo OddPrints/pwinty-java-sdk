@@ -42,7 +42,7 @@ Download
 --------
 
 Just add the jar to your project. You can find the jar in the [build directory]
-(https://github.com/mattburns/pwinty-java-sdk/tree/master/build)
+(https://github.com/mattburns/pwinty-java-sdk/tree/master/build/libs)
 
 
 Error Handling

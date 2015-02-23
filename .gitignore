@@ -1,9 +1,8 @@
 *~
 *.DS_Store
 *.swp
-build/tmp
-build/classes
-build/dependency-cache
+build/*
+!build/libs
 *test-settings.properties
 
 .gradle
