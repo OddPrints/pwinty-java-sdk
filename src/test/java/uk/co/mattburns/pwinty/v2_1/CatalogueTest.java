@@ -3,6 +3,7 @@ package uk.co.mattburns.pwinty.v2_1;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.Properties;
 
 import org.junit.BeforeClass;
@@ -114,6 +115,25 @@ public class CatalogueTest {
             }
         }
         assertTrue("Couldn't find the item I wanted to test!", testedItem);
+    }
+
+    @Test
+    public void can_get_shipping_rates() {
+        Catalogue catalogue = pwinty.getCatalogue(GB.getCountryCode(),
+                QualityLevel.Standard);
+        List<CatalogueShippingRate> rates = catalogue.getShippingRates();
+
+        CatalogueShippingRate foundRate = null;
+        for (CatalogueShippingRate rate : rates) {
+           if (rate.getBand().equals("Prints")) {
+               foundRate = rate;
+               break;
+           }
+        }
+        assertEquals("Prints", foundRate.getBand());
+        assertEquals("2nd Class Royal Mail", foundRate.getDescription());
+        assertEquals(199, foundRate.getPriceGBP());
+        assertEquals(false, foundRate.isTracked());
     }
 
     @Test

@@ -2,26 +2,27 @@ package uk.co.mattburns.pwinty.v2_1;
 
 public class CatalogueShippingRate {
 
-    private String id;
+    private String band;
     private String description;
+    private boolean isTracked;
+    private int priceGBP;
 
     public CatalogueShippingRate() {
 
     }
 
-    public String getId() {
-        return id;
+    public String getBand() {
+        return band;
     }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public boolean isTracked() {
+        return isTracked;
+    }
+
+    public int getPriceGBP() {
+        return priceGBP;
     }
 }
