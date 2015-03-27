@@ -1,11 +1,11 @@
-package uk.co.mattburns.pwinty.v2_1;
+package uk.co.mattburns.pwinty.v2_2;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.co.mattburns.pwinty.v2_1.Photo.Sizing;
+import uk.co.mattburns.pwinty.v2_2.Photo.Sizing;
 
 public class Order {
 

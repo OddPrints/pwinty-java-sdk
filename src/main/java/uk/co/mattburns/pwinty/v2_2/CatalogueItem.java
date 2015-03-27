@@ -1,6 +1,6 @@
-package uk.co.mattburns.pwinty.v2_1;
+package uk.co.mattburns.pwinty.v2_2;
 
-import uk.co.mattburns.pwinty.v2_1.Photo.Type;
+import uk.co.mattburns.pwinty.v2_2.Photo.Type;
 
 public class CatalogueItem {
 

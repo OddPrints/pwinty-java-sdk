@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2_1;
+package uk.co.mattburns.pwinty.v2_2;
 
 public class Country {
     private CountryCode countryCode;

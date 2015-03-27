@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2_1;
+package uk.co.mattburns.pwinty.v2_2;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -10,11 +10,11 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.core.MediaType;
 
-import uk.co.mattburns.pwinty.v2_1.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2_1.Order.Status;
-import uk.co.mattburns.pwinty.v2_1.Photo.Sizing;
-import uk.co.mattburns.pwinty.v2_1.Photo.Type;
-import uk.co.mattburns.pwinty.v2_1.gson.TypeDeserializer;
+import uk.co.mattburns.pwinty.v2_2.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2_2.Order.Status;
+import uk.co.mattburns.pwinty.v2_2.Photo.Sizing;
+import uk.co.mattburns.pwinty.v2_2.Photo.Type;
+import uk.co.mattburns.pwinty.v2_2.gson.TypeDeserializer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,16 +30,17 @@ public class Pwinty {
 
     private String merchantId;
     private String apiKey;
-
     private WebResource webResource;
+
+    private static final String PWINTY_VERSION = "v2.2";
 
     /**
      * This is the main class for talking to the Pwinty API. See
      * http://www.pwinty.com/api.html for detailed examples.
-     * 
+     *
      * For all method calls, if an error occurs, a {@link PwintyError} will be
      * thrown
-     * 
+     *
      * @param environment
      *            Choose SANDBOX for testing and LIVE for real orders you wish
      *            to print
@@ -362,8 +363,8 @@ public class Pwinty {
     }
 
     public enum Environment {
-        LIVE("https://api.pwinty.com/v2.1"), SANDBOX(
-                "https://sandbox.pwinty.com/v2.1");
+        LIVE("https://api.pwinty.com/" + Pwinty.PWINTY_VERSION), SANDBOX(
+                "https://sandbox.pwinty.com/" + Pwinty.PWINTY_VERSION);
 
         private String url;
 

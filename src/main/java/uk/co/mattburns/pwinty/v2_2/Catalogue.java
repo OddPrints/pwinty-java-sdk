@@ -1,11 +1,11 @@
-package uk.co.mattburns.pwinty.v2_1;
+package uk.co.mattburns.pwinty.v2_2;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import uk.co.mattburns.pwinty.v2_1.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2_1.Photo.Type;
+import uk.co.mattburns.pwinty.v2_2.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2_2.Photo.Type;
 
 public class Catalogue {
 

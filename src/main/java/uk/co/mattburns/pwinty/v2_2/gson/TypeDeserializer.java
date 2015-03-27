@@ -1,6 +1,6 @@
-package uk.co.mattburns.pwinty.v2_1.gson;
+package uk.co.mattburns.pwinty.v2_2.gson;
 
-import uk.co.mattburns.pwinty.v2_1.Photo.Type;
+import uk.co.mattburns.pwinty.v2_2.Photo.Type;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

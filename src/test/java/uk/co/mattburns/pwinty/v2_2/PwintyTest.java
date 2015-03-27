@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2_1;
+package uk.co.mattburns.pwinty.v2_2;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -9,12 +9,13 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import org.joda.time.DateTime;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import uk.co.mattburns.pwinty.v2_1.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2_1.Photo.Type;
-import uk.co.mattburns.pwinty.v2_1.Pwinty.Environment;
+import uk.co.mattburns.pwinty.v2_2.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2_2.Photo.Type;
+import uk.co.mattburns.pwinty.v2_2.Pwinty.Environment;
 
 public class PwintyTest {
 
@@ -68,23 +69,33 @@ public class PwintyTest {
         "\"price\":350," +
         "\"qualityLevel\":\"Pro\"," +
         "\"shippingInfo\":{" +
-        "\"trackingNumber\":null," +
-        "\"isTracked\":false," +
-        "\"trackingUrl\":null," +
-        "\"price\":350" +
+            "\"price\": 199," +
+            "\"shipments\":[" +
+                "{" +
+                    "\"shipmentId\": null," +
+                    "\"trackingNumber\": null," +
+                    "\"trackingUrl\": null," +
+                    "\"isTracked\": true," +
+                    "\"earliestEstimatedArrivalDate\": \"2015-03-30T16:17:56.9615519Z\"," +
+                    "\"latestEstimatedArrivalDate\": \"2015-04-04T16:17:56.9615519Z\"," +
+                    "\"shippedOn\": null" +
+                "}" +
+            "]" +
         "}," +
         "\"photos\":[" +
-        "{\"id\":2638," +
-        "\"type\":\"4x6\"," +
-        "\"url\":null," +
-        "\"status\":\"Ok\"," +
-        "\"copies\":1," +
-        "\"sizing\":\"Crop\"," +
-        "\"priceToUser\":null," +
-        "\"price\":60," +
-        "\"md5Hash\":null," +
-        "\"previewUrl\":\"https://pwintysandbox.s3.amazonaws.com/2575/c0a02d5c-2df2-40f3-b261-46948a6449c8?AWSAccessKeyId=AKIAJXAKHZJEAELFLMPA&Expires=1384538242&Signature=ujIDtEzHTrDUpeNPWqOexmSxU%2B4%3D\",\"thumbnailUrl\":\"https://pwintysandbox.s3.amazonaws.com/2575/00000000-0000-0000-0000-000000000000?AWSAccessKeyId=AKIAJXAKHZJEAELFLMPA&Expires=1384538242&Signature=6g7QdHsVrrH09SbeHduBG6JXoYk%3D\"," +
-        "\"errorMessage\":null}"+
+            "{" +
+                "\"id\":2638," +
+                "\"type\":\"4x6\"," +
+                "\"url\":null," +
+                "\"status\":\"Ok\"," +
+                "\"copies\":1," +
+                "\"sizing\":\"Crop\"," +
+                "\"priceToUser\":null," +
+                "\"price\":60," +
+                "\"md5Hash\":null," +
+                "\"previewUrl\":\"https://pwintysandbox.s3.amazonaws.com/2575/c0a02d5c-2df2-40f3-b261-46948a6449c8?AWSAccessKeyId=AKIAJXAKHZJEAELFLMPA&Expires=1384538242&Signature=ujIDtEzHTrDUpeNPWqOexmSxU%2B4%3D\",\"thumbnailUrl\":\"https://pwintysandbox.s3.amazonaws.com/2575/00000000-0000-0000-0000-000000000000?AWSAccessKeyId=AKIAJXAKHZJEAELFLMPA&Expires=1384538242&Signature=6g7QdHsVrrH09SbeHduBG6JXoYk%3D\"," +
+                "\"errorMessage\":null" +
+            "}"+
         "]," +
         "\"errorMessage\":null" +
         "}";
@@ -92,8 +103,9 @@ public class PwintyTest {
         Order o = Pwinty.fromJson(json, Order.class);
         assertEquals(123, o.getId());
         assertEquals(CountryCode.GB, o.getCountryCode());
-        assertEquals(null, o.getShippingInfo().getTrackingUrl());
-        assertEquals(350, o.getShippingInfo().getPrice());
+        assertEquals(null, o.getShippingInfo().getShipments().get(0).getTrackingUrl());
+        assertEquals(new DateTime("2015-03-30T16:17:56.9615519Z"), o.getShippingInfo().getShipments().get(0).getEarliestEstimatedArrivalDate());
+        assertEquals(199, o.getShippingInfo().getPrice());
     }
 
     @Test
