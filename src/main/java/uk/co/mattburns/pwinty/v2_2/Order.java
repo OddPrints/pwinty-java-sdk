@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import uk.co.mattburns.pwinty.v2_2.Photo.Sizing;
 
 public class Order {
@@ -142,6 +143,40 @@ public class Order {
 
     public ShippingInfo getShippingInfo() {
         return shippingInfo;
+    }
+
+    /**
+     * Get the most pessimistic earliest estimate from each of the shipments.
+     * Will be null before any images are added
+     */
+    public DateTime getEarliestEstimatedArrivalDate() {
+        DateTime min = null;
+        if (getShippingInfo() != null) {
+            for (Shipment s : getShippingInfo().getShipments()) {
+                DateTime d = s.getEarliestEstimatedArrivalDate();
+                if (min == null || min.isBefore(d)) { // be pessimistic
+                    min = d;
+                }
+            }
+        }
+        return min;
+    }
+
+    /**
+     * Get the most pessimistic latest estimate from each of the shipments.
+     * Will be null before any images are added
+     */
+    public DateTime getLatestEstimatedArrivalDate() {
+        DateTime max = null;
+        if (getShippingInfo() != null) {
+            for (Shipment s : getShippingInfo().getShipments()) {
+                DateTime d = s.getLatestEstimatedArrivalDate();
+                if (d != null && (max == null || max.isBefore(d))) { // be pessimistic
+                    max = d;
+                }
+            }
+        }
+        return max;
     }
 
     public Payment getPayment() {

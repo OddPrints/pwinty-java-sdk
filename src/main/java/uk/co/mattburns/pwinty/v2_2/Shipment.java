@@ -39,10 +39,16 @@ public class Shipment {
     }
 
     public DateTime getEarliestEstimatedArrivalDate() {
+        if (earliestEstimatedArrivalDate == null) {
+            return null;
+        }
         return new DateTime(earliestEstimatedArrivalDate);
     }
 
     public DateTime getLatestEstimatedArrivalDate() {
+        if (latestEstimatedArrivalDate == null) {
+            return null;
+        }
         return new DateTime(latestEstimatedArrivalDate);
     }
 

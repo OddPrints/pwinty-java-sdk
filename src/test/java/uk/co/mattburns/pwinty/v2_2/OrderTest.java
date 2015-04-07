@@ -1,9 +1,6 @@
 package uk.co.mattburns.pwinty.v2_2;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static uk.co.mattburns.pwinty.v2_2.CountryCode.GB;
 import static uk.co.mattburns.pwinty.v2_2.CountryCode.US;
 
@@ -207,7 +204,6 @@ public class OrderTest {
         testTrackedShipping(GB, QualityLevel.Pro, true);
     }
 
-    @Ignore("FIXME: Currently failing, I think this is a regression in pwinty API...")
     @Test
     public void cant_use_tracked_shipping_for_uk_standard()
             throws MalformedURLException {
@@ -519,9 +515,9 @@ public class OrderTest {
     }
 
     @Test
-    public void can_get_delivery_estimate() throws MalformedURLException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Pro,
-                true);
+    public void cant_get_delivery_estimate_before_photo_added() throws MalformedURLException {
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard,
+                false);
         order.setAddress1("-");
         order.setAddress2("-");
         order.setAddressTownOrCity("-");
@@ -532,17 +528,37 @@ public class OrderTest {
         int id = order.getId();
         assertEquals(Status.NotYetSubmitted, order.getStatus());
 
-        URL url = new URL(TEST_PHOTO_URL);
-
-        order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
         Order fetchedOrder = pwinty.getOrder(id);
 
-        DateTime earliest = fetchedOrder.getShippingInfo().getShipments().get(0)
-                .getEarliestEstimatedArrivalDate();
-        DateTime latest = fetchedOrder.getShippingInfo().getShipments().get(0)
-                .getLatestEstimatedArrivalDate();
+        assertEquals(0, fetchedOrder.getShippingInfo().getShipments().size());
+    }
 
-        assertTrue(earliest.isBefore(latest));
-        assertTrue(earliest.isAfter(DateTime.now()));
+    @Ignore("Sandbox is currently returning nulls. Re-enable once pwinty fix this.")
+    @Test
+    public void can_get_estimated_deliveries_once_photo_added() throws URISyntaxException {
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
+        order.setAddress1("ad1");
+        order.setAddress2("ad2");
+        order.setAddressTownOrCity("toc");
+        order.setPostalOrZipCode("zip");
+        order.setRecipientName("bloggs");
+        order.setStateOrCounty("bristol");
+
+        int id = order.getId();
+        assertEquals(Status.NotYetSubmitted, order.getStatus());
+
+        URL resource = OrderTest.class.getResource(TEST_PHOTO_LOCAL);
+        File file = new File(resource.toURI());
+
+        order = pwinty.getOrder(id); // update with latest
+        assertNull(order.getEarliestEstimatedArrivalDate());
+        assertNull(order.getLatestEstimatedArrivalDate());
+
+        order.addPhoto(file, Type._4x6, 1, Sizing.Crop);
+
+        order = pwinty.getOrder(id); // update with latest
+        assertTrue(order.getEarliestEstimatedArrivalDate().isAfter(DateTime.now()));
+        assertTrue(order.getLatestEstimatedArrivalDate().isAfter(DateTime.now()));
+        assertTrue(order.getEarliestEstimatedArrivalDate().isBefore(order.getLatestEstimatedArrivalDate()));
     }
 }
