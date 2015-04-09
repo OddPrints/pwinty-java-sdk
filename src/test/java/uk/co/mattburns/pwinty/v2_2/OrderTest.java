@@ -603,6 +603,9 @@ public class OrderTest {
 
         // update fetchedIssues
         fetchedIssues = fetchedOrder.getIssues();
+        
         assertEquals(Issue.IssueType.LostInPost, fetchedIssues.getIssues().get(0).getIssue());
+        assertEquals(Issue.IssueState.Open, fetchedIssues.getIssues().get(0).getIssueState());
+        assertTrue(fetchedIssues.getIssues().get(0).getCommentary().contains("Issue created"));
     }
 }

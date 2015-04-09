@@ -8,6 +8,8 @@ public class Issue {
     private String issueDetail;
     private IssueAction action;
     private String actionDetail;
+    private IssueState issueState;
+    private String commentary;
 
     public enum IssueType {
         DamagedOrder,
@@ -29,6 +31,20 @@ public class Issue {
         Reprint,
         NoAction,
         Other;
+    }
+
+    public enum IssueState {
+        Open,
+        InProgress,
+        ClosedNotResolved,
+        ClosedResolved,
+        Cancelled;
+    }
+
+    /**
+     * no-arg constructor included just for the sake of gson serialisation purposes.
+     */
+    public Issue() {
     }
 
     public Issue(IssueType issue, IssueAction action) {
@@ -60,5 +76,13 @@ public class Issue {
 
     public String getActionDetail() {
         return actionDetail;
+    }
+
+    public String getCommentary() {
+        return commentary;
+    }
+
+    public IssueState getIssueState() {
+        return issueState;
     }
 }
