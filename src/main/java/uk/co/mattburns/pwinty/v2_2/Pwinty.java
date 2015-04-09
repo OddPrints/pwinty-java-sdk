@@ -205,6 +205,17 @@ public class Pwinty {
         return createReponse(response, SubmissionStatus.class);
     }
 
+    Issues getIssues(int orderId) {
+            ClientResponse response = webResource
+                    .path("Orders/" + orderId + "/Issues")
+                    .accept(MediaType.APPLICATION_JSON_TYPE)
+                    .header("X-Pwinty-MerchantId", merchantId)
+                    .header("X-Pwinty-REST-API-Key", apiKey)
+                    .get(ClientResponse.class);
+
+            return createReponse(response, Issues.class);
+    }
+
     /**
      * Add a photo File object to the order. This method will block until the
      * File is uploaded.
@@ -251,6 +262,29 @@ public class Pwinty {
         throwIfBad(response);
 
         return createReponse(response, Photo.class);
+    }
+
+    Issue addIssueToOrder(int orderId, Issue issue) {
+        Form form = new Form();
+        form.add("issue", issue.getIssue().toString());
+        form.add("action", issue.getAction().toString());
+        if (issue.getIssueDetail() != null) {
+            form.add("issueDetail", issue.getIssueDetail());
+        }
+        if (issue.getActionDetail() != null) {
+            form.add("actionDetail", issue.getActionDetail());
+        }
+
+        ClientResponse response = webResource
+                .path("Orders/" + orderId + "/Issues")
+                .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+                .header("X-Pwinty-MerchantId", merchantId)
+                .header("X-Pwinty-REST-API-Key", apiKey)
+                .post(ClientResponse.class, form);
+
+        throwIfBad(response);
+
+        return createReponse(response, Issue.class);
     }
 
     public Photo getPhoto(int orderId, int photoId) {

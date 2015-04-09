@@ -271,6 +271,14 @@ public class Order {
         return pwinty.getSubmissionStatus(id);
     }
 
+    public Issues getIssues() {
+        return pwinty.getIssues(id);
+    }
+
+    public Issue addIssue(Issue issue) {
+        return pwinty.addIssueToOrder(id, issue);
+    }
+
     /**
      * This is filthy. Only way to ensure this property is kept after creation
      * on Pwinty because the API doesn't return this property... Not for public

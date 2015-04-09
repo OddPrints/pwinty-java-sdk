@@ -561,4 +561,48 @@ public class OrderTest {
         assertTrue(order.getLatestEstimatedArrivalDate().isAfter(DateTime.now()));
         assertTrue(order.getEarliestEstimatedArrivalDate().isBefore(order.getLatestEstimatedArrivalDate()));
     }
+
+    @Test
+    public void can_report_lost_in_post()
+            throws URISyntaxException {
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
+        order.setAddress1("ad1");
+        order.setAddress2("ad2");
+        order.setAddressTownOrCity("toc");
+        order.setPostalOrZipCode("zip");
+        order.setRecipientName("bloggs");
+        order.setStateOrCounty("bristol");
+
+        int id = order.getId();
+        assertEquals(Status.NotYetSubmitted, order.getStatus());
+
+        URL resource = OrderTest.class.getResource(TEST_PHOTO_LOCAL);
+        File file = new File(resource.toURI());
+
+        order.addPhoto(file, Type._4x6, 1, Sizing.Crop);
+
+        SubmissionStatus submissionStatus = order.getSubmissionStatus();
+        assertEquals(
+                "SubmissionStatus is not valid: " + submissionStatus.toString(),
+                true, submissionStatus.isValid());
+
+        order.submit();
+
+        Order fetchedOrder = pwinty.getOrder(id);
+
+        Issue lostIssue = new Issue(Issue.IssueType.LostInPost, Issue.IssueAction.Reprint);
+        //long issueId = fetchedOrder.addIssue(lostIssue).getId();
+
+        //Issue fetchedIssue = fetchedOrder.getIssue(issueId);
+        //assertEquals(IssueAction.Reprint, fetchedIssue.getAction());
+        Issues fetchedIssues = fetchedOrder.getIssues();
+        assertEquals(0, fetchedIssues.getIssues().size());
+
+        Issue addedIssue = fetchedOrder.addIssue(lostIssue);
+        assertEquals(Issue.IssueType.LostInPost, addedIssue.getIssue());
+
+        // update fetchedIssues
+        fetchedIssues = fetchedOrder.getIssues();
+        assertEquals(Issue.IssueType.LostInPost, fetchedIssues.getIssues().get(0).getIssue());
+    }
 }
