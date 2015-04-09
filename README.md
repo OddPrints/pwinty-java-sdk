@@ -91,4 +91,4 @@ gradle test
 More
 ----
 
-See the [test code](https://github.com/mattburns/pwinty-java-sdk/tree/master/src/test/java/uk/co/mattburns/pwinty/v2_1/) for more usage examples.
+See the [test code](https://github.com/mattburns/pwinty-java-sdk/tree/master/src/test/java/uk/co/mattburns/pwinty/v2_2/) for more usage examples.
