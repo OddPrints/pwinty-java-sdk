@@ -3,7 +3,7 @@ Pwinty-Java-SDK
 
 A java library for communicating with the [Pwinty API](http://www.pwinty.com/api.html).
 
-Only v2.1 of the API is supported. If you want an older version, use an older build ;)
+v2.2 of the API is supported. If you want an older version, use an older build ;)
 
 
 
