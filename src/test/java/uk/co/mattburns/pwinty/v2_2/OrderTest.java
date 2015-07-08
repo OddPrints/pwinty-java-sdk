@@ -198,16 +198,9 @@ public class OrderTest {
         testTrackedShipping(US, QualityLevel.Pro, true);
 
         testTrackedShipping(GB, QualityLevel.Standard, false);
-        // fails, see next test
-        // testTrackedShipping(GB, QualityLevel.Standard, true);
+        testTrackedShipping(GB, QualityLevel.Standard, true);
         testTrackedShipping(GB, QualityLevel.Pro, false);
         testTrackedShipping(GB, QualityLevel.Pro, true);
-    }
-
-    @Test
-    public void cant_use_tracked_shipping_for_uk_standard()
-            throws MalformedURLException {
-        testTrackedShipping(GB, QualityLevel.Standard, true, false); // fails
     }
 
     private void testTrackedShipping(CountryCode countryCode,
