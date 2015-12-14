@@ -14,13 +14,13 @@ public class Photo {
 
     public enum Type {
         // @formatter:off
-        _3x3, _3x4, _4x4, _4x5, _4x6, _5x7, _6x6, _6x8, _8x8, _8x10, _8x12, _4x18, _10x12, _10x15, _12x16,
+        _3x3, _3x4, _4x4, _4x5, _4x6, _5x5, _5x7, _6x6, _6x8, _8x8, _8x10, _8x12, _4x18, _10x12, _10x15, _12x16,
 
         _P10x15, _P11x14, _P12x18, _P16x20, _P16x24, _P18x18, _P18x24, _P20x30, _P20x24, _P24x24, _P24x36, _P30x40,
 
-        _C8x10,        _C8x12,        _C10x12,        _C11x14,        _C12x12,        _C12x16,        _C12x18,        _C12x24,        _C16x16,        _C16x20,        _C16x24,        _C18x24,        _C20x20,        _C20x24,        _C20x30,        _C24x24,
-                                                                      _C12x12_1_25,                   _C12x18_1_25,   _C12x24_1_25,   _C16x16_1_25,   _C16x20_1_25,                   _C20x30_1_25,                   _C24x24_1_25,   _C30x30_1_25,
-        _C8x10_nowrap, _C8x12_nowrap, _C10x12_nowrap, _C11x14_nowrap, _C12x12_nowrap, _C12x16_nowrap, _C12x18_nowrap, _C12x24_nowrap, _C16x16_nowrap, _C16x20_nowrap, _C16x24_nowrap, _C18x24_nowrap, _C20x20_nowrap, _C20x24_nowrap, _C20x30_nowrap, _C24x24_nowrap,
+        _C8x10,        _C8x8,         _C8x12,        _C10x10,        _C10x12,        _C11x14,        _C12x12,        _C12x16,        _C12x18,        _C12x24,        _C16x16,        _C16x20,        _C16x24,        _C18x18,        _C18x24,        _C20x20,        _C20x24,        _C20x30,        _C24x24,
+                                                                                                     _C12x12_1_25,                   _C12x18_1_25,   _C12x24_1_25,   _C16x16_1_25,   _C16x20_1_25,                                                                                   _C20x30_1_25,   _C24x24_1_25,   _C30x30_1_25,
+        _C8x10_nowrap,_C8x8_nowrap,   _C8x12_nowrap, _C10x10_nowrap, _C10x12_nowrap, _C11x14_nowrap, _C12x12_nowrap, _C12x16_nowrap, _C12x18_nowrap, _C12x24_nowrap, _C16x16_nowrap, _C16x20_nowrap, _C16x24_nowrap, _C18x18_nowrap, _C18x24_nowrap, _C20x20_nowrap, _C20x24_nowrap, _C20x30_nowrap, _C24x24_nowrap,
 
         _F10x24_4x18, _F12x12_10x10, _F12x16_8x10, _F12x16_8x12, _F12x16_10x12, _F16x20_12x16, _F20x20_18x18, _F20x28_16x20, _F20x28_16x24, _F20x28_18x24, _F28x40_24x36,
 
