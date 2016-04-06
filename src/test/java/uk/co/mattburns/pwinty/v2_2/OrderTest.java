@@ -261,6 +261,7 @@ public class OrderTest {
     }
 
     @Test
+    @Ignore("This no longer stands as true!")
     public void cannot_ship_standard_internationally()
             throws URISyntaxException {
         try {

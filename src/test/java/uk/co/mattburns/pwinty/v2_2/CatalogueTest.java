@@ -49,7 +49,7 @@ public class CatalogueTest {
 
         boolean testedItem = false;
         for (CatalogueItem item : catalogue.getItems()) {
-            if (item.getDescription().equalsIgnoreCase("4x6 inch lustre print")) {
+            if (item.getDescription().equalsIgnoreCase("4x6 inch print")) {
                 assertEquals(4, item.getImageHorizontalSize(), DELTA);
                 assertEquals(6, item.getImageVerticalSize(), DELTA);
                 assertEquals(SizeUnits.inches, item.getSizeUnits());
@@ -103,7 +103,7 @@ public class CatalogueTest {
         assertEquals(IE.getCountryCode(), catalogue.getCountryCode());
         testedItem = false;
         for (CatalogueItem item : catalogue.getItems()) {
-            if (item.getDescription().equalsIgnoreCase("9x12 cm lustre print")) {
+            if (item.getDescription().equalsIgnoreCase("9x12 cm print")) {
                 assertEquals(9, item.getImageHorizontalSize(), DELTA);
                 assertEquals(12, item.getImageVerticalSize(), DELTA);
                 assertEquals(9, item.getFullProductHorizontalSize(), DELTA);

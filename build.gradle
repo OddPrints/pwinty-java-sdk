@@ -1,7 +1,9 @@
 apply plugin: 'java'
+apply plugin: 'maven'
 
 buildscript {
     repositories {
+        maven { url "http://23.251.128.211/content/groups/public/"}
         mavenCentral()
     }
 }
@@ -19,6 +21,7 @@ jar {
 }
 
 repositories {
+    maven { url "http://23.251.128.211/content/groups/public/"}
     mavenCentral()
 }
 
@@ -43,4 +46,36 @@ test {
     // This prevents SecureRandom from causing very slow tests.
     // Another solution is to change $JAVA_HOME/jre/lib/security/java.security. Replace securerandom.source with securerandom.source=file:/dev/./urandom.
     systemProperty "java.security.egd", "file:/dev/./urandom"
+}
+
+// custom tasks for creating source/javadoc jars
+task sourcesJar(type: Jar, dependsOn:classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn:javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+// add javadoc/source jar tasks as artifacts
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(
+                    url: "${nexusUrl}/content/repositories/releases") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+            snapshotRepository(
+                    url: "${nexusUrl}/content/repositories/snapshots") {
+                authentication(userName: nexusUsername, password: nexusPassword)
+            }
+        }
+    }
 }
