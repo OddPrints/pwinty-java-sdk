@@ -27,15 +27,7 @@ public class PwintyTest {
 
     @BeforeClass
     public static void before() {
-        Properties props = new Properties();
-
-        try {
-            // load a properties file
-            props.load(OrderTest.class
-                    .getResourceAsStream("test-settings.properties"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        Properties props = TestUtils.loadProps();
 
         pwinty = new Pwinty(Environment.SANDBOX,
                 props.getProperty("PWINTY_MERCHANT_ID_SANDBOX"),

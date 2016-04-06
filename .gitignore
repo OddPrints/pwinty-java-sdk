@@ -1,15 +1,17 @@
 *~
 *.DS_Store
 *.swp
+build
 build/*
 !build/libs
-*test-settings.properties
 
 .gradle
 
 ## IntelliJ IDEA
 .idea
-*.iml
+
 ## File-based project format:
 .ipr
 .iws
+.iml
+*.iml
