@@ -47,6 +47,10 @@ test {
     // This prevents SecureRandom from causing very slow tests.
     // Another solution is to change $JAVA_HOME/jre/lib/security/java.security. Replace securerandom.source with securerandom.source=file:/dev/./urandom.
     systemProperty "java.security.egd", "file:/dev/./urandom"
+    systemProperty "PWINTY_MERCHANT_ID_SANDBOX", "${PWINTY_MERCHANT_ID_SANDBOX}"
+    systemProperty "PWINTY_MERCHANT_KEY_SANDBOX", "${PWINTY_MERCHANT_KEY_SANDBOX}"
+    systemProperty "PWINTY_MERCHANT_ID_LIVE", "${PWINTY_MERCHANT_ID_LIVE}"
+    systemProperty "PWINTY_MERCHANT_KEY_LIVE", "${PWINTY_MERCHANT_KEY_LIVE}"
 }
 
 // custom tasks for creating source/javadoc jars
