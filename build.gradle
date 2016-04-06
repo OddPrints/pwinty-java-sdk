@@ -1,3 +1,6 @@
+group 'uk.co.mattburns.pwinty'
+version '2.2.5'
+
 apply plugin: 'java'
 apply plugin: 'maven'
 
@@ -10,8 +13,6 @@ buildscript {
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
-
-version = '2.2.4'
 
 jar {
     manifest {

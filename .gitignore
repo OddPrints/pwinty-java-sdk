@@ -9,8 +9,6 @@ build/*
 .gradle
 
 ## IntelliJ IDEA
-
-# User-specific stuff:
 .idea
 
 ## File-based project format:
