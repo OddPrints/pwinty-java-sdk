@@ -6,7 +6,6 @@ apply plugin: 'maven'
 
 buildscript {
     repositories {
-        maven { url "http://23.251.128.211/content/groups/public/"}
         mavenCentral()
     }
 }
@@ -22,7 +21,6 @@ jar {
 }
 
 repositories {
-    maven { url "http://23.251.128.211/content/groups/public/"}
     mavenCentral()
 }
 
