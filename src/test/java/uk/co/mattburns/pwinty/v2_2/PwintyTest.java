@@ -17,6 +17,8 @@ import uk.co.mattburns.pwinty.v2_2.Order.QualityLevel;
 import uk.co.mattburns.pwinty.v2_2.Photo.Type;
 import uk.co.mattburns.pwinty.v2_2.Pwinty.Environment;
 
+import javax.ws.rs.core.MediaType;
+
 public class PwintyTest {
 
     private static final Country AU = new Country(CountryCode.AU);
@@ -107,7 +109,7 @@ public class PwintyTest {
         assertEquals("UNITED KINGDOM", catalogue.getCountry());
         assertEquals(GB.getCountryCode(), catalogue.getCountryCode());
 
-        Set<Photo.Type> availablePrintSizes = new HashSet<Photo.Type>();
+        Set<Photo.Type> availablePrintSizes = new HashSet<>();
         for (CatalogueItem item : catalogue.getItems()) {
             availablePrintSizes.add(item.getType());
         }
@@ -122,7 +124,7 @@ public class PwintyTest {
         assertEquals("AUSTRALIA", catalogue.getCountry());
         assertEquals(AU.getCountryCode(), catalogue.getCountryCode());
 
-        Set<Photo.Type> availablePrintSizes = new HashSet<Photo.Type>();
+        Set<Photo.Type> availablePrintSizes = new HashSet<>();
         for (CatalogueItem item : catalogue.getItems()) {
             availablePrintSizes.add(item.getType());
         }
@@ -138,7 +140,7 @@ public class PwintyTest {
 
     @Test
     public void can_fetch_all_catalogues() {
-        Set<Photo.Type> availablePrintSizes = new HashSet<Photo.Type>();
+        Set<Photo.Type> availablePrintSizes = new HashSet<>();
         for (CatalogueItem item : pwinty.getCatalogue(GB.getCountryCode(),
                 QualityLevel.Standard).getItems()) {
             availablePrintSizes.add(item.getType());
@@ -163,7 +165,7 @@ public class PwintyTest {
         Catalogue catalogue = pwinty.getCatalogue(GB.getCountryCode(),
                 QualityLevel.Standard);
 
-        Set<Photo.Type> availablePrintSizes = new HashSet<Photo.Type>();
+        Set<Photo.Type> availablePrintSizes = new HashSet<>();
         for (CatalogueItem item : catalogue.getItems()) {
             availablePrintSizes.add(item.getType());
         }
@@ -176,6 +178,12 @@ public class PwintyTest {
      */
     @Test
     public void all_available_print_types_are_in_enum() {
-        assertFalse(pwinty.thereAreNewPhotoTypes(CountryCode.values()));
+        Set<String> unrecognisedItems = pwinty
+                .getUnrecognisedItemNames(CountryCode.values());
+        String errorMessage = "Unrecognised items:";
+        for (String item : unrecognisedItems) {
+            errorMessage += " " + item;
+        }
+        assertTrue(errorMessage, unrecognisedItems.isEmpty());
     }
 }

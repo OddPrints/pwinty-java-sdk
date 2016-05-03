@@ -3,9 +3,7 @@ package uk.co.mattburns.pwinty.v2_2;
 import java.io.File;
 import java.io.PrintStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 import javax.ws.rs.core.MediaType;
@@ -424,12 +422,13 @@ public class Pwinty {
     /**
      * Test if Pwinty have started offering new print sizes currently not
      * hard-coded in the enum Photo.Type
-     * 
+     *
      * @param countryCodes
      *            countries to check (just an optimisation).
-     * @return true if there are new print sizes available.
+     * @return set of item names we don't handle
      */
-    protected boolean thereAreNewPhotoTypes(CountryCode... countryCodes) {
+    protected Set<String> getUnrecognisedItemNames(CountryCode... countryCodes) {
+        Set<String> unrecognisedItemNames = new HashSet<String>();
         for (QualityLevel quality : QualityLevel.values()) {
             for (CountryCode countryCode : countryCodes) {
                 String catalogueJSON = webResource
@@ -441,32 +440,37 @@ public class Pwinty {
                         .get(String.class);
                 Catalogue catalogue = createGson().fromJson(catalogueJSON,
                         Catalogue.class);
-                int rawCatalogueSize = catalogue.getItems().size();
-                removeUnrecognisedItems(catalogue);
-                if (rawCatalogueSize != catalogue.getItems().size()) {
-                    return true;
+                for (CatalogueItem item : getUnrecognisedItems(catalogue)) {
+                    unrecognisedItemNames.add(item.getName());
                 }
             }
         }
-        return false;
+        return unrecognisedItemNames;
     }
 
     /**
-     * Remove any items that aren't in our enum
+     * Get the set of items we dont recognise from the catalogue
      * 
      * @param catalogue
      */
-    private void removeUnrecognisedItems(Catalogue catalogue) {
-        List<CatalogueItem> unrecognisedItems = new ArrayList<CatalogueItem>();
+    private Set<CatalogueItem> getUnrecognisedItems(Catalogue catalogue) {
+        Set<CatalogueItem> unrecognisedItems = new HashSet<CatalogueItem>();
         for (CatalogueItem item : catalogue.getItems()) {
             try {
                 item.getType();
             } catch (IllegalArgumentException iae) {
-                System.err
-                        .println("Unrecognised print size: " + item.getName());
                 unrecognisedItems.add(item);
             }
         }
-        catalogue.getItems().removeAll(unrecognisedItems);
+        return unrecognisedItems;
+    }
+
+    /**
+     * Remove any items that aren't in our enum
+     *
+     * @param catalogue
+     */
+    private void removeUnrecognisedItems(Catalogue catalogue) {
+        catalogue.getItems().removeAll(getUnrecognisedItems(catalogue));
     }
 }

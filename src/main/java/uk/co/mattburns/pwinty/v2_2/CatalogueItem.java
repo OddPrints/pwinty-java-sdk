@@ -116,5 +116,4 @@ public class CatalogueItem {
             int recommendedVerticalResolution) {
         this.recommendedVerticalResolution = recommendedVerticalResolution;
     }
-
 }
