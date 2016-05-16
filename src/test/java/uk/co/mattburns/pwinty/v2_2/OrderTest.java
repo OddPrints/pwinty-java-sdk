@@ -3,6 +3,7 @@ package uk.co.mattburns.pwinty.v2_2;
 import static org.junit.Assert.*;
 import static uk.co.mattburns.pwinty.v2_2.CountryCode.GB;
 import static uk.co.mattburns.pwinty.v2_2.CountryCode.US;
+import static uk.co.mattburns.pwinty.v2_2.CountryCode.AU;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -183,16 +184,26 @@ public class OrderTest {
     }
 
     @Test
-    public void can_use_tracked_shipping() throws MalformedURLException {
-        testTrackedShipping(US, QualityLevel.Standard, false);
-        testTrackedShipping(US, QualityLevel.Standard, true);
-        testTrackedShipping(US, QualityLevel.Pro, false);
-        testTrackedShipping(US, QualityLevel.Pro, true);
+    public void can_use_tracked_shipping_US() throws MalformedURLException {
+        can_use_tracked_shipping(US);
+    }
 
-        testTrackedShipping(GB, QualityLevel.Standard, false);
-        testTrackedShipping(GB, QualityLevel.Standard, true);
-        testTrackedShipping(GB, QualityLevel.Pro, false);
-        testTrackedShipping(GB, QualityLevel.Pro, true);
+    @Test
+    public void can_use_tracked_shipping_GB() throws MalformedURLException {
+        can_use_tracked_shipping(GB);
+    }
+
+    @Ignore("Not yet supported by pwinty. Remove this @Ignore once they do...")
+    @Test
+    public void can_use_tracked_shipping_AU() throws MalformedURLException {
+        can_use_tracked_shipping(AU);
+    }
+
+    private void can_use_tracked_shipping(CountryCode country) throws MalformedURLException {
+        testTrackedShipping(country, QualityLevel.Standard, false);
+        testTrackedShipping(country, QualityLevel.Standard, true);
+        testTrackedShipping(country, QualityLevel.Pro, false);
+        testTrackedShipping(country, QualityLevel.Pro, true);
     }
 
     private void testTrackedShipping(CountryCode countryCode,
