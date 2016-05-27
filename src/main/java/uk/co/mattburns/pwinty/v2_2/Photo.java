@@ -14,7 +14,7 @@ public class Photo {
 
     public enum Type {
         // @formatter:off
-        _3x3, _3x4, _4x4, _4x5, _4x6, _5x5, _5x7, _6x6, _6x8, _8x8, _8x10, _8x12, _4x18, _10x10, _10x12, _10x15, _12x16,
+        _2x3, _3x3, _3x4, _3_5x5, _4x4, _4x5, _4x6, _5x5, _5x7, _6x6, _6x8, _8x8, _8x10, _8x12, _4x18, _10x10, _10x12, _10x15, _12x16,
 
         _P10x15, _P11x14, _P12x18, _P16x20, _P16x24, _P18x18, _P18x24, _P20x30, _P20x24, _P24x24, _P24x36, _P30x40,
 
@@ -28,7 +28,7 @@ public class Photo {
         _9x12_cm, _9x13_cm, _10x10_cm, _10x14_cm, _10x15_cm, _11x11_cm, _11x15_cm, _11x17_cm, _13x13_cm, _13x17_cm, _13x19_cm, _P12x12, _P16x16, _P20x20, _P20x27_cm, _P20x30_cm, _P30x40_cm, _P40x40_cm, _P40x53_cm, _P40x60_cm, _P50x66_cm, _P50x70_cm, _P60x80_cm, _P60x90_cm, _P70x93_cm, _P70x105_cm, _P80x106_cm, _P80x120_cm, _C20x30_cm, _C30x45_cm, _C40x40_cm, _C40x60_cm, _C60x60_cm, _C60x90_cm, _C80x120_cm, _C90x90_cm,
 
         // Merch
-        _fridge_magnet, _iphone6_case,_iphone6plus_case, _keyring_acrylic, _keyring_pu, _mug_10oz_white, _mug_15oz_white, _photobook_7x5, _photobook_8x8, _photobook_11x8, _photopanel_5x7, _photopanel_6x6, _photopanel_8x10, _photopanel_11x14, _samsunggalaxys5_case, _samsunggalaxys6_case, _samsunggalaxys6edge_case,
+        _fridge_magnet, _iphone6_case,_iphone6plus_case, _keyring_acrylic, _keyring_pu, _mug_10oz_white, _mug_11oz_white, _mug_15oz_white, _photobook_7x5, _photobook_8x8, _photobook_11x8, _photopanel_5x7, _photopanel_6x6, _photopanel_8x10, _photopanel_11x14, _samsunggalaxys5_case, _samsunggalaxys6_case, _samsunggalaxys6edge_case,
 
         // Fineart
         _FineArt_12x16, _FineArt_16x16, _FineArt_20x30, _FineArt_24x24;
