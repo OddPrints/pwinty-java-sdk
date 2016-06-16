@@ -44,7 +44,7 @@ if (order.getSubmissionStatus().isValid()) {
 Download
 --------
 
-Best to checkout, then run `gradle install`. Then you can just add this to your gradle deps: `compile 'uk.co.mattburns.pwinty:pwinty-java-sdk:2.2.5' `
+Best to checkout, then run `gradle install`. Then you can just add this to your gradle deps: `compile 'uk.co.mattburns.pwinty:pwinty-java-sdk:2.2.6' `
 
 Alternatively, add the jar to your project. You can find the jar in the [build directory]
 (https://github.com/mattburns/pwinty-java-sdk/tree/master/build/libs)
