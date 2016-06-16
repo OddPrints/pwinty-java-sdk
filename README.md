@@ -6,6 +6,9 @@ A java library for communicating with the [Pwinty API](http://www.pwinty.com/api
 v2.2 of the API is supported. If you want an older version, use an older build ;)
 
 
+Releases
+--------
+* v2.2.5 - Added ability to add a photo via an InputStream as well as a File or URL.
 
 Usage
 -----
@@ -41,7 +44,7 @@ if (order.getSubmissionStatus().isValid()) {
 Download
 --------
 
-Best to checkout, then run `gradle install`. Then you can just add this to your gradle deps: `compile 'uk.co.mattburns.pwinty:pwinty-java-sdk:2.2.4' `
+Best to checkout, then run `gradle install`. Then you can just add this to your gradle deps: `compile 'uk.co.mattburns.pwinty:pwinty-java-sdk:2.2.5' `
 
 Alternatively, add the jar to your project. You can find the jar in the [build directory]
 (https://github.com/mattburns/pwinty-java-sdk/tree/master/build/libs)

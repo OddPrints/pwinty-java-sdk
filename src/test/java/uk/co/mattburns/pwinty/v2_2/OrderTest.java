@@ -1,24 +1,9 @@
 package uk.co.mattburns.pwinty.v2_2;
 
-import static org.junit.Assert.*;
-import static uk.co.mattburns.pwinty.v2_2.CountryCode.GB;
-import static uk.co.mattburns.pwinty.v2_2.CountryCode.US;
-import static uk.co.mattburns.pwinty.v2_2.CountryCode.AU;
-
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.List;
-import java.util.Properties;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.joda.time.DateTime;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
-
+import org.junit.*;
 import uk.co.mattburns.pwinty.v2_2.Order.QualityLevel;
 import uk.co.mattburns.pwinty.v2_2.Order.Status;
 import uk.co.mattburns.pwinty.v2_2.Photo.Sizing;
@@ -27,8 +12,17 @@ import uk.co.mattburns.pwinty.v2_2.Pwinty.Environment;
 import uk.co.mattburns.pwinty.v2_2.SubmissionStatus.GeneralError;
 import uk.co.mattburns.pwinty.v2_2.gson.TypeDeserializer;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.List;
+import java.util.Properties;
+
+import static org.junit.Assert.*;
+import static uk.co.mattburns.pwinty.v2_2.CountryCode.*;
 
 public class OrderTest {
 
@@ -339,6 +333,29 @@ public class OrderTest {
         URL url = new URL(TEST_PHOTO_URL);
 
         order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
+
+        SubmissionStatus submissionStatus = order.getSubmissionStatus();
+
+        assertEquals(
+                "SubmissionStatus is not valid: " + submissionStatus.toString(),
+                true, submissionStatus.isValid());
+    }
+
+    @Test
+    public void can_create_and_add_photo_by_data() throws IOException {
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
+        order.setAddress1("ad1");
+        order.setAddress2("ad2");
+        order.setAddressTownOrCity("toc");
+        order.setPostalOrZipCode("zip");
+        order.setRecipientName("bloggs");
+        order.setStateOrCounty("bristol");
+
+        assertEquals(Status.NotYetSubmitted, order.getStatus());
+
+        InputStream stream = getClass().getResourceAsStream("test.jpg");
+
+        order.addPhoto(stream, Type._4x6, 1, Sizing.Crop);
 
         SubmissionStatus submissionStatus = order.getSubmissionStatus();
 

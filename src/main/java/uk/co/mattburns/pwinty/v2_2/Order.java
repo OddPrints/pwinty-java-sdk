@@ -1,6 +1,7 @@
 package uk.co.mattburns.pwinty.v2_2;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -295,6 +296,17 @@ public class Order {
      * File is uploaded.
      */
     public Photo addPhoto(File photo, Photo.Type type, int copies, Sizing sizing) {
+        Photo addedPhoto = pwinty.addPhotoToOrder(id, photo, type, copies,
+                sizing);
+        getPhotos().add(addedPhoto);
+        return addedPhoto;
+    }
+
+    /**
+     * Add a photo byte[] InputStream object to the order. This method will block until the
+     * File is uploaded.
+     */
+    public Photo addPhoto(InputStream photo, Photo.Type type, int copies, Sizing sizing) {
         Photo addedPhoto = pwinty.addPhotoToOrder(id, photo, type, copies,
                 sizing);
         getPhotos().add(addedPhoto);
