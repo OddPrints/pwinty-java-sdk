@@ -37,17 +37,14 @@ public class Pwinty {
     /**
      * This is the main class for talking to the Pwinty API. See
      * http://www.pwinty.com/api.html for detailed examples.
-     *
+     * <p/>
      * For all method calls, if an error occurs, a {@link PwintyError} will be
      * thrown
      *
-     * @param environment
-     *            Choose SANDBOX for testing and LIVE for real orders you wish
-     *            to print
-     * @param merchantId
-     *            As supplied by http://www.pwinty.com
-     * @param apiKey
-     *            As supplied by http://www.pwinty.com
+     * @param environment Choose SANDBOX for testing and LIVE for real orders you wish
+     *                    to print
+     * @param merchantId  As supplied by http://www.pwinty.com
+     * @param apiKey      As supplied by http://www.pwinty.com
      */
     public Pwinty(Environment environment, String merchantId, String apiKey) {
         this(null, environment, merchantId, apiKey);
@@ -56,43 +53,35 @@ public class Pwinty {
     /**
      * This is the main class for talking to the Pwinty API. See
      * http://www.pwinty.com/api.html
-     * 
-     * @param environment
-     *            Choose SANDBOX for testing and LIVE for real orders you wish
-     *            to print
-     * @param merchantId
-     *            As supplied by http://www.pwinty.com
-     * @param apiKey
-     *            As supplied by http://www.pwinty.com
-     * @param loggingStream
-     *            Requests and responses will be written to this
+     *
+     * @param environment   Choose SANDBOX for testing and LIVE for real orders you wish
+     *                      to print
+     * @param merchantId    As supplied by http://www.pwinty.com
+     * @param apiKey        As supplied by http://www.pwinty.com
+     * @param loggingStream Requests and responses will be written to this
      */
     public Pwinty(Environment environment, String merchantId, String apiKey,
-            PrintStream loggingStream) {
+                  PrintStream loggingStream) {
         this(new LoggingFilter(loggingStream), environment, merchantId, apiKey);
     }
 
     /**
      * This is the main class for talking to the Pwinty API. See
      * http://www.pwinty.com/api.html
-     * 
-     * @param environment
-     *            Choose SANDBOX for testing and LIVE for real orders you wish
-     *            to print
-     * @param merchantId
-     *            As supplied by http://www.pwinty.com
-     * @param apiKey
-     *            As supplied by http://www.pwinty.com
-     * @param logger
-     *            Requests and responses will be written to this
+     *
+     * @param environment Choose SANDBOX for testing and LIVE for real orders you wish
+     *                    to print
+     * @param merchantId  As supplied by http://www.pwinty.com
+     * @param apiKey      As supplied by http://www.pwinty.com
+     * @param logger      Requests and responses will be written to this
      */
     public Pwinty(Environment environment, String merchantId, String apiKey,
-            Logger logger) {
+                  Logger logger) {
         this(new LoggingFilter(logger), environment, merchantId, apiKey);
     }
 
     private Pwinty(LoggingFilter loggingFilter, Environment environment,
-            String merchantId, String apiKey) {
+                   String merchantId, String apiKey) {
         this.merchantId = merchantId;
         this.apiKey = apiKey;
 
@@ -119,12 +108,10 @@ public class Pwinty {
 
     /**
      * Get the most recent orders.
-     * 
-     * @param count
-     *            The number of order to retrieve
-     * @param offset
-     *            Skip over this many most recent orders
-     * @return  A list of orders
+     *
+     * @param count  The number of order to retrieve
+     * @param offset Skip over this many most recent orders
+     * @return A list of orders
      */
     public List<Order> getOrders(int count, int offset) {
         String ordersJSON = webResource.path("Orders")
@@ -205,14 +192,14 @@ public class Pwinty {
     }
 
     Issues getIssues(int orderId) {
-            ClientResponse response = webResource
-                    .path("Orders/" + orderId + "/Issues")
-                    .accept(MediaType.APPLICATION_JSON_TYPE)
-                    .header("X-Pwinty-MerchantId", merchantId)
-                    .header("X-Pwinty-REST-API-Key", apiKey)
-                    .get(ClientResponse.class);
+        ClientResponse response = webResource
+                .path("Orders/" + orderId + "/Issues")
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .header("X-Pwinty-MerchantId", merchantId)
+                .header("X-Pwinty-REST-API-Key", apiKey)
+                .get(ClientResponse.class);
 
-            return createReponse(response, Issues.class);
+        return createReponse(response, Issues.class);
     }
 
     /**
@@ -220,7 +207,7 @@ public class Pwinty {
      * File is uploaded.
      */
     Photo addPhotoToOrder(int orderId, File photo, Photo.Type type, int copies,
-            Sizing sizing) {
+                          Sizing sizing) {
         return addPhotoToOrder(orderId, null, photo, null, type, copies, sizing);
     }
 
@@ -237,7 +224,7 @@ public class Pwinty {
      * Add a photo to the order using a public URL.
      */
     Photo addPhotoToOrder(int orderId, URL photoUrl, Photo.Type type,
-            int copies, Sizing sizing) {
+                          int copies, Sizing sizing) {
         return addPhotoToOrder(orderId, null, null, photoUrl, type, copies, sizing);
     }
 
@@ -245,7 +232,7 @@ public class Pwinty {
      * Either the File or URL must be supplied
      */
     private Photo addPhotoToOrder(int orderId, InputStream photoData, File photo, URL photoUrl,
-            Photo.Type type, int copies, Sizing sizing) {
+                                  Photo.Type type, int copies, Sizing sizing) {
 
         @SuppressWarnings("resource")
         FormDataMultiPart form = new FormDataMultiPart()
@@ -253,7 +240,7 @@ public class Pwinty {
                 .field("sizing", sizing.toString())
                 .field("copies", "" + copies);
 
-        if(photoData != null) {
+        if (photoData != null) {
             form.bodyPart(new StreamDataBodyPart("file", photoData));
         } else if (photo != null) {
             form.bodyPart(new FileDataBodyPart("file", photo,
@@ -324,7 +311,7 @@ public class Pwinty {
 
     /**
      * Submit the Order for printing and shipping
-     * 
+     * <p/>
      * If an error occurs, a {@link PwintyError} will be thrown
      */
     void submitOrder(int orderId) {
@@ -435,8 +422,7 @@ public class Pwinty {
      * Test if Pwinty have started offering new print sizes currently not
      * hard-coded in the enum Photo.Type
      *
-     * @param countryCodes
-     *            countries to check (just an optimisation).
+     * @param countryCodes countries to check (just an optimisation).
      * @return set of item names we don't handle
      */
     protected Set<String> getUnrecognisedItemNames(CountryCode... countryCodes) {
@@ -462,7 +448,7 @@ public class Pwinty {
 
     /**
      * Get the set of items we dont recognise from the catalogue
-     * 
+     *
      * @param catalogue The catalogue to check
      */
     private Set<CatalogueItem> getUnrecognisedItems(Catalogue catalogue) {
