@@ -187,17 +187,19 @@ public class OrderTest {
         can_use_tracked_shipping(GB);
     }
 
-    @Ignore("Not yet supported by pwinty. Remove this @Ignore once they do...")
     @Test
     public void can_use_tracked_shipping_AU() throws MalformedURLException {
-        can_use_tracked_shipping(AU);
+        can_use_tracked_shipping(AU, QualityLevel.Standard); // AU only has standard quality
     }
 
     private void can_use_tracked_shipping(CountryCode country) throws MalformedURLException {
-        testTrackedShipping(country, QualityLevel.Standard, false);
-        testTrackedShipping(country, QualityLevel.Standard, true);
-        testTrackedShipping(country, QualityLevel.Pro, false);
-        testTrackedShipping(country, QualityLevel.Pro, true);
+        can_use_tracked_shipping(country, QualityLevel.Standard);
+        can_use_tracked_shipping(country, QualityLevel.Pro);
+    }
+
+    private void can_use_tracked_shipping(CountryCode country, QualityLevel ql) throws MalformedURLException {
+        testTrackedShipping(country, ql, false);
+        testTrackedShipping(country, ql, true);
     }
 
     private void testTrackedShipping(CountryCode countryCode,
