@@ -8,7 +8,7 @@ v2.2 of the API is supported. If you want an older version, use an older build ;
 
 Releases
 --------
-* v2.2.5 - Added ability to add a photo via an InputStream as well as a File or URL.
+* v2.2.6 - Added ability to add a photo via an InputStream as well as a File or URL.
 
 Usage
 -----
