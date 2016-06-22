@@ -24,8 +24,6 @@ public class PhotoStatus {
 
     @Override
     public String toString() {
-        return "PhotoStatus [id=" + id + ", errors=" + errors + ", warnings="
-                + warnings + "]";
+        return "PhotoStatus [id=" + id + ", errors=" + errors + ", warnings=" + warnings + "]";
     }
-
 }

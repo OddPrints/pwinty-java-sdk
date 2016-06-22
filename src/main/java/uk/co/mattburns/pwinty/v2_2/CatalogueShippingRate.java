@@ -7,13 +7,12 @@ public class CatalogueShippingRate {
     private boolean isTracked;
     private int priceGBP;
 
-    public CatalogueShippingRate() {
-
-    }
+    public CatalogueShippingRate() {}
 
     public String getBand() {
         return band;
     }
+
     public String getDescription() {
         return description;
     }

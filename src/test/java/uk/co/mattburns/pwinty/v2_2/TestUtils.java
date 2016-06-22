@@ -18,7 +18,7 @@ public class TestUtils {
         for (Object key : prop.keySet()) {
             String keyString = (String) key;
             String keyValue = prop.getProperty(keyString);
-            if(keyValue.matches("\\$\\{.*?\\}")){
+            if (keyValue.matches("\\$\\{.*?\\}")) {
                 keyValue = resolveKeyValue(keyValue);
             }
             prop.setProperty(keyString, keyValue);
@@ -26,18 +26,18 @@ public class TestUtils {
         return prop;
     }
 
-    private static String resolveKeyValue(String keyValue){
+    private static String resolveKeyValue(String keyValue) {
         keyValue = keyValue.replaceAll("\\$\\{(.*?)\\}", "$1");
         String envVar = keyValue;
         String defaultVal = null;
-        if(keyValue.indexOf(':') != -1){
+        if (keyValue.indexOf(':') != -1) {
             String[] parts = keyValue.split(":");
             envVar = parts[0];
             defaultVal = parts[1];
         }
 
         String envVal = System.getenv(envVar);
-        if(envVal == null){
+        if (envVal == null) {
             envVal = System.getProperty(envVar);
         }
         return envVal == null ? defaultVal : envVal;

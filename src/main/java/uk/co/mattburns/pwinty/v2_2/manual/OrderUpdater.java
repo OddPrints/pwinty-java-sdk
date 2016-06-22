@@ -89,8 +89,7 @@ public class OrderUpdater {
         }
     }
 
-    public void updateImageUrl(int orderIdToUpdate, int photoIdToUpdate,
-            URL newUrl) {
+    public void updateImageUrl(int orderIdToUpdate, int photoIdToUpdate, URL newUrl) {
         Pwinty pwinty = getPwinty(environment);
         System.out.println(pwinty.getOrder(orderIdToUpdate));
 
@@ -112,8 +111,8 @@ public class OrderUpdater {
         order.addPhoto(newUrl, type, copies, sizing);
     }
 
-    public void addPhotoToOrder(int orderIdToUpdate, URL newUrl, Type type,
-            int copies, Sizing sizing) {
+    public void addPhotoToOrder(
+            int orderIdToUpdate, URL newUrl, Type type, int copies, Sizing sizing) {
         Pwinty pwinty = getPwinty(environment);
         System.out.println(pwinty.getOrder(orderIdToUpdate));
 
@@ -121,8 +120,7 @@ public class OrderUpdater {
         order.addPhoto(newUrl, type, copies, sizing);
     }
 
-    public int updateUseTrackedShipping(int orderIdToUpdate,
-            boolean useTrackedShipping) {
+    public int updateUseTrackedShipping(int orderIdToUpdate, boolean useTrackedShipping) {
         Pwinty pwinty = getPwinty(environment);
         System.out.println(pwinty.getOrder(orderIdToUpdate));
 
@@ -143,16 +141,19 @@ public class OrderUpdater {
         return order.getId();
     }
 
-    public int updateDestinationCountryCode(int orderIdToUpdate,
-            CountryCode destinationCountryCode, QualityLevel qualityLevel,
+    public int updateDestinationCountryCode(
+            int orderIdToUpdate,
+            CountryCode destinationCountryCode,
+            QualityLevel qualityLevel,
             boolean useTrackedShipping) {
         Pwinty pwinty = getPwinty(environment);
         System.out.println(pwinty.getOrder(orderIdToUpdate));
 
         Order order = pwinty.getOrder(orderIdToUpdate);
 
-        order = order.createCloneWithDestinationCountryCode(
-                destinationCountryCode, qualityLevel, useTrackedShipping);
+        order =
+                order.createCloneWithDestinationCountryCode(
+                        destinationCountryCode, qualityLevel, useTrackedShipping);
         System.out.println(order);
         System.out.println(pwinty.getOrder(order.getId()));
 
@@ -165,14 +166,15 @@ public class OrderUpdater {
         Properties props = new Properties();
 
         try {
-            props.load(getClass().getResourceAsStream(
-                    "test-settings.properties"));
+            props.load(getClass().getResourceAsStream("test-settings.properties"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        return new Pwinty(env, props.getProperty("PWINTY_MERCHANT_ID_" + env),
-                props.getProperty("PWINTY_MERCHANT_KEY_" + env), System.out);
+        return new Pwinty(
+                env,
+                props.getProperty("PWINTY_MERCHANT_ID_" + env),
+                props.getProperty("PWINTY_MERCHANT_KEY_" + env),
+                System.out);
     }
-
 }

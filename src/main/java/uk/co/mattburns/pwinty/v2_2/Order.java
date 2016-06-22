@@ -33,23 +33,31 @@ public class Order {
     private Pwinty pwinty;
 
     public enum Status {
-        NotYetSubmitted, Submitted, AwaitingPayment, Complete, Cancelled;
+        NotYetSubmitted,
+        Submitted,
+        AwaitingPayment,
+        Complete,
+        Cancelled;
     }
 
     public enum Payment {
-        InvoiceMe, InvoiceRecipient;
+        InvoiceMe,
+        InvoiceRecipient;
     }
 
     public enum QualityLevel {
-        Pro, Standard;
+        Pro,
+        Standard;
     }
 
     // needed for GSON
-    Order() {
-    }
+    Order() {}
 
-    public Order(Pwinty pwinty, CountryCode labCountry,
-            CountryCode destinationCountry, QualityLevel quality,
+    public Order(
+            Pwinty pwinty,
+            CountryCode labCountry,
+            CountryCode destinationCountry,
+            QualityLevel quality,
             boolean useTrackedShipping) {
         this.pwinty = pwinty;
         this.countryCode = labCountry;
@@ -57,7 +65,7 @@ public class Order {
         this.qualityLevel = quality;
         if (destinationCountry == CountryCode.IE) {
             this.postalOrZipCode = "-"; // default postcode to dash for IE.
-                                        // Pwinty's bug really...
+            // Pwinty's bug really...
         }
         this.useTrackedShipping = useTrackedShipping;
         Order order = pwinty.createOrder(this, useTrackedShipping);
@@ -147,8 +155,8 @@ public class Order {
     }
 
     /**
-     * Get the most pessimistic earliest estimate from each of the shipments.
-     * Will be null before any images are added
+     * Get the most pessimistic earliest estimate from each of the shipments. Will be null before
+     * any images are added
      */
     public DateTime getEarliestEstimatedArrivalDate() {
         DateTime min = null;
@@ -164,8 +172,8 @@ public class Order {
     }
 
     /**
-     * Get the most pessimistic latest estimate from each of the shipments.
-     * Will be null before any images are added
+     * Get the most pessimistic latest estimate from each of the shipments. Will be null before any
+     * images are added
      */
     public DateTime getLatestEstimatedArrivalDate() {
         DateTime max = null;
@@ -192,8 +200,8 @@ public class Order {
         return qualityLevel;
     }
 
-    public Order createCloneWithQualityLevel(QualityLevel qualityLevel,
-            boolean useTrackedShipping) {
+    public Order createCloneWithQualityLevel(
+            QualityLevel qualityLevel, boolean useTrackedShipping) {
         this.qualityLevel = qualityLevel;
         this.useTrackedShipping = useTrackedShipping;
         return pwinty.createOrder(this, useTrackedShipping);
@@ -209,15 +217,15 @@ public class Order {
         return pwinty.createOrder(this, useTrackedShipping);
     }
 
-    public Order createCloneWithPayment(Payment payment,
-            boolean useTrackedShipping) {
+    public Order createCloneWithPayment(Payment payment, boolean useTrackedShipping) {
         this.payment = payment;
         this.useTrackedShipping = useTrackedShipping;
         return pwinty.createOrder(this, useTrackedShipping);
     }
 
     public Order createCloneWithDestinationCountryCode(
-            CountryCode destinationCountryCode, QualityLevel qualityLevel,
+            CountryCode destinationCountryCode,
+            QualityLevel qualityLevel,
             boolean useTrackedShipping) {
         this.destinationCountryCode = destinationCountryCode;
         this.qualityLevel = qualityLevel;
@@ -281,10 +289,9 @@ public class Order {
     }
 
     /**
-     * This is filthy. Only way to ensure this property is kept after creation
-     * on Pwinty because the API doesn't return this property... Not for public
-     * consumption!
-     * 
+     * This is filthy. Only way to ensure this property is kept after creation on Pwinty because the
+     * API doesn't return this property... Not for public consumption!
+     *
      * @param useTrackedShipping
      */
     protected void setImmutableUseTrackedShipping(boolean useTrackedShipping) {
@@ -292,23 +299,20 @@ public class Order {
     }
 
     /**
-     * Add a photo File object to the order. This method will block until the
-     * File is uploaded.
+     * Add a photo File object to the order. This method will block until the File is uploaded.
      */
     public Photo addPhoto(File photo, Photo.Type type, int copies, Sizing sizing) {
-        Photo addedPhoto = pwinty.addPhotoToOrder(id, photo, type, copies,
-                sizing);
+        Photo addedPhoto = pwinty.addPhotoToOrder(id, photo, type, copies, sizing);
         getPhotos().add(addedPhoto);
         return addedPhoto;
     }
 
     /**
-     * Add a photo byte[] InputStream object to the order. This method will block until the
-     * File is uploaded.
+     * Add a photo byte[] InputStream object to the order. This method will block until the File is
+     * uploaded.
      */
     public Photo addPhoto(InputStream photo, Photo.Type type, int copies, Sizing sizing) {
-        Photo addedPhoto = pwinty.addPhotoToOrder(id, photo, type, copies,
-                sizing);
+        Photo addedPhoto = pwinty.addPhotoToOrder(id, photo, type, copies, sizing);
         getPhotos().add(addedPhoto);
         return addedPhoto;
     }
@@ -316,10 +320,8 @@ public class Order {
     /**
      * Add a photo to the order using a public URL.
      */
-    public Photo addPhoto(URL photoUrl, Photo.Type type, int copies,
-            Sizing sizing) {
-        Photo addedPhoto = pwinty.addPhotoToOrder(id, photoUrl, type, copies,
-                sizing);
+    public Photo addPhoto(URL photoUrl, Photo.Type type, int copies, Sizing sizing) {
+        Photo addedPhoto = pwinty.addPhotoToOrder(id, photoUrl, type, copies, sizing);
         getPhotos().add(addedPhoto);
         return addedPhoto;
     }
@@ -331,7 +333,7 @@ public class Order {
 
     /**
      * Submit the Order for printing and shipping
-     * 
+     *
      * If an error occurs, a {@link PwintyError} will be thrown
      */
     public void submit() {

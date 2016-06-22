@@ -9,15 +9,24 @@ public class SubmissionStatus {
     private List<GeneralError> generalErrors;
 
     public enum GeneralError {
-        AccountBalanceInsufficient, ItemsContainingErrors, NoItemsInOrder, PostalAddressNotSet;
+        AccountBalanceInsufficient,
+        ItemsContainingErrors,
+        NoItemsInOrder,
+        PostalAddressNotSet;
     }
 
     public enum PhotoError {
-        FileCouldNotBeDownloaded, NoImageFile, InvalidImagefile, PostalAddressNotSet;
+        FileCouldNotBeDownloaded,
+        NoImageFile,
+        InvalidImagefile,
+        PostalAddressNotSet;
     }
 
     public enum PhotoWarning {
-        CroppingWillOccur, PictureSizeTooSmall, CouldNotValidateImageSize, CouldNotValidateAspectRatio;
+        CroppingWillOccur,
+        PictureSizeTooSmall,
+        CouldNotValidateImageSize,
+        CouldNotValidateAspectRatio;
     }
 
     public int getId() {
@@ -38,9 +47,14 @@ public class SubmissionStatus {
 
     @Override
     public String toString() {
-        return "SubmissionStatus [id=" + id + ", isValid=" + isValid
-                + ", photos=" + photos + ", generalErrors=" + generalErrors
+        return "SubmissionStatus [id="
+                + id
+                + ", isValid="
+                + isValid
+                + ", photos="
+                + photos
+                + ", generalErrors="
+                + generalErrors
                 + "]";
     }
-
 }

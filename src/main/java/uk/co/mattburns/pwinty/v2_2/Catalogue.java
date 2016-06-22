@@ -68,8 +68,7 @@ public class Catalogue {
                 parsedType = item.getType();
             } catch (IllegalArgumentException iae) {
                 // There Pwinty offer a type that is not yet in the enum...
-                System.err
-                        .println("Unrecognised print size: " + item.getName());
+                System.err.println("Unrecognised print size: " + item.getName());
             }
             if (parsedType != null) {
                 availablePrintSizes.add(parsedType);
@@ -78,5 +77,4 @@ public class Catalogue {
 
         return availablePrintSizes.contains(type);
     }
-
 }

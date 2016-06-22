@@ -44,8 +44,7 @@ public class Issue {
     /**
      * no-arg constructor included just for the sake of gson serialisation purposes.
      */
-    public Issue() {
-    }
+    public Issue() {}
 
     public Issue(IssueType issue, IssueAction action) {
         this(issue, action, null, null);

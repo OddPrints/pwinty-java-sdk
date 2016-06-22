@@ -31,9 +31,12 @@ public class PwintyTest {
     public static void before() {
         Properties props = TestUtils.loadProps();
 
-        pwinty = new Pwinty(Environment.SANDBOX,
-                props.getProperty("PWINTY_MERCHANT_ID_SANDBOX"),
-                props.getProperty("PWINTY_MERCHANT_KEY_SANDBOX"), System.out);
+        pwinty =
+                new Pwinty(
+                        Environment.SANDBOX,
+                        props.getProperty("PWINTY_MERCHANT_ID_SANDBOX"),
+                        props.getProperty("PWINTY_MERCHANT_KEY_SANDBOX"),
+                        System.out);
     }
 
     @Test
@@ -47,65 +50,67 @@ public class PwintyTest {
     @Test
     public void can_deserialize_json() {
         /* @formatter:off */
-        String json = "{" +
-        "\"id\":123," +
-        "\"address1\":null," +
-        "\"address2\":null," +
-        "\"postalOrZipCode\":null," +
-        "\"countryCode\":\"GB\"," +
-        "\"addressTownOrCity\":null," +
-        "\"recipientName\":null," +
-        "\"stateOrCounty\":null," +
-        "\"status\":\"NotYetSubmitted\"," +
-        "\"payment\":\"InvoiceMe\"," +
-        "\"paymentUrl\":null," +
-        "\"destinationCountryCode\":\"GB\"," +
-        "\"price\":350," +
-        "\"qualityLevel\":\"Pro\"," +
-        "\"shippingInfo\":{" +
-            "\"price\": 199," +
-            "\"shipments\":[" +
-                "{" +
-                    "\"shipmentId\": null," +
-                    "\"trackingNumber\": null," +
-                    "\"trackingUrl\": null," +
-                    "\"isTracked\": true," +
-                    "\"earliestEstimatedArrivalDate\": \"2015-03-30T16:17:56.9615519Z\"," +
-                    "\"latestEstimatedArrivalDate\": \"2015-04-04T16:17:56.9615519Z\"," +
-                    "\"shippedOn\": null" +
-                "}" +
-            "]" +
-        "}," +
-        "\"photos\":[" +
-            "{" +
-                "\"id\":2638," +
-                "\"type\":\"4x6\"," +
-                "\"url\":null," +
-                "\"status\":\"Ok\"," +
-                "\"copies\":1," +
-                "\"sizing\":\"Crop\"," +
-                "\"priceToUser\":null," +
-                "\"price\":60," +
-                "\"md5Hash\":null," +
-                "\"previewUrl\":\"https://pwintysandbox.s3.amazonaws.com/2575/c0a02d5c-2df2-40f3-b261-46948a6449c8?AWSAccessKeyId=AKIAJXAKHZJEAELFLMPA&Expires=1384538242&Signature=ujIDtEzHTrDUpeNPWqOexmSxU%2B4%3D\",\"thumbnailUrl\":\"https://pwintysandbox.s3.amazonaws.com/2575/00000000-0000-0000-0000-000000000000?AWSAccessKeyId=AKIAJXAKHZJEAELFLMPA&Expires=1384538242&Signature=6g7QdHsVrrH09SbeHduBG6JXoYk%3D\"," +
-                "\"errorMessage\":null" +
-            "}"+
-        "]," +
-        "\"errorMessage\":null" +
-        "}";
+        String json =
+                "{"
+                        + "\"id\":123,"
+                        + "\"address1\":null,"
+                        + "\"address2\":null,"
+                        + "\"postalOrZipCode\":null,"
+                        + "\"countryCode\":\"GB\","
+                        + "\"addressTownOrCity\":null,"
+                        + "\"recipientName\":null,"
+                        + "\"stateOrCounty\":null,"
+                        + "\"status\":\"NotYetSubmitted\","
+                        + "\"payment\":\"InvoiceMe\","
+                        + "\"paymentUrl\":null,"
+                        + "\"destinationCountryCode\":\"GB\","
+                        + "\"price\":350,"
+                        + "\"qualityLevel\":\"Pro\","
+                        + "\"shippingInfo\":{"
+                        + "\"price\": 199,"
+                        + "\"shipments\":["
+                        + "{"
+                        + "\"shipmentId\": null,"
+                        + "\"trackingNumber\": null,"
+                        + "\"trackingUrl\": null,"
+                        + "\"isTracked\": true,"
+                        + "\"earliestEstimatedArrivalDate\": \"2015-03-30T16:17:56.9615519Z\","
+                        + "\"latestEstimatedArrivalDate\": \"2015-04-04T16:17:56.9615519Z\","
+                        + "\"shippedOn\": null"
+                        + "}"
+                        + "]"
+                        + "},"
+                        + "\"photos\":["
+                        + "{"
+                        + "\"id\":2638,"
+                        + "\"type\":\"4x6\","
+                        + "\"url\":null,"
+                        + "\"status\":\"Ok\","
+                        + "\"copies\":1,"
+                        + "\"sizing\":\"Crop\","
+                        + "\"priceToUser\":null,"
+                        + "\"price\":60,"
+                        + "\"md5Hash\":null,"
+                        + "\"previewUrl\":\"https://pwintysandbox.s3.amazonaws.com/2575/c0a02d5c-2df2-40f3-b261-46948a6449c8?AWSAccessKeyId=AKIAJXAKHZJEAELFLMPA&Expires=1384538242&Signature=ujIDtEzHTrDUpeNPWqOexmSxU%2B4%3D\",\"thumbnailUrl\":\"https://pwintysandbox.s3.amazonaws.com/2575/00000000-0000-0000-0000-000000000000?AWSAccessKeyId=AKIAJXAKHZJEAELFLMPA&Expires=1384538242&Signature=6g7QdHsVrrH09SbeHduBG6JXoYk%3D\","
+                        + "\"errorMessage\":null"
+                        + "}"
+                        + "],"
+                        + "\"errorMessage\":null"
+                        + "}";
         /* @formatter:on */
         Order o = Pwinty.fromJson(json, Order.class);
         assertEquals(123, o.getId());
         assertEquals(CountryCode.GB, o.getCountryCode());
         assertEquals(null, o.getShippingInfo().getShipments().get(0).getTrackingUrl());
-        assertEquals(new DateTime("2015-03-30T16:17:56.9615519Z"), o.getShippingInfo().getShipments().get(0).getEarliestEstimatedArrivalDate());
+        assertEquals(
+                new DateTime("2015-03-30T16:17:56.9615519Z"),
+                o.getShippingInfo().getShipments().get(0).getEarliestEstimatedArrivalDate());
         assertEquals(199, o.getShippingInfo().getPrice());
     }
 
     @Test
     public void can_fetch_catalogue() {
-        Catalogue catalogue = pwinty.getCatalogue(GB.getCountryCode(),
-                QualityLevel.Pro);
+        Catalogue catalogue = pwinty.getCatalogue(GB.getCountryCode(), QualityLevel.Pro);
         assertEquals("UNITED KINGDOM", catalogue.getCountry());
         assertEquals(GB.getCountryCode(), catalogue.getCountryCode());
 
@@ -119,8 +124,7 @@ public class PwintyTest {
 
     @Test
     public void can_fetch_oz_catalogue() {
-        Catalogue catalogue = pwinty.getCatalogue(AU.getCountryCode(),
-                QualityLevel.Standard);
+        Catalogue catalogue = pwinty.getCatalogue(AU.getCountryCode(), QualityLevel.Standard);
         assertEquals("AUSTRALIA", catalogue.getCountry());
         assertEquals(AU.getCountryCode(), catalogue.getCountryCode());
 
@@ -133,37 +137,34 @@ public class PwintyTest {
 
     @Test
     public void can_silently_ignore_unrecognised_print_sizes() {
-        Catalogue catalogue = pwinty.getCatalogue(GB.getCountryCode(),
-                QualityLevel.Pro);
+        Catalogue catalogue = pwinty.getCatalogue(GB.getCountryCode(), QualityLevel.Pro);
         catalogue.containsType(Type._4x4); // This should always work
     }
 
     @Test
     public void can_fetch_all_catalogues() {
         Set<Photo.Type> availablePrintSizes = new HashSet<>();
-        for (CatalogueItem item : pwinty.getCatalogue(GB.getCountryCode(),
-                QualityLevel.Standard).getItems()) {
+        for (CatalogueItem item :
+                pwinty.getCatalogue(GB.getCountryCode(), QualityLevel.Standard).getItems()) {
             availablePrintSizes.add(item.getType());
         }
-        for (CatalogueItem item : pwinty.getCatalogue(US.getCountryCode(),
-                QualityLevel.Standard).getItems()) {
+        for (CatalogueItem item :
+                pwinty.getCatalogue(US.getCountryCode(), QualityLevel.Standard).getItems()) {
             availablePrintSizes.add(item.getType());
         }
-        for (CatalogueItem item : pwinty.getCatalogue(GB.getCountryCode(),
-                QualityLevel.Pro).getItems()) {
+        for (CatalogueItem item :
+                pwinty.getCatalogue(GB.getCountryCode(), QualityLevel.Pro).getItems()) {
             availablePrintSizes.add(item.getType());
         }
-        for (CatalogueItem item : pwinty.getCatalogue(US.getCountryCode(),
-                QualityLevel.Pro).getItems()) {
+        for (CatalogueItem item :
+                pwinty.getCatalogue(US.getCountryCode(), QualityLevel.Pro).getItems()) {
             availablePrintSizes.add(item.getType());
         }
-
     }
 
     @Test
     public void no_pano_in_standard() {
-        Catalogue catalogue = pwinty.getCatalogue(GB.getCountryCode(),
-                QualityLevel.Standard);
+        Catalogue catalogue = pwinty.getCatalogue(GB.getCountryCode(), QualityLevel.Standard);
 
         Set<Photo.Type> availablePrintSizes = new HashSet<>();
         for (CatalogueItem item : catalogue.getItems()) {
@@ -178,8 +179,7 @@ public class PwintyTest {
      */
     @Test
     public void all_available_print_types_are_in_enum() {
-        Set<String> unrecognisedItems = pwinty
-                .getUnrecognisedItemNames(CountryCode.values());
+        Set<String> unrecognisedItems = pwinty.getUnrecognisedItemNames(CountryCode.values());
         String errorMessage = "Unrecognised items:";
         for (String item : unrecognisedItems) {
             errorMessage += " " + item;

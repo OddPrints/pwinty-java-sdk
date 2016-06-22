@@ -28,7 +28,8 @@ public class OrderTest {
 
     // Enter keys here to runs the tests
     private static final String TEST_PHOTO_LOCAL = "test.jpg";
-    private static final String TEST_PHOTO_URL = "http://farm4.staticflickr.com/3454/3837830342_dae0b932a9_b_d.jpg";
+    private static final String TEST_PHOTO_URL =
+            "http://farm4.staticflickr.com/3454/3837830342_dae0b932a9_b_d.jpg";
 
     private static Pwinty pwinty;
 
@@ -36,9 +37,12 @@ public class OrderTest {
     public static void before() {
         Properties props = TestUtils.loadProps();
 
-        pwinty = new Pwinty(Environment.SANDBOX,
-                props.getProperty("PWINTY_MERCHANT_ID_SANDBOX"),
-                props.getProperty("PWINTY_MERCHANT_KEY_SANDBOX"), System.out);
+        pwinty =
+                new Pwinty(
+                        Environment.SANDBOX,
+                        props.getProperty("PWINTY_MERCHANT_ID_SANDBOX"),
+                        props.getProperty("PWINTY_MERCHANT_KEY_SANDBOX"),
+                        System.out);
     }
 
     @AfterClass
@@ -96,11 +100,12 @@ public class OrderTest {
                 }
             }
             if (fetchedOrders.isEmpty()) {
-                fail("Couln't find Order "
-                        + orderId
-                        + ", no more orders to search. "
-                        + "I suggest you visit https://sandboxdashboard.pwinty.com/Account/Balance "
-                        + "to grab an old order number and set it at the top of this test.");
+                fail(
+                        "Couln't find Order "
+                                + orderId
+                                + ", no more orders to search. "
+                                + "I suggest you visit https://sandboxdashboard.pwinty.com/Account/Balance "
+                                + "to grab an old order number and set it at the top of this test.");
             }
         }
 
@@ -141,15 +146,12 @@ public class OrderTest {
 
         SubmissionStatus submissionStatus = order.getSubmissionStatus();
         assertEquals(false, submissionStatus.isValid());
-        assertTrue(submissionStatus.getGeneralErrors().contains(
-                GeneralError.NoItemsInOrder));
-        assertTrue(submissionStatus.getGeneralErrors().contains(
-                GeneralError.PostalAddressNotSet));
+        assertTrue(submissionStatus.getGeneralErrors().contains(GeneralError.NoItemsInOrder));
+        assertTrue(submissionStatus.getGeneralErrors().contains(GeneralError.PostalAddressNotSet));
     }
 
     @Test
-    public void can_create_and_add_photo_and_submit_order()
-            throws URISyntaxException {
+    public void can_create_and_add_photo_and_submit_order() throws URISyntaxException {
         Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
         order.setAddress1("ad1");
         order.setAddress2("ad2");
@@ -169,7 +171,8 @@ public class OrderTest {
         SubmissionStatus submissionStatus = order.getSubmissionStatus();
         assertEquals(
                 "SubmissionStatus is not valid: " + submissionStatus.toString(),
-                true, submissionStatus.isValid());
+                true,
+                submissionStatus.isValid());
 
         order.submit();
 
@@ -197,23 +200,25 @@ public class OrderTest {
         can_use_tracked_shipping(country, QualityLevel.Pro);
     }
 
-    private void can_use_tracked_shipping(CountryCode country, QualityLevel ql) throws MalformedURLException {
+    private void can_use_tracked_shipping(CountryCode country, QualityLevel ql)
+            throws MalformedURLException {
         testTrackedShipping(country, ql, false);
         testTrackedShipping(country, ql, true);
     }
 
-    private void testTrackedShipping(CountryCode countryCode,
-            QualityLevel qualityLevel, boolean useTrackedShipping)
+    private void testTrackedShipping(
+            CountryCode countryCode, QualityLevel qualityLevel, boolean useTrackedShipping)
             throws MalformedURLException {
-        testTrackedShipping(countryCode, qualityLevel, useTrackedShipping,
-                useTrackedShipping);
+        testTrackedShipping(countryCode, qualityLevel, useTrackedShipping, useTrackedShipping);
     }
 
-    private void testTrackedShipping(CountryCode countryCode,
-            QualityLevel qualityLevel, boolean useTrackedShipping,
-            boolean expected) throws MalformedURLException {
-        Order order = new Order(pwinty, countryCode, countryCode, qualityLevel,
-                useTrackedShipping);
+    private void testTrackedShipping(
+            CountryCode countryCode,
+            QualityLevel qualityLevel,
+            boolean useTrackedShipping,
+            boolean expected)
+            throws MalformedURLException {
+        Order order = new Order(pwinty, countryCode, countryCode, qualityLevel, useTrackedShipping);
         order.setAddress1("-");
         order.setAddress2("-");
         order.setAddressTownOrCity("-");
@@ -229,16 +234,16 @@ public class OrderTest {
         order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
         Order fetchedOrder = pwinty.getOrder(id);
 
-        assertEquals(countryCode + "-" + qualityLevel + "-"
-                + useTrackedShipping, expected, fetchedOrder.getShippingInfo().getShipments().get(0)
-                .isTracked());
+        assertEquals(
+                countryCode + "-" + qualityLevel + "-" + useTrackedShipping,
+                expected,
+                fetchedOrder.getShippingInfo().getShipments().get(0).isTracked());
     }
 
     @Test
-    public void no_postcode_is_ok_for_IE() throws URISyntaxException,
-            MalformedURLException {
-        Order order = new Order(pwinty, CountryCode.IE, CountryCode.IE,
-                QualityLevel.Standard, false);
+    public void no_postcode_is_ok_for_IE() throws URISyntaxException, MalformedURLException {
+        Order order =
+                new Order(pwinty, CountryCode.IE, CountryCode.IE, QualityLevel.Standard, false);
         order.setAddress1("ad1");
         order.setAddress2("ad2");
         order.setAddressTownOrCity("toc");
@@ -256,27 +261,25 @@ public class OrderTest {
         SubmissionStatus submissionStatus = order.getSubmissionStatus();
         assertEquals(
                 "SubmissionStatus is not valid: " + submissionStatus.toString(),
-                true, submissionStatus.isValid());
+                true,
+                submissionStatus.isValid());
     }
 
     @Test
     @Ignore("Looks like this has changed...")
-    public void cannot_ship_standard_internationally()
-            throws URISyntaxException {
+    public void cannot_ship_standard_internationally() throws URISyntaxException {
         try {
             new Order(pwinty, GB, CountryCode.AD, QualityLevel.Standard, false);
             fail("International shipping for standard prints from GB should not be allowed...");
         } catch (PwintyError pe) {
-            assertTrue(pe.getErrorMessage().toLowerCase()
-                    .contains("no shipping rates available"));
+            assertTrue(pe.getErrorMessage().toLowerCase().contains("no shipping rates available"));
         }
     }
 
     @Test
     public void cannot_order_standard_pano() throws URISyntaxException {
         try {
-            Order order = new Order(pwinty, GB, GB, QualityLevel.Standard,
-                    false);
+            Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
 
             URL resource = OrderTest.class.getResource(TEST_PHOTO_LOCAL);
             File file = new File(resource.toURI());
@@ -284,8 +287,7 @@ public class OrderTest {
             order.addPhoto(file, Type._4x18, 1, Sizing.Crop);
             fail();
         } catch (PwintyError pe) {
-            assertTrue(pe.getErrorMessage().toLowerCase()
-                    .contains("no item of type 4x18"));
+            assertTrue(pe.getErrorMessage().toLowerCase().contains("no item of type 4x18"));
         }
     }
 
@@ -295,8 +297,7 @@ public class OrderTest {
     }
 
     @Test
-    public void error_is_thrown_if_order_not_in_correct_state()
-            throws URISyntaxException {
+    public void error_is_thrown_if_order_not_in_correct_state() throws URISyntaxException {
         Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
         order.setAddress1("ad1");
         order.setAddress2("ad2");
@@ -340,7 +341,8 @@ public class OrderTest {
 
         assertEquals(
                 "SubmissionStatus is not valid: " + submissionStatus.toString(),
-                true, submissionStatus.isValid());
+                true,
+                submissionStatus.isValid());
     }
 
     @Test
@@ -363,13 +365,14 @@ public class OrderTest {
 
         assertEquals(
                 "SubmissionStatus is not valid: " + submissionStatus.toString(),
-                true, submissionStatus.isValid());
+                true,
+                submissionStatus.isValid());
     }
 
     @Test
     public void can_add_metric_photo_size() throws MalformedURLException {
-        Order order = new Order(pwinty, CountryCode.IE, CountryCode.IE,
-                QualityLevel.Standard, false);
+        Order order =
+                new Order(pwinty, CountryCode.IE, CountryCode.IE, QualityLevel.Standard, false);
         order.setAddress1("ad1");
         order.setAddress2("ad2");
         order.setAddressTownOrCity("toc");
@@ -387,7 +390,8 @@ public class OrderTest {
 
         assertEquals(
                 "SubmissionStatus is not valid: " + submissionStatus.toString(),
-                true, submissionStatus.isValid());
+                true,
+                submissionStatus.isValid());
     }
 
     @Test
@@ -468,7 +472,8 @@ public class OrderTest {
 
     @Test
     public void can_serialize_json_order_photo_type() {
-        String json = "{\"id\":1,\"address1\":\"1 street,\",\"address2\":\"blah,\",\"postalOrZipCode\":\"peecode\",\"country\":\"GB\",\"addressTownOrCity\":\"bristol.\",\"recipientName\":\"matt burns\",\"textOnReverse\":null,\"stateOrCounty\":\"Bristol.\",\"status\":\"NotYetSubmitted\",\"payment\":null,\"paymentUrl\":null,\"photos\":[{\"id\":123,\"type\":\"4x18\",\"url\":\"http://www.g.com\",\"status\":\"Ok\",\"copies\":1,\"sizing\":\"Crop\",\"orderId\":1,\"price\":null}],\"documents\":[],\"stickers\":[{\"id\":456,\"orderId\":1,\"fileName\":\"sticker.jpg\"}]}";
+        String json =
+                "{\"id\":1,\"address1\":\"1 street,\",\"address2\":\"blah,\",\"postalOrZipCode\":\"peecode\",\"country\":\"GB\",\"addressTownOrCity\":\"bristol.\",\"recipientName\":\"matt burns\",\"textOnReverse\":null,\"stateOrCounty\":\"Bristol.\",\"status\":\"NotYetSubmitted\",\"payment\":null,\"paymentUrl\":null,\"photos\":[{\"id\":123,\"type\":\"4x18\",\"url\":\"http://www.g.com\",\"status\":\"Ok\",\"copies\":1,\"sizing\":\"Crop\",\"orderId\":1,\"price\":null}],\"documents\":[],\"stickers\":[{\"id\":456,\"orderId\":1,\"fileName\":\"sticker.jpg\"}]}";
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(Type.class, new TypeDeserializer());
         Gson gson = gsonBuilder.create();
@@ -491,8 +496,7 @@ public class OrderTest {
 
     @Test
     public void can_change_quality_using_clone() throws URISyntaxException {
-        Order order = new Order(pwinty, GB, CountryCode.GB,
-                QualityLevel.Standard, false);
+        Order order = new Order(pwinty, GB, CountryCode.GB, QualityLevel.Standard, false);
 
         assertEquals(QualityLevel.Standard, order.getQualityLevel());
         int originalId = order.getId();
@@ -504,8 +508,7 @@ public class OrderTest {
     }
 
     @Test
-    public void only_minimum_address_needed()
-            throws URISyntaxException {
+    public void only_minimum_address_needed() throws URISyntaxException {
         Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
         order.setAddress1("ad1");
         order.setAddressTownOrCity("toc");
@@ -522,7 +525,8 @@ public class OrderTest {
         SubmissionStatus submissionStatus = order.getSubmissionStatus();
         assertEquals(
                 "SubmissionStatus is not valid: " + submissionStatus.toString(),
-                true, submissionStatus.isValid());
+                true,
+                submissionStatus.isValid());
 
         order.submit();
 
@@ -532,8 +536,7 @@ public class OrderTest {
 
     @Test
     public void cant_get_delivery_estimate_before_photo_added() throws MalformedURLException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard,
-                false);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
         order.setAddress1("-");
         order.setAddress2("-");
         order.setAddressTownOrCity("-");
@@ -575,12 +578,13 @@ public class OrderTest {
         order = pwinty.getOrder(id); // update with latest
         assertTrue(order.getEarliestEstimatedArrivalDate().isAfter(DateTime.now()));
         assertTrue(order.getLatestEstimatedArrivalDate().isAfter(DateTime.now()));
-        assertTrue(order.getEarliestEstimatedArrivalDate().isBefore(order.getLatestEstimatedArrivalDate()));
+        assertTrue(
+                order.getEarliestEstimatedArrivalDate()
+                        .isBefore(order.getLatestEstimatedArrivalDate()));
     }
 
     @Test
-    public void can_report_lost_in_post()
-            throws URISyntaxException {
+    public void can_report_lost_in_post() throws URISyntaxException {
         Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
         order.setAddress1("ad1");
         order.setAddress2("ad2");
@@ -600,7 +604,8 @@ public class OrderTest {
         SubmissionStatus submissionStatus = order.getSubmissionStatus();
         assertEquals(
                 "SubmissionStatus is not valid: " + submissionStatus.toString(),
-                true, submissionStatus.isValid());
+                true,
+                submissionStatus.isValid());
 
         order.submit();
 
@@ -619,7 +624,7 @@ public class OrderTest {
 
         // update fetchedIssues
         fetchedIssues = fetchedOrder.getIssues();
-        
+
         assertEquals(Issue.IssueType.LostInPost, fetchedIssues.getIssues().get(0).getIssue());
         assertEquals(Issue.IssueState.Open, fetchedIssues.getIssues().get(0).getIssueState());
         assertTrue(fetchedIssues.getIssues().get(0).getCommentary().contains("Issue created"));

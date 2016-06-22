@@ -35,53 +35,49 @@ public class Pwinty {
     private static final String PWINTY_VERSION = "v2.2";
 
     /**
-     * This is the main class for talking to the Pwinty API. See
-     * http://www.pwinty.com/api.html for detailed examples.
+     * This is the main class for talking to the Pwinty API. See http://www.pwinty.com/api.html for
+     * detailed examples.
      * <p/>
-     * For all method calls, if an error occurs, a {@link PwintyError} will be
-     * thrown
+     * For all method calls, if an error occurs, a {@link PwintyError} will be thrown
      *
-     * @param environment Choose SANDBOX for testing and LIVE for real orders you wish
-     *                    to print
-     * @param merchantId  As supplied by http://www.pwinty.com
-     * @param apiKey      As supplied by http://www.pwinty.com
+     * @param environment Choose SANDBOX for testing and LIVE for real orders you wish to print
+     * @param merchantId As supplied by http://www.pwinty.com
+     * @param apiKey As supplied by http://www.pwinty.com
      */
     public Pwinty(Environment environment, String merchantId, String apiKey) {
         this(null, environment, merchantId, apiKey);
     }
 
     /**
-     * This is the main class for talking to the Pwinty API. See
-     * http://www.pwinty.com/api.html
+     * This is the main class for talking to the Pwinty API. See http://www.pwinty.com/api.html
      *
-     * @param environment   Choose SANDBOX for testing and LIVE for real orders you wish
-     *                      to print
-     * @param merchantId    As supplied by http://www.pwinty.com
-     * @param apiKey        As supplied by http://www.pwinty.com
+     * @param environment Choose SANDBOX for testing and LIVE for real orders you wish to print
+     * @param merchantId As supplied by http://www.pwinty.com
+     * @param apiKey As supplied by http://www.pwinty.com
      * @param loggingStream Requests and responses will be written to this
      */
-    public Pwinty(Environment environment, String merchantId, String apiKey,
-                  PrintStream loggingStream) {
+    public Pwinty(
+            Environment environment, String merchantId, String apiKey, PrintStream loggingStream) {
         this(new LoggingFilter(loggingStream), environment, merchantId, apiKey);
     }
 
     /**
-     * This is the main class for talking to the Pwinty API. See
-     * http://www.pwinty.com/api.html
+     * This is the main class for talking to the Pwinty API. See http://www.pwinty.com/api.html
      *
-     * @param environment Choose SANDBOX for testing and LIVE for real orders you wish
-     *                    to print
-     * @param merchantId  As supplied by http://www.pwinty.com
-     * @param apiKey      As supplied by http://www.pwinty.com
-     * @param logger      Requests and responses will be written to this
+     * @param environment Choose SANDBOX for testing and LIVE for real orders you wish to print
+     * @param merchantId As supplied by http://www.pwinty.com
+     * @param apiKey As supplied by http://www.pwinty.com
+     * @param logger Requests and responses will be written to this
      */
-    public Pwinty(Environment environment, String merchantId, String apiKey,
-                  Logger logger) {
+    public Pwinty(Environment environment, String merchantId, String apiKey, Logger logger) {
         this(new LoggingFilter(logger), environment, merchantId, apiKey);
     }
 
-    private Pwinty(LoggingFilter loggingFilter, Environment environment,
-                   String merchantId, String apiKey) {
+    private Pwinty(
+            LoggingFilter loggingFilter,
+            Environment environment,
+            String merchantId,
+            String apiKey) {
         this.merchantId = merchantId;
         this.apiKey = apiKey;
 
@@ -96,12 +92,14 @@ public class Pwinty {
     }
 
     public List<Country> getCountries() {
-        String countriesJSON = webResource.path("Country")
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("X-Pwinty-MerchantId", merchantId)
-                .header("X-Pwinty-REST-API-Key", apiKey).get(String.class);
-        Country[] countries = createGson().fromJson(countriesJSON,
-                Country[].class);
+        String countriesJSON =
+                webResource
+                        .path("Country")
+                        .accept(MediaType.APPLICATION_JSON_TYPE)
+                        .header("X-Pwinty-MerchantId", merchantId)
+                        .header("X-Pwinty-REST-API-Key", apiKey)
+                        .get(String.class);
+        Country[] countries = createGson().fromJson(countriesJSON, Country[].class);
 
         return Arrays.asList(countries);
     }
@@ -109,19 +107,20 @@ public class Pwinty {
     /**
      * Get the most recent orders.
      *
-     * @param count  The number of order to retrieve
+     * @param count The number of order to retrieve
      * @param offset Skip over this many most recent orders
      * @return A list of orders
      */
     public List<Order> getOrders(int count, int offset) {
-        String ordersJSON = webResource.path("Orders")
-                .queryParam("count", "" + count)
-                .queryParam("offset", "" + offset)
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("X-Pwinty-MerchantId", merchantId)
-                .header("X-Pwinty-REST-API-Key", apiKey)
-
-                .get(String.class);
+        String ordersJSON =
+                webResource
+                        .path("Orders")
+                        .queryParam("count", "" + count)
+                        .queryParam("offset", "" + offset)
+                        .accept(MediaType.APPLICATION_JSON_TYPE)
+                        .header("X-Pwinty-MerchantId", merchantId)
+                        .header("X-Pwinty-REST-API-Key", apiKey)
+                        .get(String.class);
         Order[] orders = createGson().fromJson(ordersJSON, Order[].class);
 
         for (Order order : orders) {
@@ -131,11 +130,13 @@ public class Pwinty {
     }
 
     public Order getOrder(int orderId) {
-        ClientResponse response = webResource.path("Orders/" + orderId)
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("X-Pwinty-MerchantId", merchantId)
-                .header("X-Pwinty-REST-API-Key", apiKey)
-                .get(ClientResponse.class);
+        ClientResponse response =
+                webResource
+                        .path("Orders/" + orderId)
+                        .accept(MediaType.APPLICATION_JSON_TYPE)
+                        .header("X-Pwinty-MerchantId", merchantId)
+                        .header("X-Pwinty-REST-API-Key", apiKey)
+                        .get(ClientResponse.class);
 
         Order order = createReponse(response, Order.class);
         order.setPwinty(this);
@@ -144,19 +145,21 @@ public class Pwinty {
 
     Order createOrder(Order newOrder, boolean useTrackedShipping) {
         Form form = createOrderForm(newOrder, useTrackedShipping);
-        ClientResponse response = webResource.path("Orders")
-                .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("X-Pwinty-MerchantId", merchantId)
-                .header("X-Pwinty-REST-API-Key", apiKey)
-                .post(ClientResponse.class, form);
+        ClientResponse response =
+                webResource
+                        .path("Orders")
+                        .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+                        .accept(MediaType.APPLICATION_JSON_TYPE)
+                        .header("X-Pwinty-MerchantId", merchantId)
+                        .header("X-Pwinty-REST-API-Key", apiKey)
+                        .post(ClientResponse.class, form);
 
         Order createdOrder = createReponse(response, Order.class);
         createdOrder.setPwinty(this);
 
         for (Photo photo : newOrder.getPhotos()) {
-            createdOrder.addPhoto(photo.getUrl(), photo.getType(),
-                    photo.getCopies(), photo.getSizing());
+            createdOrder.addPhoto(
+                    photo.getUrl(), photo.getType(), photo.getCopies(), photo.getSizing());
         }
         return createdOrder;
     }
@@ -164,12 +167,14 @@ public class Pwinty {
     Order updateOrder(int orderId, Order newOrder) {
         Form form = createOrderForm(newOrder);
         form.add("id", orderId);
-        ClientResponse response = webResource.path("Orders/" + orderId)
-                .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("X-Pwinty-MerchantId", merchantId)
-                .header("X-Pwinty-REST-API-Key", apiKey)
-                .put(ClientResponse.class, form);
+        ClientResponse response =
+                webResource
+                        .path("Orders/" + orderId)
+                        .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+                        .accept(MediaType.APPLICATION_JSON_TYPE)
+                        .header("X-Pwinty-MerchantId", merchantId)
+                        .header("X-Pwinty-REST-API-Key", apiKey)
+                        .put(ClientResponse.class, form);
 
         return createReponse(response, Order.class);
     }
@@ -181,80 +186,87 @@ public class Pwinty {
     }
 
     SubmissionStatus getSubmissionStatus(int orderId) {
-        ClientResponse response = webResource
-                .path("Orders/" + orderId + "/SubmissionStatus")
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("X-Pwinty-MerchantId", merchantId)
-                .header("X-Pwinty-REST-API-Key", apiKey)
-                .get(ClientResponse.class);
+        ClientResponse response =
+                webResource
+                        .path("Orders/" + orderId + "/SubmissionStatus")
+                        .accept(MediaType.APPLICATION_JSON_TYPE)
+                        .header("X-Pwinty-MerchantId", merchantId)
+                        .header("X-Pwinty-REST-API-Key", apiKey)
+                        .get(ClientResponse.class);
 
         return createReponse(response, SubmissionStatus.class);
     }
 
     Issues getIssues(int orderId) {
-        ClientResponse response = webResource
-                .path("Orders/" + orderId + "/Issues")
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("X-Pwinty-MerchantId", merchantId)
-                .header("X-Pwinty-REST-API-Key", apiKey)
-                .get(ClientResponse.class);
+        ClientResponse response =
+                webResource
+                        .path("Orders/" + orderId + "/Issues")
+                        .accept(MediaType.APPLICATION_JSON_TYPE)
+                        .header("X-Pwinty-MerchantId", merchantId)
+                        .header("X-Pwinty-REST-API-Key", apiKey)
+                        .get(ClientResponse.class);
 
         return createReponse(response, Issues.class);
     }
 
     /**
-     * Add a photo File object to the order. This method will block until the
-     * File is uploaded.
+     * Add a photo File object to the order. This method will block until the File is uploaded.
      */
-    Photo addPhotoToOrder(int orderId, File photo, Photo.Type type, int copies,
-                          Sizing sizing) {
+    Photo addPhotoToOrder(int orderId, File photo, Photo.Type type, int copies, Sizing sizing) {
         return addPhotoToOrder(orderId, null, photo, null, type, copies, sizing);
     }
 
     /**
-     * Add a photo InputStream object to the order. This method will block until the
-     * File is uploaded.
+     * Add a photo InputStream object to the order. This method will block until the File is
+     * uploaded.
      */
-    Photo addPhotoToOrder(int orderId, InputStream photo, Photo.Type type, int copies,
-                          Sizing sizing) {
+    Photo addPhotoToOrder(
+            int orderId, InputStream photo, Photo.Type type, int copies, Sizing sizing) {
         return addPhotoToOrder(orderId, photo, null, null, type, copies, sizing);
     }
 
     /**
      * Add a photo to the order using a public URL.
      */
-    Photo addPhotoToOrder(int orderId, URL photoUrl, Photo.Type type,
-                          int copies, Sizing sizing) {
+    Photo addPhotoToOrder(int orderId, URL photoUrl, Photo.Type type, int copies, Sizing sizing) {
         return addPhotoToOrder(orderId, null, null, photoUrl, type, copies, sizing);
     }
 
     /**
      * Either the File or URL must be supplied
      */
-    private Photo addPhotoToOrder(int orderId, InputStream photoData, File photo, URL photoUrl,
-                                  Photo.Type type, int copies, Sizing sizing) {
+    private Photo addPhotoToOrder(
+            int orderId,
+            InputStream photoData,
+            File photo,
+            URL photoUrl,
+            Photo.Type type,
+            int copies,
+            Sizing sizing) {
 
         @SuppressWarnings("resource")
-        FormDataMultiPart form = new FormDataMultiPart()
-                .field("type", type.toString())
-                .field("sizing", sizing.toString())
-                .field("copies", "" + copies);
+        FormDataMultiPart form =
+                new FormDataMultiPart()
+                        .field("type", type.toString())
+                        .field("sizing", sizing.toString())
+                        .field("copies", "" + copies);
 
         if (photoData != null) {
             form.bodyPart(new StreamDataBodyPart("file", photoData));
         } else if (photo != null) {
-            form.bodyPart(new FileDataBodyPart("file", photo,
-                    MediaType.APPLICATION_OCTET_STREAM_TYPE));
+            form.bodyPart(
+                    new FileDataBodyPart("file", photo, MediaType.APPLICATION_OCTET_STREAM_TYPE));
         } else {
             form = form.field("url", photoUrl.toExternalForm());
         }
 
-        ClientResponse response = webResource
-                .path("Orders/" + orderId + "/Photos")
-                .type(MediaType.MULTIPART_FORM_DATA_TYPE)
-                .header("X-Pwinty-MerchantId", merchantId)
-                .header("X-Pwinty-REST-API-Key", apiKey)
-                .post(ClientResponse.class, form);
+        ClientResponse response =
+                webResource
+                        .path("Orders/" + orderId + "/Photos")
+                        .type(MediaType.MULTIPART_FORM_DATA_TYPE)
+                        .header("X-Pwinty-MerchantId", merchantId)
+                        .header("X-Pwinty-REST-API-Key", apiKey)
+                        .post(ClientResponse.class, form);
 
         throwIfBad(response);
 
@@ -272,12 +284,13 @@ public class Pwinty {
             form.add("actionDetail", issue.getActionDetail());
         }
 
-        ClientResponse response = webResource
-                .path("Orders/" + orderId + "/Issues")
-                .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
-                .header("X-Pwinty-MerchantId", merchantId)
-                .header("X-Pwinty-REST-API-Key", apiKey)
-                .post(ClientResponse.class, form);
+        ClientResponse response =
+                webResource
+                        .path("Orders/" + orderId + "/Issues")
+                        .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+                        .header("X-Pwinty-MerchantId", merchantId)
+                        .header("X-Pwinty-REST-API-Key", apiKey)
+                        .post(ClientResponse.class, form);
 
         throwIfBad(response);
 
@@ -285,12 +298,13 @@ public class Pwinty {
     }
 
     public Photo getPhoto(int orderId, int photoId) {
-        ClientResponse response = webResource
-                .path("Orders/" + orderId + "/Photos/" + photoId)
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("X-Pwinty-MerchantId", merchantId)
-                .header("X-Pwinty-REST-API-Key", apiKey)
-                .get(ClientResponse.class);
+        ClientResponse response =
+                webResource
+                        .path("Orders/" + orderId + "/Photos/" + photoId)
+                        .accept(MediaType.APPLICATION_JSON_TYPE)
+                        .header("X-Pwinty-MerchantId", merchantId)
+                        .header("X-Pwinty-REST-API-Key", apiKey)
+                        .get(ClientResponse.class);
 
         return createReponse(response, Photo.class);
     }
@@ -298,13 +312,14 @@ public class Pwinty {
     void deletePhoto(int orderId, int photoId) {
         Form form = new Form();
 
-        ClientResponse response = webResource
-                .path("Orders/" + orderId + "/Photos/" + photoId)
-                .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("X-Pwinty-MerchantId", merchantId)
-                .header("X-Pwinty-REST-API-Key", apiKey)
-                .delete(ClientResponse.class, form);
+        ClientResponse response =
+                webResource
+                        .path("Orders/" + orderId + "/Photos/" + photoId)
+                        .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+                        .accept(MediaType.APPLICATION_JSON_TYPE)
+                        .header("X-Pwinty-MerchantId", merchantId)
+                        .header("X-Pwinty-REST-API-Key", apiKey)
+                        .delete(ClientResponse.class, form);
 
         throwIfBad(response);
     }
@@ -329,13 +344,14 @@ public class Pwinty {
         Form form = new Form();
         form.add("status", status);
 
-        ClientResponse response = webResource
-                .path("Orders/" + orderId + "/Status")
-                .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("X-Pwinty-MerchantId", merchantId)
-                .header("X-Pwinty-REST-API-Key", apiKey)
-                .post(ClientResponse.class, form);
+        ClientResponse response =
+                webResource
+                        .path("Orders/" + orderId + "/Status")
+                        .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+                        .accept(MediaType.APPLICATION_JSON_TYPE)
+                        .header("X-Pwinty-MerchantId", merchantId)
+                        .header("X-Pwinty-REST-API-Key", apiKey)
+                        .post(ClientResponse.class, form);
 
         throwIfBad(response);
     }
@@ -384,8 +400,7 @@ public class Pwinty {
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         Gson gson = gsonBuilder.create();
 
-        PwintyError error = gson.fromJson(response.getEntity(String.class),
-                PwintyError.class);
+        PwintyError error = gson.fromJson(response.getEntity(String.class), PwintyError.class);
         if (error == null) {
             error = new PwintyError();
         }
@@ -394,8 +409,8 @@ public class Pwinty {
     }
 
     public enum Environment {
-        LIVE("https://api.pwinty.com/" + Pwinty.PWINTY_VERSION), SANDBOX(
-                "https://sandbox.pwinty.com/" + Pwinty.PWINTY_VERSION);
+        LIVE("https://api.pwinty.com/" + Pwinty.PWINTY_VERSION),
+        SANDBOX("https://sandbox.pwinty.com/" + Pwinty.PWINTY_VERSION);
 
         private String url;
 
@@ -405,13 +420,14 @@ public class Pwinty {
     }
 
     public Catalogue getCatalogue(CountryCode countryCode, QualityLevel quality) {
-        String catalogueJSON = webResource
-                .path("Catalogue/" + countryCode + "/" + quality.toString())
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .header("X-Pwinty-MerchantId", merchantId)
-                .header("X-Pwinty-REST-API-Key", apiKey).get(String.class);
-        Catalogue catalogue = createGson().fromJson(catalogueJSON,
-                Catalogue.class);
+        String catalogueJSON =
+                webResource
+                        .path("Catalogue/" + countryCode + "/" + quality.toString())
+                        .accept(MediaType.APPLICATION_JSON_TYPE)
+                        .header("X-Pwinty-MerchantId", merchantId)
+                        .header("X-Pwinty-REST-API-Key", apiKey)
+                        .get(String.class);
+        Catalogue catalogue = createGson().fromJson(catalogueJSON, Catalogue.class);
 
         removeUnrecognisedItems(catalogue);
 
@@ -419,8 +435,8 @@ public class Pwinty {
     }
 
     /**
-     * Test if Pwinty have started offering new print sizes currently not
-     * hard-coded in the enum Photo.Type
+     * Test if Pwinty have started offering new print sizes currently not hard-coded in the enum
+     * Photo.Type
      *
      * @param countryCodes countries to check (just an optimisation).
      * @return set of item names we don't handle
@@ -429,15 +445,14 @@ public class Pwinty {
         Set<String> unrecognisedItemNames = new HashSet<String>();
         for (QualityLevel quality : QualityLevel.values()) {
             for (CountryCode countryCode : countryCodes) {
-                String catalogueJSON = webResource
-                        .path("Catalogue/" + countryCode + "/"
-                                + quality.toString())
-                        .accept(MediaType.APPLICATION_JSON_TYPE)
-                        .header("X-Pwinty-MerchantId", merchantId)
-                        .header("X-Pwinty-REST-API-Key", apiKey)
-                        .get(String.class);
-                Catalogue catalogue = createGson().fromJson(catalogueJSON,
-                        Catalogue.class);
+                String catalogueJSON =
+                        webResource
+                                .path("Catalogue/" + countryCode + "/" + quality.toString())
+                                .accept(MediaType.APPLICATION_JSON_TYPE)
+                                .header("X-Pwinty-MerchantId", merchantId)
+                                .header("X-Pwinty-REST-API-Key", apiKey)
+                                .get(String.class);
+                Catalogue catalogue = createGson().fromJson(catalogueJSON, Catalogue.class);
                 for (CatalogueItem item : getUnrecognisedItems(catalogue)) {
                     unrecognisedItemNames.add(item.getName());
                 }

@@ -27,15 +27,17 @@ public class CatalogueTest {
     public static void before() {
         Properties props = TestUtils.loadProps();
 
-        pwinty = new Pwinty(Environment.SANDBOX,
-                props.getProperty("PWINTY_MERCHANT_ID_SANDBOX"),
-                props.getProperty("PWINTY_MERCHANT_KEY_SANDBOX"), System.out);
+        pwinty =
+                new Pwinty(
+                        Environment.SANDBOX,
+                        props.getProperty("PWINTY_MERCHANT_ID_SANDBOX"),
+                        props.getProperty("PWINTY_MERCHANT_KEY_SANDBOX"),
+                        System.out);
     }
 
     @Test
     public void can_fetch_catalogue() {
-        Catalogue catalogue = pwinty.getCatalogue(GB.getCountryCode(),
-                QualityLevel.Pro);
+        Catalogue catalogue = pwinty.getCatalogue(GB.getCountryCode(), QualityLevel.Pro);
         assertEquals("UNITED KINGDOM", catalogue.getCountry());
         assertEquals(GB.getCountryCode(), catalogue.getCountryCode());
 
@@ -54,8 +56,7 @@ public class CatalogueTest {
 
         testedItem = false;
         for (CatalogueItem item : catalogue.getItems()) {
-            if (item.getDescription().equalsIgnoreCase(
-                    "4x18 poster mounted in 10x24 frame")) {
+            if (item.getDescription().equalsIgnoreCase("4x18 poster mounted in 10x24 frame")) {
                 assertEquals(4, item.getImageHorizontalSize(), DELTA);
                 assertEquals(18, item.getImageVerticalSize(), DELTA);
                 assertEquals(10, item.getFullProductHorizontalSize(), DELTA);
@@ -68,8 +69,7 @@ public class CatalogueTest {
         }
         assertTrue("Couldn't find the item I wanted to test!", testedItem);
 
-        catalogue = pwinty.getCatalogue(AU.getCountryCode(),
-                QualityLevel.Standard);
+        catalogue = pwinty.getCatalogue(AU.getCountryCode(), QualityLevel.Standard);
         assertEquals("AUSTRALIA", catalogue.getCountry());
         assertEquals(AU.getCountryCode(), catalogue.getCountryCode());
         testedItem = false;
@@ -89,8 +89,7 @@ public class CatalogueTest {
         }
         assertTrue("Couldn't find the item I wanted to test!", testedItem);
 
-        catalogue = pwinty.getCatalogue(IE.getCountryCode(),
-                QualityLevel.Standard);
+        catalogue = pwinty.getCatalogue(IE.getCountryCode(), QualityLevel.Standard);
         assertEquals("IRELAND", catalogue.getCountry());
         assertEquals(IE.getCountryCode(), catalogue.getCountryCode());
         testedItem = false;
@@ -111,16 +110,15 @@ public class CatalogueTest {
 
     @Test
     public void can_get_shipping_rates() {
-        Catalogue catalogue = pwinty.getCatalogue(GB.getCountryCode(),
-                QualityLevel.Standard);
+        Catalogue catalogue = pwinty.getCatalogue(GB.getCountryCode(), QualityLevel.Standard);
         List<CatalogueShippingRate> rates = catalogue.getShippingRates();
 
         CatalogueShippingRate foundRate = null;
         for (CatalogueShippingRate rate : rates) {
-           if (rate.getBand().equals("Prints")) {
-               foundRate = rate;
-               break;
-           }
+            if (rate.getBand().equals("Prints")) {
+                foundRate = rate;
+                break;
+            }
         }
         assertEquals("Prints", foundRate.getBand());
         assertEquals("2nd Class Royal Mail", foundRate.getDescription());

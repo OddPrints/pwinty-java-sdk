@@ -16,11 +16,11 @@ public class CatalogueItem {
     private int recommendedHorizontalResolution;
     private int recommendedVerticalResolution;
 
-    public CatalogueItem() {
-    }
+    public CatalogueItem() {}
 
     public enum SizeUnits {
-        inches, cm
+        inches,
+        cm
     }
 
     public String getName() {
@@ -103,8 +103,7 @@ public class CatalogueItem {
         return recommendedHorizontalResolution;
     }
 
-    public void setRecommendedHorizontalResolution(
-            int recommendedHorizontalResolution) {
+    public void setRecommendedHorizontalResolution(int recommendedHorizontalResolution) {
         this.recommendedHorizontalResolution = recommendedHorizontalResolution;
     }
 
@@ -112,8 +111,7 @@ public class CatalogueItem {
         return recommendedVerticalResolution;
     }
 
-    public void setRecommendedVerticalResolution(
-            int recommendedVerticalResolution) {
+    public void setRecommendedVerticalResolution(int recommendedVerticalResolution) {
         this.recommendedVerticalResolution = recommendedVerticalResolution;
     }
 }
