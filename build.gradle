@@ -1,14 +1,25 @@
-group 'uk.co.mattburns.pwinty'
-version '2.2.6'
-
-apply plugin: 'java'
-apply plugin: 'maven'
-
 buildscript {
     repositories {
         mavenCentral()
     }
 }
+
+plugins {
+    id 'com.github.sherter.google-java-format' version '0.3.2'
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+googleJavaFormat {
+    options style: 'AOSP'
+}
+
+// Force code formatting
+compileJava.dependsOn tasks.googleJavaFormat
+
+group 'uk.co.mattburns.pwinty'
+version '2.2.6'
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
