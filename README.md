@@ -91,6 +91,11 @@ cp test-settings.properties src/test/resources/uk/co/mattburns/pwinty/v2_2/
 ./gradlew test
 ```
 
+Save time and run an individual test like this:
+
+```
+./gradlew test --tests "uk.co.mattburns.pwinty.v2_2.PwintyTest.all_available_print_types_are_in_enum"
+```
 
 
 More
