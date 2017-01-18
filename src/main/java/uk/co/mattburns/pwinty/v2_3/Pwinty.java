@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2_2;
+package uk.co.mattburns.pwinty.v2_3;
 
 import java.io.File;
 import java.io.InputStream;
@@ -10,11 +10,11 @@ import java.util.logging.Logger;
 import javax.ws.rs.core.MediaType;
 
 import com.sun.jersey.multipart.file.StreamDataBodyPart;
-import uk.co.mattburns.pwinty.v2_2.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2_2.Order.Status;
-import uk.co.mattburns.pwinty.v2_2.Photo.Sizing;
-import uk.co.mattburns.pwinty.v2_2.Photo.Type;
-import uk.co.mattburns.pwinty.v2_2.gson.TypeDeserializer;
+import uk.co.mattburns.pwinty.v2_3.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2_3.Order.Status;
+import uk.co.mattburns.pwinty.v2_3.Photo.Sizing;
+import uk.co.mattburns.pwinty.v2_3.Photo.Type;
+import uk.co.mattburns.pwinty.v2_3.gson.TypeDeserializer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -207,6 +207,18 @@ public class Pwinty {
                         .get(ClientResponse.class);
 
         return createReponse(response, Issues.class);
+    }
+
+    Logs getLogs(int orderId) {
+        ClientResponse response =
+                webResource
+                        .path("Orders/" + orderId + "/Logs")
+                        .accept(MediaType.APPLICATION_JSON_TYPE)
+                        .header("X-Pwinty-MerchantId", merchantId)
+                        .header("X-Pwinty-REST-API-Key", apiKey)
+                        .get(ClientResponse.class);
+
+        return createReponse(response, Logs.class);
     }
 
     /**

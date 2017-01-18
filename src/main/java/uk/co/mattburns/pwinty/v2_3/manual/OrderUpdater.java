@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2_2.manual;
+package uk.co.mattburns.pwinty.v2_3.manual;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -7,14 +7,10 @@ import java.net.URLDecoder;
 import java.util.List;
 import java.util.Properties;
 
-import uk.co.mattburns.pwinty.v2_2.CountryCode;
-import uk.co.mattburns.pwinty.v2_2.Order;
-import uk.co.mattburns.pwinty.v2_2.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2_2.Photo;
-import uk.co.mattburns.pwinty.v2_2.Photo.Sizing;
-import uk.co.mattburns.pwinty.v2_2.Photo.Type;
-import uk.co.mattburns.pwinty.v2_2.Pwinty;
-import uk.co.mattburns.pwinty.v2_2.Pwinty.Environment;
+import uk.co.mattburns.pwinty.v2_3.CountryCode;
+import uk.co.mattburns.pwinty.v2_3.Order;
+import uk.co.mattburns.pwinty.v2_3.Photo;
+import uk.co.mattburns.pwinty.v2_3.Pwinty;
 
 public class OrderUpdater {
 
@@ -36,9 +32,9 @@ public class OrderUpdater {
         // false);
     }
 
-    private Environment environment;
+    private Pwinty.Environment environment;
 
-    public OrderUpdater(Environment environment) {
+    public OrderUpdater(Pwinty.Environment environment) {
         this.environment = environment;
     }
 
@@ -96,8 +92,8 @@ public class OrderUpdater {
         Order order = pwinty.getOrder(orderIdToUpdate);
         List<Photo> photos = order.getPhotos();
 
-        Type type = null;
-        Sizing sizing = null;
+        Photo.Type type = null;
+        Photo.Sizing sizing = null;
         int copies = 0;
         for (Photo photo : photos) {
             if (photo.getId() == photoIdToUpdate) {
@@ -112,7 +108,7 @@ public class OrderUpdater {
     }
 
     public void addPhotoToOrder(
-            int orderIdToUpdate, URL newUrl, Type type, int copies, Sizing sizing) {
+            int orderIdToUpdate, URL newUrl, Photo.Type type, int copies, Photo.Sizing sizing) {
         Pwinty pwinty = getPwinty(environment);
         System.out.println(pwinty.getOrder(orderIdToUpdate));
 
@@ -144,7 +140,7 @@ public class OrderUpdater {
     public int updateDestinationCountryCode(
             int orderIdToUpdate,
             CountryCode destinationCountryCode,
-            QualityLevel qualityLevel,
+            Order.QualityLevel qualityLevel,
             boolean useTrackedShipping) {
         Pwinty pwinty = getPwinty(environment);
         System.out.println(pwinty.getOrder(orderIdToUpdate));
@@ -162,7 +158,7 @@ public class OrderUpdater {
         return order.getId();
     }
 
-    public Pwinty getPwinty(Environment env) {
+    public Pwinty getPwinty(Pwinty.Environment env) {
         Properties props = new Properties();
 
         try {

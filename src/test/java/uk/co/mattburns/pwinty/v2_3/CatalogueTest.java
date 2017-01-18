@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2_2;
+package uk.co.mattburns.pwinty.v2_3;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -9,9 +9,9 @@ import java.util.Properties;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import uk.co.mattburns.pwinty.v2_2.CatalogueItem.SizeUnits;
-import uk.co.mattburns.pwinty.v2_2.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2_2.Pwinty.Environment;
+import uk.co.mattburns.pwinty.v2_3.CatalogueItem.SizeUnits;
+import uk.co.mattburns.pwinty.v2_3.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2_3.Pwinty.Environment;
 
 public class CatalogueTest {
 

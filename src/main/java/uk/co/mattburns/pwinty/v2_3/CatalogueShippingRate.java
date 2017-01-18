@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2_2;
+package uk.co.mattburns.pwinty.v2_3;
 
 public class CatalogueShippingRate {
 

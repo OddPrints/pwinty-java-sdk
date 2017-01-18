@@ -1,16 +1,16 @@
-package uk.co.mattburns.pwinty.v2_2;
+package uk.co.mattburns.pwinty.v2_3;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.joda.time.DateTime;
 import org.junit.*;
-import uk.co.mattburns.pwinty.v2_2.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2_2.Order.Status;
-import uk.co.mattburns.pwinty.v2_2.Photo.Sizing;
-import uk.co.mattburns.pwinty.v2_2.Photo.Type;
-import uk.co.mattburns.pwinty.v2_2.Pwinty.Environment;
-import uk.co.mattburns.pwinty.v2_2.SubmissionStatus.GeneralError;
-import uk.co.mattburns.pwinty.v2_2.gson.TypeDeserializer;
+import uk.co.mattburns.pwinty.v2_3.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2_3.Order.Status;
+import uk.co.mattburns.pwinty.v2_3.Photo.Sizing;
+import uk.co.mattburns.pwinty.v2_3.Photo.Type;
+import uk.co.mattburns.pwinty.v2_3.Pwinty.Environment;
+import uk.co.mattburns.pwinty.v2_3.SubmissionStatus.GeneralError;
+import uk.co.mattburns.pwinty.v2_3.gson.TypeDeserializer;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Properties;
 
 import static org.junit.Assert.*;
-import static uk.co.mattburns.pwinty.v2_2.CountryCode.*;
+import static uk.co.mattburns.pwinty.v2_3.CountryCode.*;
 
 public class OrderTest {
 
@@ -628,5 +628,42 @@ public class OrderTest {
         assertEquals(Issue.IssueType.LostInPost, fetchedIssues.getIssues().get(0).getIssue());
         assertEquals(Issue.IssueState.Open, fetchedIssues.getIssues().get(0).getIssueState());
         assertTrue(fetchedIssues.getIssues().get(0).getCommentary().contains("Issue created"));
+    }
+
+    @Test
+    public void can_get_logs() throws URISyntaxException {
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
+        order.setAddress1("ad1");
+        order.setAddress2("ad2");
+        order.setAddressTownOrCity("toc");
+        order.setPostalOrZipCode("zip");
+        order.setRecipientName("bloggs");
+        order.setStateOrCounty("bristol");
+
+        int id = order.getId();
+        assertEquals(Status.NotYetSubmitted, order.getStatus());
+
+        URL resource = OrderTest.class.getResource(TEST_PHOTO_LOCAL);
+        File file = new File(resource.toURI());
+
+        order.addPhoto(file, Type._4x6, 1, Sizing.Crop);
+
+        SubmissionStatus submissionStatus = order.getSubmissionStatus();
+        assertEquals(
+                "SubmissionStatus is not valid: " + submissionStatus.toString(),
+                true,
+                submissionStatus.isValid());
+
+        order.submit();
+
+        Order fetchedOrder = pwinty.getOrder(id);
+
+        Logs logs = fetchedOrder.getLogs();
+
+        assertEquals(2, logs.getLogs().size());
+        assertEquals("Order created", logs.getLogs().get(0).getTitle());
+        assertEquals("Order created", logs.getLogs().get(0).getMessage());
+        assertEquals("Status update", logs.getLogs().get(1).getTitle());
+        assertEquals("Order updated from NotYetSubmitted to Submitted", logs.getLogs().get(1).getMessage());
     }
 }

@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2_2;
+package uk.co.mattburns.pwinty.v2_3;
 
 import java.io.File;
 import java.io.InputStream;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
-import uk.co.mattburns.pwinty.v2_2.Photo.Sizing;
+import uk.co.mattburns.pwinty.v2_3.Photo.Sizing;
 
 public class Order {
 
@@ -343,5 +343,9 @@ public class Order {
 
     void setPwinty(Pwinty pwinty) {
         this.pwinty = pwinty;
+    }
+
+    public Logs getLogs() {
+        return pwinty.getLogs(id);
     }
 }

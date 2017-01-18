@@ -1,24 +1,21 @@
-package uk.co.mattburns.pwinty.v2_2;
+package uk.co.mattburns.pwinty.v2_3;
 
 import java.util.List;
 
-import uk.co.mattburns.pwinty.v2_2.SubmissionStatus.PhotoError;
-import uk.co.mattburns.pwinty.v2_2.SubmissionStatus.PhotoWarning;
-
 public class PhotoStatus {
     private int id;
-    private List<PhotoError> errors;
-    private List<PhotoWarning> warnings;
+    private List<SubmissionStatus.PhotoError> errors;
+    private List<SubmissionStatus.PhotoWarning> warnings;
 
     public int getId() {
         return id;
     }
 
-    public List<PhotoError> getErrors() {
+    public List<SubmissionStatus.PhotoError> getErrors() {
         return errors;
     }
 
-    public List<PhotoWarning> getWarnings() {
+    public List<SubmissionStatus.PhotoWarning> getWarnings() {
         return warnings;
     }
 

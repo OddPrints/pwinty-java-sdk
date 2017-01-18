@@ -1,18 +1,17 @@
-package uk.co.mattburns.pwinty.v2_2;
+package uk.co.mattburns.pwinty.v2_3;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import uk.co.mattburns.pwinty.v2_2.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2_2.Photo.Type;
+import uk.co.mattburns.pwinty.v2_3.Photo.Type;
 
 public class Catalogue {
 
     private String country;
     private CountryCode countryCode;
 
-    private QualityLevel qualityLevel;
+    private Order.QualityLevel qualityLevel;
     private List<CatalogueItem> items;
     private List<CatalogueShippingRate> shippingRates;
 
@@ -36,11 +35,11 @@ public class Catalogue {
         this.country = country;
     }
 
-    public QualityLevel getQualityLevel() {
+    public Order.QualityLevel getQualityLevel() {
         return qualityLevel;
     }
 
-    public void setQualityLevel(QualityLevel qualityLevel) {
+    public void setQualityLevel(Order.QualityLevel qualityLevel) {
         this.qualityLevel = qualityLevel;
     }
 

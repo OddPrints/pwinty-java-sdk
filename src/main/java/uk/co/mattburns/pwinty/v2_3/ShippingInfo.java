@@ -1,7 +1,5 @@
-package uk.co.mattburns.pwinty.v2_2;
+package uk.co.mattburns.pwinty.v2_3;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 public class ShippingInfo {
