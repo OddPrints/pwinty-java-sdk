@@ -31,4 +31,8 @@ public class Log {
     public DateTime getCreated() {
         return new DateTime(created);
     }
+
+    public String getCreatedString() {
+        return getCreated().toString("yyyy-MM-dd HH:mm:ss");
+    }
 }
