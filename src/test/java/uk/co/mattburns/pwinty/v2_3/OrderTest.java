@@ -88,7 +88,11 @@ public class OrderTest {
 
     @Test
     public void can_find_order_by_fetching_all_orders_recursively() {
-        int orderId = 271149; // just an old order I have...
+        long start = System.currentTimeMillis();
+        long timeout = 60000;
+        long deadline = start + timeout;
+        int orderId =
+                469658; // just an old order I have... Update this occasionally to prevent slow test!
         boolean found = false;
         int count = 100;
         for (int offset = 0; !found; offset += count) {
@@ -99,13 +103,24 @@ public class OrderTest {
                     break;
                 }
             }
+
             if (fetchedOrders.isEmpty()) {
                 fail(
-                        "Couln't find Order "
+                        "Couldn't find Order "
                                 + orderId
                                 + ", no more orders to search. "
                                 + "I suggest you visit https://sandboxdashboard.pwinty.com/Account/Balance "
                                 + "to grab an old order number and set it at the top of this test.");
+            }
+            if (System.currentTimeMillis() > deadline) {
+                fail(
+                        "Couldn't find Order "
+                                + orderId
+                                + " within "
+                                + timeout
+                                + "ms. "
+                                + "I suggest you visit https://sandboxdashboard.pwinty.com/Account/Balance "
+                                + "to grab a more recent old order number and set it at the top of this test. #filthyHackForNow");
             }
         }
 
