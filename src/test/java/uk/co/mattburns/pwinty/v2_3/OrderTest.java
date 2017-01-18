@@ -664,6 +664,8 @@ public class OrderTest {
         assertEquals("Order created", logs.getLogs().get(0).getTitle());
         assertEquals("Order created", logs.getLogs().get(0).getMessage());
         assertEquals("Status update", logs.getLogs().get(1).getTitle());
-        assertEquals("Order updated from NotYetSubmitted to Submitted", logs.getLogs().get(1).getMessage());
+        assertEquals(
+                "Order updated from NotYetSubmitted to Submitted",
+                logs.getLogs().get(1).getMessage());
     }
 }
