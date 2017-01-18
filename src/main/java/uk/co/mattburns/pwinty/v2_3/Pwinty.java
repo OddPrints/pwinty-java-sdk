@@ -32,7 +32,7 @@ public class Pwinty {
     private String apiKey;
     private WebResource webResource;
 
-    private static final String PWINTY_VERSION = "v2.2";
+    private static final String PWINTY_VERSION = "v2.3";
 
     /**
      * This is the main class for talking to the Pwinty API. See http://www.pwinty.com/api.html for
