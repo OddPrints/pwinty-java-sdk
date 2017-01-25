@@ -32,7 +32,6 @@ public class Photo {
         _10x12,
         _10x15,
         _12x16,
-
         _P10x15,
         _P11x14,
         _P12x18,
@@ -45,7 +44,6 @@ public class Photo {
         _P24x24,
         _P24x36,
         _P30x40,
-
         _C8x10,
         _C8x8,
         _C8x12,
@@ -92,7 +90,6 @@ public class Photo {
         _C20x24_nowrap,
         _C20x30_nowrap,
         _C24x24_nowrap,
-
         _F10x24_4x18,
         _F12x12_10x10,
         _F12x16_8x10,
@@ -104,8 +101,6 @@ public class Photo {
         _F20x28_16x24,
         _F20x28_18x24,
         _F28x40_24x36,
-
-        // Metric sizes:
         _9x12_cm,
         _9x13_cm,
         _10x10_cm,
@@ -143,8 +138,6 @@ public class Photo {
         _C60x90_cm,
         _C80x120_cm,
         _C90x90_cm,
-
-        // Merch
         _fridge_magnet,
         _iphone6_case,
         _iphone6plus_case,
@@ -156,6 +149,7 @@ public class Photo {
         _photobook_7x5,
         _photobook_8x8,
         _photobook_11x8,
+        _photobook_11x8_5_hardphotocover,
         _photobook_a4_l,
         _photobook_a4_landscape_hardphotocover,
         _photobook_a4_landscape_hardlinencover,
@@ -171,6 +165,10 @@ public class Photo {
         _photobook_21cm_square_hardphotocover,
         _photobook_14cm_square_softphotocover,
         _FA1,
+        _FA2,
+        _FA2_Unmounted,
+        _FineArt_A2,
+        _Magnet_Single_4x4,
         _photobook_a4_portrait_hardphotocover,
         _photobook_a5_portrait_softphotocover,
         _photobook_a5_landscape_softphotocover,
@@ -181,8 +179,6 @@ public class Photo {
         _samsunggalaxys5_case,
         _samsunggalaxys6_case,
         _samsunggalaxys6edge_case,
-
-        // Fineart
         _FineArt_12x16,
         _FineArt_16x16,
         _FineArt_20x30,
