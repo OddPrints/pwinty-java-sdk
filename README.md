@@ -8,7 +8,9 @@ v2.3 of the API is supported. If you want an older version, use an older build ;
 
 Releases
 --------
-* v2.3.0 - Added ability to add a photo via an InputStream as well as a File or URL.
+
+* v2.3.0 - v2.3 of Pwinty API, includes ability to get order logs from Pwinty.
+* v2.2.6 - Added ability to add a photo via an InputStream as well as a File or URL.
 
 Usage
 -----
