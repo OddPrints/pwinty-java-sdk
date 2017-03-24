@@ -45,6 +45,7 @@ public class Photo {
         _13x17_cm,
         _13x18_cm,
         _13x19_cm,
+        _C_Float_16x24,
         _C8x8,
         _C8x8_nowrap,
         _C8x10,
@@ -99,12 +100,16 @@ public class Photo {
         _C60x90_cm,
         _C80x120_cm,
         _C90x90_cm,
+        _F_Surface_16x24,
         _F10x24_4x18,
         _F12x12_10x10,
         _F12x16_8x10,
         _F12x16_8x12,
         _F12x16_10x12,
         _F16x20_12x16,
+        _F16x20_12x18,
+        _F16x24_12x18,
+        _F16x24_14x21,
         _F20x20_18x18,
         _F20x28_16x20,
         _F20x28_16x24,
@@ -116,6 +121,7 @@ public class Photo {
         _FA2_Unmounted,
         _FineArt_12x16,
         _FineArt_16x16,
+        _FineArt_16x24,
         _FineArt_18x24,
         _FineArt_20x28,
         _FineArt_20x30,
@@ -190,8 +196,9 @@ public class Photo {
         _photopanel_8x10,
         _photopanel_11x14,
         _samsunggalaxys5_case,
+        _samsunggalaxys6_case,
         _samsunggalaxys6edge_case,
-        _samsunggalaxys6_case;
+        _SurfaceMount_16x24;
 
         @Override
         public String toString() {
