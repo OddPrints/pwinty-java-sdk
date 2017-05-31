@@ -4,10 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 import org.joda.time.DateTime;
 import org.junit.BeforeClass;
@@ -181,6 +178,14 @@ public class PwintyTest {
         String errorMessage = "Unrecognised items:";
         for (String item : unrecognisedItems) {
             errorMessage += " " + item;
+        }
+
+        errorMessage += "\n\nThe Photo.Types should now look like this:\n\n";
+        if (!unrecognisedItems.isEmpty()) {
+            Set<String> allItems = pwinty.getAllItemNames(CountryCode.values());
+            for (String itemName : allItems) {
+                errorMessage += "_" + itemName.replaceAll("\\.", "_") + ",\n";
+            }
         }
         assertTrue(errorMessage, unrecognisedItems.isEmpty());
     }

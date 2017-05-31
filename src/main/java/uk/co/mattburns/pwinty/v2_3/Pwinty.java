@@ -447,6 +447,32 @@ public class Pwinty {
     }
 
     /**
+     * Helper for test code. Just get a Set of all the Catalogue names
+     *
+     * @param countryCodes countries to check (just an optimisation).
+     * @return set of item names
+     */
+    protected Set<String> getAllItemNames(CountryCode... countryCodes) {
+        Set<String> allItemNames = new TreeSet<>();
+        for (QualityLevel quality : QualityLevel.values()) {
+            for (CountryCode countryCode : countryCodes) {
+                String catalogueJSON =
+                        webResource
+                                .path("Catalogue/" + countryCode + "/" + quality.toString())
+                                .accept(MediaType.APPLICATION_JSON_TYPE)
+                                .header("X-Pwinty-MerchantId", merchantId)
+                                .header("X-Pwinty-REST-API-Key", apiKey)
+                                .get(String.class);
+                Catalogue catalogue = createGson().fromJson(catalogueJSON, Catalogue.class);
+                for (CatalogueItem item : catalogue.getItems()) {
+                    allItemNames.add(item.getName());
+                }
+            }
+        }
+        return allItemNames;
+    }
+
+    /**
      * Test if Pwinty have started offering new print sizes currently not hard-coded in the enum
      * Photo.Type
      *
@@ -454,7 +480,7 @@ public class Pwinty {
      * @return set of item names we don't handle
      */
     protected Set<String> getUnrecognisedItemNames(CountryCode... countryCodes) {
-        Set<String> unrecognisedItemNames = new HashSet<String>();
+        Set<String> unrecognisedItemNames = new TreeSet<String>();
         for (QualityLevel quality : QualityLevel.values()) {
             for (CountryCode countryCode : countryCodes) {
                 String catalogueJSON =
