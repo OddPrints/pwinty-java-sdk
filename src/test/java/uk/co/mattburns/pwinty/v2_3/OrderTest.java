@@ -248,12 +248,26 @@ public class OrderTest {
         URL url = new URL(TEST_PHOTO_URL);
 
         order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
-        Order fetchedOrder = pwinty.getOrder(id);
 
-        assertEquals(
-                countryCode + "-" + qualityLevel + "-" + useTrackedShipping,
-                expected,
-                fetchedOrder.getShippingInfo().getShipments().get(0).isTracked());
+        // retry this because for some reason the shipments don't appear immendiately.
+        // See my email to Tom 2017-05-31 17:24
+        boolean success = false;
+        int attempt = 1;
+        while (!success && attempt < 10) {
+            try {
+                System.out.println("attempt: " + attempt++);
+                Order fetchedOrder = pwinty.getOrder(id);
+
+                assertEquals(
+                        countryCode + "-" + qualityLevel + "-" + useTrackedShipping,
+                        expected,
+                        fetchedOrder.getShippingInfo().getShipments().get(0).isTracked());
+                success = true;
+            } catch (IndexOutOfBoundsException e) {
+
+            }
+        }
+        assertTrue("Shipments never updated :(", success);
     }
 
     @Test
