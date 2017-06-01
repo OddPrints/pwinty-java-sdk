@@ -249,11 +249,12 @@ public class OrderTest {
 
         order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
 
-        // retry this because for some reason the shipments don't appear immendiately.
+        // retry this because for some reason the shipments don't appear immediately.
         // See my email to Tom 2017-05-31 17:24
+        // UPDATE: This is now resolved, but I'm keeping the code here just in case but setting max attempts to 1
         boolean success = false;
         int attempt = 1;
-        while (!success && attempt < 10) {
+        while (!success && attempt < 2) {
             try {
                 System.out.println("attempt: " + attempt++);
                 Order fetchedOrder = pwinty.getOrder(id);
