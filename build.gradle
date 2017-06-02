@@ -19,7 +19,7 @@ googleJavaFormat {
 compileJava.dependsOn tasks.googleJavaFormat
 
 group 'uk.co.mattburns.pwinty'
-version '2.3.0'
+version '2.3.1'
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7

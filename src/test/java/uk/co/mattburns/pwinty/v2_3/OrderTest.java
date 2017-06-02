@@ -699,4 +699,26 @@ public class OrderTest {
                 "Order updated from NotYetSubmitted to Submitted",
                 logs.getLogs().get(1).getMessage());
     }
+
+    @Test
+    public void test_shipment_carrier() throws URISyntaxException, MalformedURLException {
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Pro, true);
+        order.setAddress1("-");
+        order.setAddress2("-");
+        order.setAddressTownOrCity("-");
+        order.setPostalOrZipCode("-");
+        order.setRecipientName("-");
+        order.setStateOrCounty("-");
+        int id = order.getId();
+        URL url = new URL(TEST_PHOTO_URL);
+
+        order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
+
+        try {
+            Order fetchedOrder = pwinty.getOrder(id);
+             fetchedOrder.getShippingInfo().getShipments().get(0).getCarrier();
+        } catch (Shipment.UnhandledCarrierException e) {
+            assertEquals("UK NonLiveShippingInfoService Postal Service", e.getUnhandledCarrier());
+        }
+    }
 }

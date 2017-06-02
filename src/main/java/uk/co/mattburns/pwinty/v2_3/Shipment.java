@@ -13,6 +13,7 @@ public class Shipment {
     private String earliestEstimatedArrivalDate;
     private String latestEstimatedArrivalDate;
     private String shippedOn;
+    private String carrier;
 
     public String getShipmentId() {
         return shipmentId;
@@ -52,7 +53,73 @@ public class Shipment {
         return new DateTime(latestEstimatedArrivalDate);
     }
 
-    public String getShippedOn() {
-        return shippedOn;
+    public DateTime getShippedOn() {
+        if (shippedOn == null) {
+            return null;
+        }
+        return new DateTime(shippedOn);
+    }
+
+    /**
+     * The the Carrier used. If Pwinty returns a Carrier we've not seen before, you will have to catch the
+     * thrown exception and get the Carrier String out of that because there won't be a human-friendly mapping
+     * @return Carrier enum
+     * @throws UnhandledCarrierException
+     */
+    public Carrier getCarrier() throws UnhandledCarrierException {
+        try {
+            return Carrier.valueOf(carrier);
+        } catch (IllegalArgumentException e) {
+            throw new UnhandledCarrierException(carrier);
+        }
+    }
+
+    public enum Carrier {
+        RoyalMail("Royal Mail"),
+        RoyalMailFirstClass("Royal Mail 1st Class"),
+        RoyalMailSecondClass("Royal Mail 2nd Class"),
+        FedEx("FedEx"),
+        FedExUK("FedEx"),
+        FedExIntl("Interlink, FedEx"),
+        UPS("UPS"),
+        UpsTwoDay("UPS 2 Day"),
+        UKMail("UK Mail"),
+        TNT("TNT"),
+        ParcelForce("Parcel Force"),
+        DHL("DHL"),
+        UPSMI("UPS-MI (USPS)"),
+        DpdNextDay("DPD Next Day"),
+        EuPostal("Europe Post"),
+        AuPost("Australia Post"),
+        AirMail("Air Mail"),
+        NotKnown("-");
+
+        private String humanFriendlyName;
+
+        Carrier(String humanFriendlyName) {
+            this.humanFriendlyName = humanFriendlyName;
+        }
+
+        @Override
+        public String toString() {
+            return getHumanFriendlyName();
+        }
+
+        public String getHumanFriendlyName() {
+            return humanFriendlyName;
+        }
+    }
+
+    public class UnhandledCarrierException extends Exception {
+        private final String unhandledCarrier;
+
+        public UnhandledCarrierException(String unhandledCarrier) {
+            super(unhandledCarrier);
+            this.unhandledCarrier = unhandledCarrier;
+        }
+
+        public String getUnhandledCarrier() {
+            return unhandledCarrier;
+        }
     }
 }
