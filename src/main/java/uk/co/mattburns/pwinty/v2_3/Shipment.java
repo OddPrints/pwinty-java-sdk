@@ -61,8 +61,10 @@ public class Shipment {
     }
 
     /**
-     * The the Carrier used. If Pwinty returns a Carrier we've not seen before, you will have to catch the
-     * thrown exception and get the Carrier String out of that because there won't be a human-friendly mapping
+     * The the Carrier used. If Pwinty returns a Carrier we've not seen before, you will have to
+     * catch the thrown exception and get the Carrier String out of that because there won't be a
+     * human-friendly mapping
+     *
      * @return Carrier enum
      * @throws UnhandledCarrierException
      */

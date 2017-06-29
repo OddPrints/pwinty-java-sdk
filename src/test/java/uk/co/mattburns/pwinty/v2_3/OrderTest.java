@@ -716,7 +716,7 @@ public class OrderTest {
 
         try {
             Order fetchedOrder = pwinty.getOrder(id);
-             fetchedOrder.getShippingInfo().getShipments().get(0).getCarrier();
+            fetchedOrder.getShippingInfo().getShipments().get(0).getCarrier();
         } catch (Shipment.UnhandledCarrierException e) {
             assertEquals("UK NonLiveShippingInfoService Postal Service", e.getUnhandledCarrier());
         }
