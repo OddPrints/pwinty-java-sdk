@@ -1,6 +1,10 @@
 buildscript {
     repositories {
+        jcenter()
         mavenCentral()
+    }
+    dependencies {
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.+"
     }
 }
 
@@ -8,6 +12,7 @@ plugins {
     id 'com.github.sherter.google-java-format' version '0.3.2'
 }
 
+apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'java'
 apply plugin: 'maven'
 
@@ -74,23 +79,39 @@ task javadocJar(type: Jar, dependsOn:javadoc) {
     from javadoc.destinationDir
 }
 
+artifactoryPublish {
+    dependsOn sourcesJar, javadocJar
+}
+
 // add javadoc/source jar tasks as artifacts
 artifacts {
     archives sourcesJar
     archives javadocJar
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(
-                    url: "${nexusUrl}/content/repositories/releases") {
-                authentication(userName: nexusUsername, password: nexusPassword)
-            }
-            snapshotRepository(
-                    url: "${nexusUrl}/content/repositories/snapshots") {
-                authentication(userName: nexusUsername, password: nexusPassword)
-            }
+configurations {
+    published
+}
+
+artifactory {
+    contextUrl = "${artifactoryUrl}"
+    publish {
+        repository {
+            repoKey = "libs-release-local"
+            username = "${artifactoryUsername}"
+            password = "${artifactoryPassword}"
+        }
+        defaults {
+            publishConfigs('archives', 'published')
+            publishArtifacts = true
+            properties = ['qa.level': 'basic', 'dev.team' : 'core']
+            publishPom = true
+        }
+    }
+    resolve {
+        repository {
+            repoKey = 'libs-release'
+            maven = true
         }
     }
 }
