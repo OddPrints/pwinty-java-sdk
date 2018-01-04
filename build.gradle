@@ -89,9 +89,9 @@ artifacts {
     archives javadocJar
 }
 
-//configurations {
-//    published
-//}
+configurations {
+    published
+}
 
 artifactory {
     contextUrl = "${artifactoryUrl}"
