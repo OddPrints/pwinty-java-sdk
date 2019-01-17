@@ -66,7 +66,7 @@ public class Shipment {
      * human-friendly mapping
      *
      * @return Carrier enum
-     * @throws UnhandledCarrierException
+     * @throws UnhandledCarrierException previously unseen carrier
      */
     public Carrier getCarrier() throws UnhandledCarrierException {
         try {

@@ -36,8 +36,7 @@ public class Pwinty {
 
     /**
      * This is the main class for talking to the Pwinty API. See http://www.pwinty.com/api.html for
-     * detailed examples.
-     * <p/>
+     * detailed examples. <br>
      * For all method calls, if an error occurs, a {@link PwintyError} will be thrown
      *
      * @param environment Choose SANDBOX for testing and LIVE for real orders you wish to print

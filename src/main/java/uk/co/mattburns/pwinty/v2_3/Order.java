@@ -157,6 +157,8 @@ public class Order {
     /**
      * Get the most pessimistic earliest estimate from each of the shipments. Will be null before
      * any images are added
+     *
+     * @return earliest arrival date
      */
     public DateTime getEarliestEstimatedArrivalDate() {
         DateTime min = null;
@@ -174,6 +176,8 @@ public class Order {
     /**
      * Get the most pessimistic latest estimate from each of the shipments. Will be null before any
      * images are added
+     *
+     * @return latest arrival date
      */
     public DateTime getLatestEstimatedArrivalDate() {
         DateTime max = null;
@@ -292,7 +296,7 @@ public class Order {
      * This is filthy. Only way to ensure this property is kept after creation on Pwinty because the
      * API doesn't return this property... Not for public consumption!
      *
-     * @param useTrackedShipping
+     * @param useTrackedShipping set true to use tracked shipping
      */
     protected void setImmutableUseTrackedShipping(boolean useTrackedShipping) {
         this.useTrackedShipping = useTrackedShipping;
@@ -300,6 +304,12 @@ public class Order {
 
     /**
      * Add a photo File object to the order. This method will block until the File is uploaded.
+     *
+     * @param photo file of photo to add to order
+     * @param type print product
+     * @param copies number of copies
+     * @param sizing sizing
+     * @return added photo
      */
     public Photo addPhoto(File photo, Photo.Type type, int copies, Sizing sizing) {
         Photo addedPhoto = pwinty.addPhotoToOrder(id, photo, type, copies, sizing);
@@ -310,6 +320,12 @@ public class Order {
     /**
      * Add a photo byte[] InputStream object to the order. This method will block until the File is
      * uploaded.
+     *
+     * @param photo file of photo to add to order
+     * @param type print product
+     * @param copies number of copies
+     * @param sizing sizing
+     * @return added photo
      */
     public Photo addPhoto(InputStream photo, Photo.Type type, int copies, Sizing sizing) {
         Photo addedPhoto = pwinty.addPhotoToOrder(id, photo, type, copies, sizing);
@@ -319,6 +335,12 @@ public class Order {
 
     /**
      * Add a photo to the order using a public URL.
+     *
+     * @param photoUrl url of photo to add to order
+     * @param type print product
+     * @param copies number of copies
+     * @param sizing sizing
+     * @return added photo
      */
     public Photo addPhoto(URL photoUrl, Photo.Type type, int copies, Sizing sizing) {
         Photo addedPhoto = pwinty.addPhotoToOrder(id, photoUrl, type, copies, sizing);
