@@ -645,6 +645,7 @@ public class Photo {
         _photobook_21cm_square_hardphotocover_mx,
         _photobook_21cm_square_softphotocover,
         _photobook_21cm_square_softphotocover_mx,
+        _photobook_32x27_hardphotocover,
         _photobook_a4_landscape_hardlinencover,
         _photobook_a4_landscape_hardphotocover,
         _photobook_a4_landscape_hardphotocover_mx,
