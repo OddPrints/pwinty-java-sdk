@@ -432,7 +432,15 @@ public class OrderTest {
         URL url = new URL(TEST_PHOTO_URL);
         order.addPhoto(url, Type._4x6, 2, Sizing.ShrinkToExactFit);
         SubmissionStatus submissionStatus = order.getSubmissionStatus();
-        int photoId = submissionStatus.getPhotos().get(0).getId();
+
+        List<PhotoStatus> photos = submissionStatus.getPhotos();
+        int retries = 100;
+        while (photos.isEmpty() && retries > 0) {
+            System.out.println("Didn't expect photos to be empty, Pwinty bug?");
+            retries--;
+            photos = submissionStatus.getPhotos();
+        }
+        int photoId = photos.get(0).getId();
 
         Photo photo = pwinty.getPhoto(order.getId(), photoId);
         assertEquals(2, photo.getCopies());
