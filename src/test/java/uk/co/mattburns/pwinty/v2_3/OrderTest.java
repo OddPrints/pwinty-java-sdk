@@ -28,9 +28,7 @@ public class OrderTest {
 
     // Enter keys here to runs the tests
     private static final String TEST_PHOTO_LOCAL = "test.jpg";
-    private static final String TEST_PHOTO_URL =
-            "http://farm4.staticflickr.com/3454/3837830342_dae0b932a9_b_d.jpg";
-
+    private static final String TEST_PHOTO_URL = "https://www.oddprints.com/image/26f75ca4-5a0f-4ca4-b2e3-a2a276abfbca/agtzfm9kZHByaW50c3IqCxIGQmFza2V0GICAoKjtjJYKDAsSCkJhc2tldEl0ZW0YgICAgICAgAoM";
     private static Pwinty pwinty;
 
     @BeforeClass
@@ -431,15 +429,8 @@ public class OrderTest {
 
         URL url = new URL(TEST_PHOTO_URL);
         order.addPhoto(url, Type._4x6, 2, Sizing.ShrinkToExactFit);
-        SubmissionStatus submissionStatus = order.getSubmissionStatus();
 
-        List<PhotoStatus> photos = submissionStatus.getPhotos();
-        int retries = 100;
-        while (photos.isEmpty() && retries > 0) {
-            System.out.println("Didn't expect photos to be empty, Pwinty bug?");
-            retries--;
-            photos = submissionStatus.getPhotos();
-        }
+        List<PhotoStatus> photos = order.getSubmissionStatus().getPhotos();
         int photoId = photos.get(0).getId();
 
         Photo photo = pwinty.getPhoto(order.getId(), photoId);
