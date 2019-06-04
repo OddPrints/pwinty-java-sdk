@@ -28,7 +28,8 @@ public class OrderTest {
 
     // Enter keys here to runs the tests
     private static final String TEST_PHOTO_LOCAL = "test.jpg";
-    private static final String TEST_PHOTO_URL = "https://www.oddprints.com/image/26f75ca4-5a0f-4ca4-b2e3-a2a276abfbca/agtzfm9kZHByaW50c3IqCxIGQmFza2V0GICAoKjtjJYKDAsSCkJhc2tldEl0ZW0YgICAgICAgAoM";
+    private static final String TEST_PHOTO_URL =
+            "https://www.oddprints.com/image/26f75ca4-5a0f-4ca4-b2e3-a2a276abfbca/agtzfm9kZHByaW50c3IqCxIGQmFza2V0GICAoKjtjJYKDAsSCkJhc2tldEl0ZW0YgICAgICAgAoM";
     private static Pwinty pwinty;
 
     @BeforeClass
