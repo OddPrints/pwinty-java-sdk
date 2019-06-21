@@ -174,6 +174,7 @@ public class OrderTest {
         order.setPostalOrZipCode("zip");
         order.setRecipientName("bloggs");
         order.setStateOrCounty("bristol");
+        order.setMobileTelephone("01234123456");
 
         int id = order.getId();
         assertEquals(Status.NotYetSubmitted, order.getStatus());

@@ -381,6 +381,7 @@ public class Pwinty {
         form.add("postalOrZipCode", newOrder.getPostalOrZipCode());
         form.add("countryCode", newOrder.getCountryCode());
         form.add("destinationCountryCode", newOrder.getDestinationCountryCode());
+        form.add("mobileTelephone", newOrder.getMobileTelephone());
         if (useTrackedShipping != null) {
             form.add("useTrackedShipping", useTrackedShipping);
         }

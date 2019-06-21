@@ -20,6 +20,7 @@ public class Order {
     private String postalOrZipCode;
     private CountryCode countryCode;
     private CountryCode destinationCountryCode;
+    private String mobileTelephone;
     private int price;
     private Status status;
     private boolean useTrackedShipping;
@@ -144,6 +145,14 @@ public class Order {
 
     public CountryCode getDestinationCountryCode() {
         return destinationCountryCode;
+    }
+
+    public String getMobileTelephone() {
+        return mobileTelephone;
+    }
+
+    public void setMobileTelephone(String mobileTelephone) {
+        this.mobileTelephone = mobileTelephone;
     }
 
     public int getPrice() {

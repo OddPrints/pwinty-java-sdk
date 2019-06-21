@@ -71,6 +71,7 @@ public class OrderUpdater {
         order.setAddressTownOrCity(decode(order.getAddressTownOrCity()));
         order.setStateOrCounty(decode(order.getStateOrCounty()));
         order.setPostalOrZipCode(decode(order.getPostalOrZipCode()));
+        order.setMobileTelephone(decode(order.getMobileTelephone()));
     }
 
     private String decode(String str) {
