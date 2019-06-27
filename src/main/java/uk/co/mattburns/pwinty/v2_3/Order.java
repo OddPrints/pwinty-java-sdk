@@ -153,6 +153,7 @@ public class Order {
 
     public void setMobileTelephone(String mobileTelephone) {
         this.mobileTelephone = mobileTelephone;
+        overwriteThisOrderWithGivenOrder(pwinty.updateOrder(id, this));
     }
 
     public int getPrice() {

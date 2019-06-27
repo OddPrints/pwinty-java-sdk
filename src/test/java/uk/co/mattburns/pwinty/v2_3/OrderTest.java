@@ -296,6 +296,23 @@ public class OrderTest {
                 submissionStatus.isValid());
     }
 
+    @Ignore("Hmm, looks like this doesn't actually work in pwinty api v2.3")
+    @Test
+    public void can_create_order_with_mobile_telephone() {
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
+        order.setAddress1("ad1");
+        order.setAddress2("ad2");
+        order.setAddressTownOrCity("toc");
+        order.setPostalOrZipCode("zip");
+        order.setRecipientName("bloggs");
+        order.setStateOrCounty("bristol");
+        order.setMobileTelephone("123456");
+
+        int id = order.getId();
+
+        assertEquals("123456", pwinty.getOrder(id).getMobileTelephone());
+    }
+
     @Test
     @Ignore("Looks like this has changed...")
     public void cannot_ship_standard_internationally() throws URISyntaxException {
