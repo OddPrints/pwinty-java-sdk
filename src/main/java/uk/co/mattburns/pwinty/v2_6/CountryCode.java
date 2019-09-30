@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2_3;
+package uk.co.mattburns.pwinty.v2_6;
 
 public enum CountryCode {
     AD,

@@ -1,11 +1,12 @@
-package uk.co.mattburns.pwinty.v2_3;
+package uk.co.mattburns.pwinty.v2_6;
 
 public class CatalogueShippingRate {
 
     private String band;
     private String description;
     private boolean isTracked;
-    private int priceGBP;
+    private int price;
+    private String currency;
 
     public CatalogueShippingRate() {}
 
@@ -21,7 +22,11 @@ public class CatalogueShippingRate {
         return isTracked;
     }
 
-    public int getPriceGBP() {
-        return priceGBP;
+    public int getPrice() {
+        return price;
+    }
+
+    public String getCurrency() {
+        return currency;
     }
 }

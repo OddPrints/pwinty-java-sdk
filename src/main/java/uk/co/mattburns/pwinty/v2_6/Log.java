@@ -1,8 +1,6 @@
-package uk.co.mattburns.pwinty.v2_3;
+package uk.co.mattburns.pwinty.v2_6;
 
 import org.joda.time.DateTime;
-
-import java.util.Date;
 
 public class Log {
     private String title;

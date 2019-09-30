@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2_3;
+package uk.co.mattburns.pwinty.v2_6;
 
 import java.io.File;
 import java.io.InputStream;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
-import uk.co.mattburns.pwinty.v2_3.Photo.Sizing;
+import uk.co.mattburns.pwinty.v2_6.Photo.Sizing;
 
 public class Order {
 
@@ -60,6 +60,16 @@ public class Order {
             CountryCode destinationCountry,
             QualityLevel quality,
             boolean useTrackedShipping) {
+        this(pwinty, labCountry, destinationCountry, quality, useTrackedShipping, null);
+    }
+
+    public Order(
+            Pwinty pwinty,
+            CountryCode labCountry,
+            CountryCode destinationCountry,
+            QualityLevel quality,
+            boolean useTrackedShipping,
+            String mobileTelephone) {
         this.pwinty = pwinty;
         this.countryCode = labCountry;
         this.destinationCountryCode = destinationCountry;
@@ -69,6 +79,7 @@ public class Order {
             // Pwinty's bug really...
         }
         this.useTrackedShipping = useTrackedShipping;
+        this.mobileTelephone = mobileTelephone;
         Order order = pwinty.createOrder(this, useTrackedShipping);
         overwriteThisOrderWithGivenOrder(order);
     }
@@ -149,11 +160,6 @@ public class Order {
 
     public String getMobileTelephone() {
         return mobileTelephone;
-    }
-
-    public void setMobileTelephone(String mobileTelephone) {
-        this.mobileTelephone = mobileTelephone;
-        overwriteThisOrderWithGivenOrder(pwinty.updateOrder(id, this));
     }
 
     public int getPrice() {

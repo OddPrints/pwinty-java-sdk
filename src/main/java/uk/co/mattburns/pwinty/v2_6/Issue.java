@@ -1,6 +1,4 @@
-package uk.co.mattburns.pwinty.v2_3;
-
-import java.util.List;
+package uk.co.mattburns.pwinty.v2_6;
 
 public class Issue {
     private Long id;

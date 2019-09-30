@@ -3,12 +3,13 @@ Pwinty-Java-SDK
 
 A java library for communicating with the [Pwinty API](http://www.pwinty.com/api.html).
 
-v2.3 of the API is supported. If you want an older version, use an older build ;)
+v2.6 of the API is supported. If you want an older version, use an older build ;)
 
 
 Releases
 --------
 
+* v2.6.0 - v2.6 of Pwinty API, claims to fix mobile phone issue on orders.
 * v2.3.1 - Make shippedOn field a DateTime. Added Carrier enum. 
 * v2.3.0 - v2.3 of Pwinty API, includes ability to get order logs from Pwinty.
 * v2.2.6 - Added ability to add a photo via an InputStream as well as a File or URL.
@@ -47,7 +48,7 @@ if (order.getSubmissionStatus().isValid()) {
 Download
 --------
 
-Best to checkout, then run `./gradlew install`. Then you can just add this to your gradle deps: `compile 'uk.co.mattburns.pwinty:pwinty-java-sdk:2.3.0' `
+Best to checkout, then run `./gradlew install`. Then you can just add this to your gradle deps: `compile 'uk.co.mattburns.pwinty:pwinty-java-sdk:2.6.0' `
 
 Alternatively, add the jar to your project. You can find the jar in the [build directory]
 (https://github.com/mattburns/pwinty-java-sdk/tree/master/build/libs)
@@ -89,7 +90,7 @@ git clone https://github.com/mattburns/pwinty-java-sdk.git
 cd pwinty-java-sdk
 echo PWINTY_MERCHANT_ID_SANDBOX=12345 > test-settings.properties
 echo PWINTY_MERCHANT_KEY_SANDBOX=12345 >> test-settings.properties
-cp test-settings.properties src/test/resources/uk/co/mattburns/pwinty/v2_3/
+cp test-settings.properties src/test/resources/uk/co/mattburns/pwinty/v2_6/
 
 ./gradlew test
 ```
@@ -97,11 +98,11 @@ cp test-settings.properties src/test/resources/uk/co/mattburns/pwinty/v2_3/
 Save time and run an individual test like this:
 
 ```
-./gradlew test --tests "uk.co.mattburns.pwinty.v2_3.PwintyTest.all_available_print_types_are_in_enum"
+./gradlew test --tests "uk.co.mattburns.pwinty.v2_6.PwintyTest.all_available_print_types_are_in_enum"
 ```
 
 
 More
 ----
 
-See the [test code](https://github.com/mattburns/pwinty-java-sdk/tree/master/src/test/java/uk/co/mattburns/pwinty/v2_3/) for more usage examples.
+See the [test code](https://github.com/mattburns/pwinty-java-sdk/tree/master/src/test/java/uk/co/mattburns/pwinty/v2_6/) for more usage examples.

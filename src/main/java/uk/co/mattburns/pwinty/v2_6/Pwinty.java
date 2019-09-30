@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2_3;
+package uk.co.mattburns.pwinty.v2_6;
 
 import java.io.File;
 import java.io.InputStream;
@@ -10,11 +10,11 @@ import java.util.logging.Logger;
 import javax.ws.rs.core.MediaType;
 
 import com.sun.jersey.multipart.file.StreamDataBodyPart;
-import uk.co.mattburns.pwinty.v2_3.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2_3.Order.Status;
-import uk.co.mattburns.pwinty.v2_3.Photo.Sizing;
-import uk.co.mattburns.pwinty.v2_3.Photo.Type;
-import uk.co.mattburns.pwinty.v2_3.gson.TypeDeserializer;
+import uk.co.mattburns.pwinty.v2_6.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2_6.Order.Status;
+import uk.co.mattburns.pwinty.v2_6.Photo.Sizing;
+import uk.co.mattburns.pwinty.v2_6.Photo.Type;
+import uk.co.mattburns.pwinty.v2_6.gson.TypeDeserializer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,7 +32,7 @@ public class Pwinty {
     private String apiKey;
     private WebResource webResource;
 
-    private static final String PWINTY_VERSION = "v2.3";
+    private static final String PWINTY_VERSION = "v2.6";
 
     /**
      * This is the main class for talking to the Pwinty API. See http://www.pwinty.com/api.html for

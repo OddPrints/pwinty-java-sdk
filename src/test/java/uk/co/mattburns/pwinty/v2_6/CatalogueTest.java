@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2_3;
+package uk.co.mattburns.pwinty.v2_6;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -9,9 +9,9 @@ import java.util.Properties;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import uk.co.mattburns.pwinty.v2_3.CatalogueItem.SizeUnits;
-import uk.co.mattburns.pwinty.v2_3.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2_3.Pwinty.Environment;
+import uk.co.mattburns.pwinty.v2_6.CatalogueItem.SizeUnits;
+import uk.co.mattburns.pwinty.v2_6.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2_6.Pwinty.Environment;
 
 public class CatalogueTest {
 
@@ -122,7 +122,8 @@ public class CatalogueTest {
         }
         assertEquals("Prints", foundRate.getBand());
         assertEquals("2nd Class Royal Mail", foundRate.getDescription());
-        assertEquals(199, foundRate.getPriceGBP());
+        assertEquals(199, foundRate.getPrice());
+        assertEquals("GBP", foundRate.getCurrency());
         assertEquals(false, foundRate.isTracked());
     }
 

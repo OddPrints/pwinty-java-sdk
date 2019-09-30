@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2_3;
+package uk.co.mattburns.pwinty.v2_6;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,9 +10,9 @@ import org.joda.time.DateTime;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import uk.co.mattburns.pwinty.v2_3.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2_3.Photo.Type;
-import uk.co.mattburns.pwinty.v2_3.Pwinty.Environment;
+import uk.co.mattburns.pwinty.v2_6.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2_6.Photo.Type;
+import uk.co.mattburns.pwinty.v2_6.Pwinty.Environment;
 
 public class PwintyTest {
 

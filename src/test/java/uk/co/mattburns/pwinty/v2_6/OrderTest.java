@@ -1,16 +1,16 @@
-package uk.co.mattburns.pwinty.v2_3;
+package uk.co.mattburns.pwinty.v2_6;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.joda.time.DateTime;
 import org.junit.*;
-import uk.co.mattburns.pwinty.v2_3.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2_3.Order.Status;
-import uk.co.mattburns.pwinty.v2_3.Photo.Sizing;
-import uk.co.mattburns.pwinty.v2_3.Photo.Type;
-import uk.co.mattburns.pwinty.v2_3.Pwinty.Environment;
-import uk.co.mattburns.pwinty.v2_3.SubmissionStatus.GeneralError;
-import uk.co.mattburns.pwinty.v2_3.gson.TypeDeserializer;
+import uk.co.mattburns.pwinty.v2_6.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2_6.Order.Status;
+import uk.co.mattburns.pwinty.v2_6.Photo.Sizing;
+import uk.co.mattburns.pwinty.v2_6.Photo.Type;
+import uk.co.mattburns.pwinty.v2_6.Pwinty.Environment;
+import uk.co.mattburns.pwinty.v2_6.SubmissionStatus.GeneralError;
+import uk.co.mattburns.pwinty.v2_6.gson.TypeDeserializer;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Properties;
 
 import static org.junit.Assert.*;
-import static uk.co.mattburns.pwinty.v2_3.CountryCode.*;
+import static uk.co.mattburns.pwinty.v2_6.CountryCode.*;
 
 public class OrderTest {
 
@@ -174,7 +174,6 @@ public class OrderTest {
         order.setPostalOrZipCode("zip");
         order.setRecipientName("bloggs");
         order.setStateOrCounty("bristol");
-        order.setMobileTelephone("01234123456");
 
         int id = order.getId();
         assertEquals(Status.NotYetSubmitted, order.getStatus());
@@ -296,17 +295,15 @@ public class OrderTest {
                 submissionStatus.isValid());
     }
 
-    @Ignore("Hmm, looks like this doesn't actually work in pwinty api v2.3")
     @Test
     public void can_create_order_with_mobile_telephone() {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
+        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false, "123456");
         order.setAddress1("ad1");
         order.setAddress2("ad2");
         order.setAddressTownOrCity("toc");
         order.setPostalOrZipCode("zip");
         order.setRecipientName("bloggs");
         order.setStateOrCounty("bristol");
-        order.setMobileTelephone("123456");
 
         int id = order.getId();
 

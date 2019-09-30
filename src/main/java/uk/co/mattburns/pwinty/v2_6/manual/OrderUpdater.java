@@ -1,4 +1,4 @@
-package uk.co.mattburns.pwinty.v2_3.manual;
+package uk.co.mattburns.pwinty.v2_6.manual;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -7,10 +7,10 @@ import java.net.URLDecoder;
 import java.util.List;
 import java.util.Properties;
 
-import uk.co.mattburns.pwinty.v2_3.CountryCode;
-import uk.co.mattburns.pwinty.v2_3.Order;
-import uk.co.mattburns.pwinty.v2_3.Photo;
-import uk.co.mattburns.pwinty.v2_3.Pwinty;
+import uk.co.mattburns.pwinty.v2_6.CountryCode;
+import uk.co.mattburns.pwinty.v2_6.Order;
+import uk.co.mattburns.pwinty.v2_6.Photo;
+import uk.co.mattburns.pwinty.v2_6.Pwinty;
 
 public class OrderUpdater {
 
@@ -71,7 +71,6 @@ public class OrderUpdater {
         order.setAddressTownOrCity(decode(order.getAddressTownOrCity()));
         order.setStateOrCounty(decode(order.getStateOrCounty()));
         order.setPostalOrZipCode(decode(order.getPostalOrZipCode()));
-        order.setMobileTelephone(decode(order.getMobileTelephone()));
     }
 
     private String decode(String str) {
