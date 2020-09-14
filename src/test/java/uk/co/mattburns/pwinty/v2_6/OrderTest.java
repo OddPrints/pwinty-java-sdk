@@ -167,13 +167,7 @@ public class OrderTest {
 
     @Test
     public void can_create_and_add_photo_and_submit_order() throws URISyntaxException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
-        order.setAddress1("ad1");
-        order.setAddress2("ad2");
-        order.setAddressTownOrCity("toc");
-        order.setPostalOrZipCode("zip");
-        order.setRecipientName("bloggs");
-        order.setStateOrCounty("bristol");
+        Order order = createTestOrder();
 
         int id = order.getId();
         assertEquals(Status.NotYetSubmitted, order.getStatus());
@@ -343,13 +337,7 @@ public class OrderTest {
 
     @Test
     public void error_is_thrown_if_order_not_in_correct_state() throws URISyntaxException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
-        order.setAddress1("ad1");
-        order.setAddress2("ad2");
-        order.setAddressTownOrCity("toc");
-        order.setPostalOrZipCode("zip");
-        order.setRecipientName("bloggs");
-        order.setStateOrCounty("bristol");
+        Order order = createTestOrder();
 
         URL resource = OrderTest.class.getResource(TEST_PHOTO_LOCAL);
         File file = new File(resource.toURI());
@@ -368,13 +356,7 @@ public class OrderTest {
 
     @Test
     public void can_create_and_add_photo_by_url() throws MalformedURLException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
-        order.setAddress1("ad1");
-        order.setAddress2("ad2");
-        order.setAddressTownOrCity("toc");
-        order.setPostalOrZipCode("zip");
-        order.setRecipientName("bloggs");
-        order.setStateOrCounty("bristol");
+        Order order = createTestOrder();
 
         assertEquals(Status.NotYetSubmitted, order.getStatus());
 
@@ -392,13 +374,7 @@ public class OrderTest {
 
     @Test
     public void can_create_and_add_photo_by_data() throws IOException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
-        order.setAddress1("ad1");
-        order.setAddress2("ad2");
-        order.setAddressTownOrCity("toc");
-        order.setPostalOrZipCode("zip");
-        order.setRecipientName("bloggs");
-        order.setStateOrCounty("bristol");
+        Order order = createTestOrder();
 
         assertEquals(Status.NotYetSubmitted, order.getStatus());
 
@@ -441,7 +417,7 @@ public class OrderTest {
 
     @Test
     public void can_get_photo_details() throws MalformedURLException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
+        Order order = createTestOrder();
 
         URL url = new URL(TEST_PHOTO_URL);
         order.addPhoto(url, Type._4x6, 2, Sizing.ShrinkToExactFit);
@@ -456,7 +432,7 @@ public class OrderTest {
 
     @Test
     public void can_delete_photo_from_order() throws MalformedURLException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
+        Order order = createTestOrder();
 
         URL url = new URL(TEST_PHOTO_URL);
         order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
@@ -483,13 +459,7 @@ public class OrderTest {
 
     @Test
     public void cannot_cancel_submitted_order() throws URISyntaxException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
-        order.setAddress1("ad1");
-        order.setAddress2("ad2");
-        order.setAddressTownOrCity("toc");
-        order.setPostalOrZipCode("zip");
-        order.setRecipientName("bloggs");
-        order.setStateOrCounty("bristol");
+        Order order = createTestOrder();
 
         URL resource = OrderTest.class.getResource(TEST_PHOTO_LOCAL);
         File file = new File(resource.toURI());
@@ -601,13 +571,7 @@ public class OrderTest {
     @Ignore("Sandbox is currently returning nulls. Re-enable once pwinty fix this.")
     @Test
     public void can_get_estimated_deliveries_once_photo_added() throws URISyntaxException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
-        order.setAddress1("ad1");
-        order.setAddress2("ad2");
-        order.setAddressTownOrCity("toc");
-        order.setPostalOrZipCode("zip");
-        order.setRecipientName("bloggs");
-        order.setStateOrCounty("bristol");
+        Order order = createTestOrder();
 
         int id = order.getId();
         assertEquals(Status.NotYetSubmitted, order.getStatus());
@@ -629,8 +593,7 @@ public class OrderTest {
                         .isBefore(order.getLatestEstimatedArrivalDate()));
     }
 
-    @Test
-    public void can_report_lost_in_post() throws URISyntaxException {
+    private Order createTestOrder() {
         Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
         order.setAddress1("ad1");
         order.setAddress2("ad2");
@@ -638,6 +601,12 @@ public class OrderTest {
         order.setPostalOrZipCode("zip");
         order.setRecipientName("bloggs");
         order.setStateOrCounty("bristol");
+        return order;
+    }
+
+    @Test
+    public void can_report_lost_in_post() throws URISyntaxException {
+        Order order = createTestOrder();
 
         int id = order.getId();
         assertEquals(Status.NotYetSubmitted, order.getStatus());
@@ -678,13 +647,7 @@ public class OrderTest {
 
     @Test
     public void can_get_logs() throws URISyntaxException {
-        Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
-        order.setAddress1("ad1");
-        order.setAddress2("ad2");
-        order.setAddressTownOrCity("toc");
-        order.setPostalOrZipCode("zip");
-        order.setRecipientName("bloggs");
-        order.setStateOrCounty("bristol");
+        Order order = createTestOrder();
 
         int id = order.getId();
         assertEquals(Status.NotYetSubmitted, order.getStatus());
