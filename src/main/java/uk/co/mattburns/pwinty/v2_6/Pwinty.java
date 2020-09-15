@@ -1,21 +1,5 @@
 package uk.co.mattburns.pwinty.v2_6;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.net.URL;
-import java.util.*;
-import java.util.logging.Logger;
-
-import javax.ws.rs.core.MediaType;
-
-import com.sun.jersey.multipart.file.StreamDataBodyPart;
-import uk.co.mattburns.pwinty.v2_6.Order.QualityLevel;
-import uk.co.mattburns.pwinty.v2_6.Order.Status;
-import uk.co.mattburns.pwinty.v2_6.Photo.Sizing;
-import uk.co.mattburns.pwinty.v2_6.Photo.Type;
-import uk.co.mattburns.pwinty.v2_6.gson.TypeDeserializer;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.jersey.api.client.Client;
@@ -25,6 +9,19 @@ import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.representation.Form;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
+import com.sun.jersey.multipart.file.StreamDataBodyPart;
+import java.io.File;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.net.URL;
+import java.util.*;
+import java.util.logging.Logger;
+import javax.ws.rs.core.MediaType;
+import uk.co.mattburns.pwinty.v2_6.Order.QualityLevel;
+import uk.co.mattburns.pwinty.v2_6.Order.Status;
+import uk.co.mattburns.pwinty.v2_6.Photo.Sizing;
+import uk.co.mattburns.pwinty.v2_6.Photo.Type;
+import uk.co.mattburns.pwinty.v2_6.gson.TypeDeserializer;
 
 public class Pwinty {
 
@@ -220,9 +217,7 @@ public class Pwinty {
         return createReponse(response, Logs.class);
     }
 
-    /**
-     * Add a photo File object to the order. This method will block until the File is uploaded.
-     */
+    /** Add a photo File object to the order. This method will block until the File is uploaded. */
     Photo addPhotoToOrder(int orderId, File photo, Photo.Type type, int copies, Sizing sizing) {
         return addPhotoToOrder(orderId, null, photo, null, type, copies, sizing);
     }
@@ -236,16 +231,12 @@ public class Pwinty {
         return addPhotoToOrder(orderId, photo, null, null, type, copies, sizing);
     }
 
-    /**
-     * Add a photo to the order using a public URL.
-     */
+    /** Add a photo to the order using a public URL. */
     Photo addPhotoToOrder(int orderId, URL photoUrl, Photo.Type type, int copies, Sizing sizing) {
         return addPhotoToOrder(orderId, null, null, photoUrl, type, copies, sizing);
     }
 
-    /**
-     * Either the File or URL must be supplied
-     */
+    /** Either the File or URL must be supplied */
     private Photo addPhotoToOrder(
             int orderId,
             InputStream photoData,
@@ -337,16 +328,14 @@ public class Pwinty {
 
     /**
      * Submit the Order for printing and shipping
-     * <p/>
-     * If an error occurs, a {@link PwintyError} will be thrown
+     *
+     * <p>If an error occurs, a {@link PwintyError} will be thrown
      */
     void submitOrder(int orderId) {
         updateOrder(orderId, Status.Submitted);
     }
 
-    /**
-     * If an error occurs, a {@link PwintyError} will be thrown
-     */
+    /** If an error occurs, a {@link PwintyError} will be thrown */
     void cancelOrder(int orderId) {
         updateOrder(orderId, Status.Cancelled);
     }

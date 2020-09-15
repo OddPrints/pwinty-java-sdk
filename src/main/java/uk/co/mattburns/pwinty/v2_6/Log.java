@@ -7,9 +7,7 @@ public class Log {
     private String message;
     private String created;
 
-    /**
-     * no-arg constructor included just for the sake of gson serialisation purposes.
-     */
+    /** no-arg constructor included just for the sake of gson serialisation purposes. */
     public Log() {}
 
     public Log(String title, String message, String created) {

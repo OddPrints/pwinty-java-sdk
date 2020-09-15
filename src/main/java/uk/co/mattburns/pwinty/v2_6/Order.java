@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.joda.time.DateTime;
 import uk.co.mattburns.pwinty.v2_6.Photo.Sizing;
 
@@ -372,7 +371,7 @@ public class Order {
     /**
      * Submit the Order for printing and shipping
      *
-     * If an error occurs, a {@link PwintyError} will be thrown
+     * <p>If an error occurs, a {@link PwintyError} will be thrown
      */
     public void submit() {
         pwinty.submitOrder(id);

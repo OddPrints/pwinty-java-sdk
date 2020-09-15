@@ -1,7 +1,18 @@
 package uk.co.mattburns.pwinty.v2_6;
 
+import static org.junit.Assert.*;
+import static uk.co.mattburns.pwinty.v2_6.CountryCode.*;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.List;
+import java.util.Properties;
 import org.joda.time.DateTime;
 import org.junit.*;
 import uk.co.mattburns.pwinty.v2_6.Order.QualityLevel;
@@ -11,18 +22,6 @@ import uk.co.mattburns.pwinty.v2_6.Photo.Type;
 import uk.co.mattburns.pwinty.v2_6.Pwinty.Environment;
 import uk.co.mattburns.pwinty.v2_6.SubmissionStatus.GeneralError;
 import uk.co.mattburns.pwinty.v2_6.gson.TypeDeserializer;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.List;
-import java.util.Properties;
-
-import static org.junit.Assert.*;
-import static uk.co.mattburns.pwinty.v2_6.CountryCode.*;
 
 public class OrderTest {
 
@@ -92,7 +91,8 @@ public class OrderTest {
         long timeout = 60000;
         long deadline = start + timeout;
         int orderId =
-                469658; // just an old order I have... Update this occasionally to prevent slow test!
+                469658; // just an old order I have... Update this occasionally to prevent slow
+        // test!
         boolean found = false;
         int count = 100;
         for (int offset = 0; !found; offset += count) {
@@ -244,7 +244,8 @@ public class OrderTest {
 
         // retry this because for some reason the shipments don't appear immediately.
         // See my email to Tom 2017-05-31 17:24
-        // UPDATE: This is now resolved, but I'm keeping the code here just in case but setting max attempts to 1
+        // UPDATE: This is now resolved, but I'm keeping the code here just in case but setting max
+        // attempts to 1
         boolean success = false;
         int attempt = 1;
         while (!success && attempt < 2) {
@@ -627,10 +628,10 @@ public class OrderTest {
         Order fetchedOrder = pwinty.getOrder(id);
 
         Issue lostIssue = new Issue(Issue.IssueType.LostInPost, Issue.IssueAction.Reprint);
-        //long issueId = fetchedOrder.addIssue(lostIssue).getId();
+        // long issueId = fetchedOrder.addIssue(lostIssue).getId();
 
-        //Issue fetchedIssue = fetchedOrder.getIssue(issueId);
-        //assertEquals(IssueAction.Reprint, fetchedIssue.getAction());
+        // Issue fetchedIssue = fetchedOrder.getIssue(issueId);
+        // assertEquals(IssueAction.Reprint, fetchedIssue.getAction());
         Issues fetchedIssues = fetchedOrder.getIssues();
         assertEquals(0, fetchedIssues.getIssues().size());
 

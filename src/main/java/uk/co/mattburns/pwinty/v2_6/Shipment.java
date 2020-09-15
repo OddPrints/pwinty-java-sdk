@@ -1,9 +1,8 @@
 package uk.co.mattburns.pwinty.v2_6;
 
-import org.joda.time.DateTime;
-
 import java.net.MalformedURLException;
 import java.net.URL;
+import org.joda.time.DateTime;
 
 public class Shipment {
     private String shipmentId;

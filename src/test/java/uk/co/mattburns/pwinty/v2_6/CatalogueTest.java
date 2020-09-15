@@ -5,10 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.Properties;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import uk.co.mattburns.pwinty.v2_6.CatalogueItem.SizeUnits;
 import uk.co.mattburns.pwinty.v2_6.Order.QualityLevel;
 import uk.co.mattburns.pwinty.v2_6.Pwinty.Environment;

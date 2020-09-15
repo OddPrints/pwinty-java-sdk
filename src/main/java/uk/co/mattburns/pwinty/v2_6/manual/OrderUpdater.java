@@ -6,7 +6,6 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.Properties;
-
 import uk.co.mattburns.pwinty.v2_6.CountryCode;
 import uk.co.mattburns.pwinty.v2_6.Order;
 import uk.co.mattburns.pwinty.v2_6.Photo;

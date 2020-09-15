@@ -39,9 +39,7 @@ public class Issue {
         Cancelled;
     }
 
-    /**
-     * no-arg constructor included just for the sake of gson serialisation purposes.
-     */
+    /** no-arg constructor included just for the sake of gson serialisation purposes. */
     public Issue() {}
 
     public Issue(IssueType issue, IssueAction action) {

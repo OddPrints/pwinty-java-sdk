@@ -5,11 +5,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.*;
-
 import org.joda.time.DateTime;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import uk.co.mattburns.pwinty.v2_6.Order.QualityLevel;
 import uk.co.mattburns.pwinty.v2_6.Photo.Type;
 import uk.co.mattburns.pwinty.v2_6.Pwinty.Environment;
@@ -169,9 +167,7 @@ public class PwintyTest {
         assertFalse(availablePrintSizes.contains(Type._4x18));
     }
 
-    /**
-     * This test just forces us to keep the enum up to date.
-     */
+    /** This test just forces us to keep the enum up to date. */
     @Test
     public void all_available_print_types_are_in_enum() {
         Set<String> unrecognisedItems = pwinty.getUnrecognisedItemNames(CountryCode.values());

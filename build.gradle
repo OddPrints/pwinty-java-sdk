@@ -9,19 +9,12 @@ buildscript {
 }
 
 plugins {
-    id 'com.github.sherter.google-java-format' version '0.3.2'
+    id "com.diffplug.spotless" version "5.5.1"
 }
 
 apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'java'
 apply plugin: 'maven'
-
-googleJavaFormat {
-    options style: 'AOSP'
-}
-
-// Force code formatting
-compileJava.dependsOn tasks.googleJavaFormat
 
 group 'uk.co.mattburns.pwinty'
 version '2.6.0'
@@ -33,6 +26,14 @@ jar {
     manifest {
         attributes 'Implementation-Title': 'pwinty-java-sdk',
                    'Implementation-Version': version
+    }
+}
+
+spotless {
+    java {
+//        googleJavaFormat()
+        googleJavaFormat().aosp()
+
     }
 }
 

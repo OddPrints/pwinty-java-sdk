@@ -1,11 +1,10 @@
 package uk.co.mattburns.pwinty.v2_6.gson;
 
-import uk.co.mattburns.pwinty.v2_6.Photo.Type;
-
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import uk.co.mattburns.pwinty.v2_6.Photo.Type;
 
 public class TypeDeserializer implements JsonDeserializer<Type> {
     @Override
