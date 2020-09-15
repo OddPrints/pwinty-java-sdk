@@ -423,7 +423,7 @@ public class OrderTest {
         URL url = new URL(TEST_PHOTO_URL);
         order.addPhoto(url, Type._4x6, 2, Sizing.ShrinkToExactFit);
 
-        List<PhotoStatus> photos = order.getSubmissionStatus().getPhotos();
+        List<Photo> photos = order.getPhotos();
         int photoId = photos.get(0).getId();
 
         Photo photo = pwinty.getPhoto(order.getId(), photoId);
@@ -437,18 +437,28 @@ public class OrderTest {
 
         URL url = new URL(TEST_PHOTO_URL);
         order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
-
-        SubmissionStatus submissionStatus = order.getSubmissionStatus();
-        assertEquals(1, submissionStatus.getPhotos().size());
-
+        assertEquals(1, order.getPhotos().size());
         order.deletePhoto(order.getPhotos().get(0));
-
-        submissionStatus = order.getSubmissionStatus();
-        assertEquals(0, submissionStatus.getPhotos().size());
+        assertEquals(0, order.getPhotos().size());
     }
 
     @Test
-    public void can_cancel_order() throws URISyntaxException {
+    public void photo_count_increments_consistently() throws MalformedURLException {
+        Order order = createTestOrder();
+        URL url = new URL(TEST_PHOTO_URL);
+        for (int i = 1 ; i < 5 ; i++) {
+            int sizeBefore = order.getPhotos().size();
+            order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
+            int sizeAfter = order.getPhotos().size();
+
+            if (sizeAfter != sizeBefore + 1) {
+                fail("Photocount didn't increase properly. Before: " + sizeBefore + ", After: " + sizeAfter);
+            }
+        }
+    }
+
+    @Test
+    public void can_cancel_order() {
         Order order = new Order(pwinty, GB, GB, QualityLevel.Standard, false);
 
         int id = order.getId();

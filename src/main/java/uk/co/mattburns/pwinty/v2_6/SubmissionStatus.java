@@ -37,6 +37,9 @@ public class SubmissionStatus {
         return isValid;
     }
 
+    /**
+     * Confusingly, these are just the bad photos that may explain why an order can't be submitted
+     */
     public List<PhotoStatus> getPhotos() {
         return photos;
     }
