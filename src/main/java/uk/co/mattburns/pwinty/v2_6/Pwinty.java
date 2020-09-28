@@ -401,7 +401,12 @@ public class Pwinty {
         gsonBuilder.excludeFieldsWithoutExposeAnnotation();
         Gson gson = gsonBuilder.create();
 
-        PwintyError error = gson.fromJson(response.getEntity(String.class), PwintyError.class);
+        PwintyError error = null;
+        try {
+            error = gson.fromJson(response.getEntity(String.class), PwintyError.class);
+        } catch (Throwable t) {
+            // Ignore, assume response isn't even json
+        }
         if (error == null) {
             error = new PwintyError();
         }
