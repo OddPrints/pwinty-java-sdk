@@ -38,7 +38,8 @@ public class SubmissionStatus {
     }
 
     /**
-     * Confusingly, these are just the bad photos that may explain why an order can't be submitted
+     * Confusingly, these are just the bad photos that may explain why an order can't be submitted.
+     * @return Just the BAD photos for cases when an order can't be submitted
      */
     public List<PhotoStatus> getPhotos() {
         return photos;
