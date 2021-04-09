@@ -495,6 +495,8 @@ public class Photo {
         _FineArt_A1,
         _FineArt_A2,
         _FineArt_A3,
+        _GLOBAL_PHO_4X6,
+        _GLOBAL_PHO_4X6_PRO,
         _GoldBeadFrame_12x12_6x6,
         _GoldBeadFrame_12x14_6x8,
         _GoldBeadFrame_12x15_6x9,
