@@ -11,6 +11,6 @@ public class TypeDeserializer implements JsonDeserializer<Type> {
     public Type deserialize(
             JsonElement json, java.lang.reflect.Type arg1, JsonDeserializationContext arg2)
             throws JsonParseException {
-        return Type.valueOf("_" + json.getAsJsonPrimitive().getAsString());
+        return Type.valueOf("_" + json.getAsJsonPrimitive().getAsString().replaceAll("-", "_"));
     }
 }
