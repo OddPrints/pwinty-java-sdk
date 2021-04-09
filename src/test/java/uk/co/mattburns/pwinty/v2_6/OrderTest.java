@@ -446,13 +446,17 @@ public class OrderTest {
     public void photo_count_increments_consistently() throws MalformedURLException {
         Order order = createTestOrder();
         URL url = new URL(TEST_PHOTO_URL);
-        for (int i = 1 ; i < 5 ; i++) {
+        for (int i = 1; i < 5; i++) {
             int sizeBefore = order.getPhotos().size();
             order.addPhoto(url, Type._4x6, 1, Sizing.Crop);
             int sizeAfter = order.getPhotos().size();
 
             if (sizeAfter != sizeBefore + 1) {
-                fail("Photocount didn't increase properly. Before: " + sizeBefore + ", After: " + sizeAfter);
+                fail(
+                        "Photocount didn't increase properly. Before: "
+                                + sizeBefore
+                                + ", After: "
+                                + sizeAfter);
             }
         }
     }
