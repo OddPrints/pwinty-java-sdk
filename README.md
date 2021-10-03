@@ -1,3 +1,8 @@
+THIS IS DEPRECATED
+==================
+
+Go use the newer [Prodigi API](https://github.com/OddPrints/prodigi-java-sdk) instead :)
+
 Pwinty-Java-SDK
 ===============
 
